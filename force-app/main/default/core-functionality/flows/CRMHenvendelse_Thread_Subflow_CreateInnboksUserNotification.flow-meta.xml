@@ -192,7 +192,7 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </assignmentItems>
     </assignments>

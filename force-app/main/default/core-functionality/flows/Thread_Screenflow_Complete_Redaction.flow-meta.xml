@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Close_tab</name>
         <label>Close tab</label>
-        <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -12,8 +12,8 @@
     <actionCalls>
         <name>Log_exception</name>
         <label>Log exception</label>
-        <locationX>754</locationX>
-        <locationY>878</locationY>
+        <locationX>440</locationX>
+        <locationY>758</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -24,6 +24,18 @@
             <typeValue>Thread__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>logLevel</name>
             <value>
@@ -38,6 +50,9 @@
         </inputParameters>
         <inputParameters>
             <name>refRecord</name>
+            <value>
+                <elementReference>Get_Thread</elementReference>
+            </value>
         </inputParameters>
         <inputParameters>
             <name>source</name>
@@ -47,53 +62,6 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
-    <decisions>
-        <name>isSent</name>
-        <label>isSent</label>
-        <locationX>314</locationX>
-        <locationY>758</locationY>
-        <defaultConnector>
-            <targetReference>Close_tab</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Sent</defaultConnectorLabel>
-        <rules>
-            <name>Failed_to_create_user_notification</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>No_user_notification</targetReference>
-            </connector>
-            <label>Failed to create user notification</label>
-        </rules>
-        <rules>
-            <name>Failed_to_send_user_notification</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>partialSuccess</targetReference>
-            </connector>
-            <label>Failed to send user notification</label>
-        </rules>
-    </decisions>
     <interviewLabel>Thread Screenflow Complete Redaction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Screenflow Complete Redaction</label>
     <processMetadataValues>
@@ -119,8 +87,8 @@
         <description>Create a message to inform the user about redaction.</description>
         <name>Create_Info_Message_On_Redaction</name>
         <label>Create Info Message On Redaction</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
         <connector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
@@ -128,6 +96,12 @@
             <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>CRM_Event_Type__c</field>
+            <value>
+                <stringValue>REDACTED</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
@@ -152,11 +126,11 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>314</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Innboks_User_Notification</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -177,8 +151,8 @@
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>754</locationX>
-        <locationY>758</locationY>
+        <locationX>440</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
         </connector>
@@ -186,10 +160,10 @@
     <recordUpdates>
         <name>Set_thread_to_redacted</name>
         <label>Set thread to redacted</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <connector>
-            <targetReference>isSent</targetReference>
+            <targetReference>Close_tab</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Rollback</targetReference>
@@ -205,7 +179,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -220,8 +194,8 @@
     <screens>
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
-        <locationX>754</locationX>
-        <locationY>998</locationY>
+        <locationX>440</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -235,50 +209,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>No_user_notification</name>
-        <label>No user notification</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Close_tab</targetReference>
-        </connector>
-        <fields>
-            <name>userNotificationError</name>
-            <fieldText>&lt;p&gt;Tråden er sladdet, men &lt;b&gt;klarte ikke&lt;/b&gt; å lage en brukernotifikasjon for å varsle bruker.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>partialSuccess</name>
-        <label>Partial Success</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Close_tab</targetReference>
-        </connector>
-        <fields>
-            <name>partialSuccessMessage</name>
-            <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -297,64 +231,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_Innboks_User_Notification</name>
-        <label>Create Innboks User Notification</label>
-        <locationX>314</locationX>
-        <locationY>278</locationY>
-        <connector>
-            <targetReference>Trigger_sync</targetReference>
-        </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
-        <inputAssignments>
-            <name>ExternalNotification</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>Get_Thread.LastModifiedDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>NotificationMessageText</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>threadId</name>
-            <value>
-                <elementReference>Get_Thread.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
-    </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
     </textTemplates>
-    <variables>
-        <name>newUserNotification</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>UserNotification__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

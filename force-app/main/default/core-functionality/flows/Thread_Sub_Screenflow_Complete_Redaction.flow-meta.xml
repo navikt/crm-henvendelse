@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Log_exception</name>
         <label>Log exception</label>
-        <locationX>754</locationX>
-        <locationY>1334</locationY>
+        <locationX>880</locationX>
+        <locationY>1454</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -15,6 +15,12 @@
             <typeValue>Thread__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>logLevel</name>
             <value>
@@ -29,6 +35,9 @@
         </inputParameters>
         <inputParameters>
             <name>refRecord</name>
+            <value>
+                <elementReference>Get_Thread</elementReference>
+            </value>
         </inputParameters>
         <inputParameters>
             <name>source</name>
@@ -41,8 +50,8 @@
     <assignments>
         <name>Assign_fault_message</name>
         <label>Assign fault message</label>
-        <locationX>754</locationX>
-        <locationY>1454</locationY>
+        <locationX>880</locationX>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>isSuccess</assignToReference>
             <operator>Assign</operator>
@@ -57,12 +66,15 @@
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Navigate_0_0_0</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_disposal_datetime</name>
         <label>Set disposal datetime</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.CRM_Disposal_Datetime__c</assignToReference>
             <operator>Assign</operator>
@@ -77,10 +89,10 @@
     <decisions>
         <name>Discard_all_messages</name>
         <label>Discard all messages</label>
-        <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationX>440</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_Info_Message_On_Redaction</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -97,6 +109,28 @@
                 <targetReference>Find_and_discard_all_messages</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sensitive_information_is</name>
+        <label>Sensitive information is</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Discard_all_messages</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>True</defaultConnectorLabel>
+        <rules>
+            <name>False_Sensitive_information_is</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread.STO_Sensitive_Information__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>False</label>
         </rules>
     </decisions>
     <interviewLabel>Thread Sub-Screenflow Complete Redaction {!$Flow.CurrentDateTime}</interviewLabel>
@@ -124,8 +158,8 @@
         <description>Create a message to inform the user about redaction.</description>
         <name>Create_Info_Message_On_Redaction</name>
         <label>Create Info Message On Redaction</label>
-        <locationX>314</locationX>
-        <locationY>854</locationY>
+        <locationX>440</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Navigate_0</targetReference>
         </connector>
@@ -163,11 +197,11 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>314</locationX>
-        <locationY>734</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Info_Message_On_Redaction</targetReference>
+            <targetReference>Sensitive_information_is</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -188,8 +222,8 @@
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>754</locationX>
-        <locationY>1214</locationY>
+        <locationX>880</locationX>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
         </connector>
@@ -197,8 +231,8 @@
     <recordUpdates>
         <name>Find_and_discard_all_messages</name>
         <label>Find and discard all messages</label>
-        <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Set_disposal_datetime</targetReference>
         </connector>
@@ -238,8 +272,8 @@
     <recordUpdates>
         <name>Set_thread_to_redacted</name>
         <label>Set thread to redacted</label>
-        <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationX>440</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Navigate_0_0</targetReference>
         </connector>
@@ -278,13 +312,13 @@
     <screens>
         <name>Navigate</name>
         <label>Navigate</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_Info_Message_On_Redaction</targetReference>
         </connector>
         <fields>
             <name>NavigateComponent</name>
@@ -300,8 +334,8 @@
     <screens>
         <name>Navigate_0</name>
         <label>Navigate</label>
-        <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationX>440</locationX>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -322,8 +356,8 @@
     <screens>
         <name>Navigate_0_0</name>
         <label>Navigate</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>440</locationX>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -338,11 +372,30 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Navigate_0_0_0</name>
+        <label>Navigate</label>
+        <locationX>880</locationX>
+        <locationY>1694</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NavigateComponent_0_0_0</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Discard_all_messages</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
     <status>Active</status>

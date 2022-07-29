@@ -23,19 +23,10 @@ public class CRM_ThreadPdfController_Test {
     }
 
     @isTest
-    static void splitWordTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWord(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWord(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWord(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWord(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'shrtstr',
             splitter.splitWord('shrtstr'),
@@ -52,20 +43,11 @@ public class CRM_ThreadPdfController_Test {
             'if argument is longer than limit - returns splittet string'
         );
     }
-    @isTest 
-    public static void splitLinkTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter =
-            new CRM_ThreadPdfController.LongWordSplitter(20);
-        System.assertEquals(
-            null,
-            splitter.splitLink(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitLink(''),
-            'if argument is empty string - returns empty string'
-        );
+    @isTest
+    public static void splitLinkTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(20);
+        System.assertEquals(null, splitter.splitLink(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitLink(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'http://short_link',
             splitter.splitLink('http://short_link'),
@@ -78,14 +60,9 @@ public class CRM_ThreadPdfController_Test {
         );
     }
     @isTest
-    static void splitWordsTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWords(null),
-            'if argument is null - returns argument'
-        );
+    static void splitWordsTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWords(null), 'if argument is null - returns argument');
         System.assertEquals(
             0,
             splitter.splitWords(new List<String>()).size(),
@@ -103,33 +80,19 @@ public class CRM_ThreadPdfController_Test {
         System.assertEquals('shortword', resultList[3]);
     }
     @isTest
-    static void splitWordsInLineTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInLine(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWordsInLine(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordsInLineTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInLine(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWordsInLine(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'hello world! alonglongw ord shortword',
             splitter.splitWordsInLine('hello world! alonglongword shortword')
         );
     }
     @isTest
-    static void splitWordsInLinesTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInLines(null),
-            'if argument is null - returns argument'
-        );
+    static void splitWordsInLinesTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInLines(null), 'if argument is null - returns argument');
         System.assertEquals(
             0,
             splitter.splitWordsInLines(new List<String>()).size(),
@@ -147,19 +110,10 @@ public class CRM_ThreadPdfController_Test {
         System.assertEquals('short words in this line', resultList[3]);
     }
     @isTest
-    static void splitWordsInMessageTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInMessage(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWordsInMessage(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordsInMessageTest() {
+        CRM_ThreadPdfController.LongWordSplitter splitter = new CRM_ThreadPdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInMessage(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWordsInMessage(''), 'if argument is empty string - returns empty string');
         String multilineString =
             'hello world!\n' +
             'line with longlonglonglong words\n' +

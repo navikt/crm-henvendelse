@@ -65,17 +65,11 @@
             <field>CRM_Created_By_Ident__c</field>
             <operator>NotEqualTo</operator>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </filters>
         <object>Conversation_Note__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Create_Innbox_Event</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
@@ -89,6 +83,12 @@
             <name>ConversationNote</name>
             <value>
                 <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>notificationDateTime</name>
+            <value>
+                <elementReference>$Record.CRM_Date_Registered__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

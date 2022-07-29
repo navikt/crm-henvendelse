@@ -80,7 +80,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_DONE_Event</name>
         <label>Create DONE Event</label>
@@ -88,9 +88,21 @@
         <locationY>288</locationY>
         <flowName>UN_UserNotificationCreateDoneEventFromRelatedRecordId</flowName>
         <inputAssignments>
+            <name>appname</name>
+            <value>
+                <stringValue>sf-brukernotifikasjon</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>DoneDateTime</name>
             <value>
                 <elementReference>$Record.CRM_Read_Datetime__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>namespace</name>
+            <value>
+                <stringValue>teamnks</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

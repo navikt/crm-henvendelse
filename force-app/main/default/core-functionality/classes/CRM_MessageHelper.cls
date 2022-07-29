@@ -141,7 +141,11 @@ public with sharing class CRM_MessageHelper {
      */
     @AuraEnabled
     public static void markAsRead(Id threadId) {
-        List<Message__c> msgList = [SELECT Id, CRM_Read__c, CRM_Read_Datetime__c FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
+        List<Message__c> msgList = [
+            SELECT Id, CRM_Read__c, CRM_Read_Datetime__c
+            FROM Message__c
+            WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId
+        ];
         for (Message__c msg : msgList) {
             msg.CRM_Read__c = true;
             msg.CRM_Read_Datetime__c = DateTime.now();
@@ -159,7 +163,11 @@ public with sharing class CRM_MessageHelper {
      */
     @AuraEnabled
     public static void markAsReadByNav(Id threadId) {
-        List<Message__c> msgList = [SELECT Id, CRM_Read_By_Nav__c, CRM_Read_By_Nav_Datetime__c FROM Message__c WHERE CRM_Read_By_Nav__c = FALSE AND CRM_Thread__c = :threadId];
+        List<Message__c> msgList = [
+            SELECT Id, CRM_Read_By_Nav__c, CRM_Read_By_Nav_Datetime__c
+            FROM Message__c
+            WHERE CRM_Read_By_Nav__c = FALSE AND CRM_Thread__c = :threadId
+        ];
         for (Message__c msg : msgList) {
             msg.CRM_Read_By_Nav__c = true;
             msg.CRM_Read_By_Nav_Datetime__c = DateTime.now();

@@ -125,7 +125,9 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprettetDato = formatDateTime(thread.CRM_Date_Time_Registered__c);
         this.avsluttetDato = formatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
-        this.henvendelseType = (thread.CRM_Type__c == 'CHAT') ? HENVENDELSE_TYPE.CHAT.name() : HENVENDELSE_TYPE.MELDINGSKJEDE.name();
+        this.henvendelseType = (thread.CRM_Type__c == 'CHAT')
+            ? HENVENDELSE_TYPE.CHAT.name()
+            : HENVENDELSE_TYPE.MELDINGSKJEDE.name();
         this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = thread.CRM_Theme_Code__c;
         this.sladding = thread.STO_Sensitive_Information__c;

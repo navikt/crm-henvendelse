@@ -42,7 +42,7 @@ export default class messagingThreadViewer extends LightningElement {
         }
         this.handleSubscribe();
         this.scrolltobottom();
-        markAsReadByNav({ threadId: this.threadid});
+        markAsReadByNav({ threadId: this.threadid });
     }
 
     disconnectedCallback() {
@@ -54,69 +54,67 @@ export default class messagingThreadViewer extends LightningElement {
         if (test) {
             test.focus();
         }
-        this.resizablePanelTop = this.template.querySelector("section");
-        this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded, false);
-        this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
+        this.resizablePanelTop = this.template.querySelector('section');
+        this.resizablePanelTop.addEventListener('mousemove', this.mouseMoveEventHandlerBinded, false);
+        this.resizablePanelTop.addEventListener('mouseleave', this.mouseLeaveEventHandler, false);
     }
     //##################################//
     //#####    Event Handlers    #######//
     //##################################//
 
-    mouseMoveEventHandler(e){
+    mouseMoveEventHandler(e) {
         // detecting if cursor is in the area of interest
-        if((this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY) < 10){
+        if (this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY < 10) {
             // change cursor style, and adding listener for mousedown event
-            document.body.style.cursor = "ns-resize";
-            if(this.mouseListenerCounter !== true){
-                this.resizablePanelTop.addEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+            document.body.style.cursor = 'ns-resize';
+            if (this.mouseListenerCounter !== true) {
+                this.resizablePanelTop.addEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = true;
             }
-        }
-        else{
+        } else {
             // remove listener and reset cursor when cursor is out of area of interest
-            if(this.mouseListenerCounter === true){
-                this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+            if (this.mouseListenerCounter === true) {
+                this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = false;
             }
-            document.body.style.cursor = "auto";
+            document.body.style.cursor = 'auto';
         }
     }
     //binding, to make 'this' available when running in context of other object
     mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
-    
 
-    mouseLeaveEventHandler(e){
-        if(this.mouseListenerCounter === true){
-            this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+    mouseLeaveEventHandler(e) {
+        if (this.mouseListenerCounter === true) {
+            this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
             this.mouseListenerCounter = false;
         }
-        document.body.style.cursor = "auto";
+        document.body.style.cursor = 'auto';
     }
 
-    mouseDownEventHandler(e){
+    mouseDownEventHandler(e) {
         this.onresize = true;
-        this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
-        document.addEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
-        this.resizablePanelTop.removeEventListener("mousemove", this.mouseMoveEventHandlerBinded, false);
-        this.resizablePanelTop.removeEventListener("mouseleave", this.mouseLeaveEventHandler, false);
-        document.addEventListener("mousemove", this.resizeEventHandlerBinded, true);
+        this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
+        document.addEventListener('mouseup', this.mouseUpEventHandlerBinded, true);
+        this.resizablePanelTop.removeEventListener('mousemove', this.mouseMoveEventHandlerBinded, false);
+        this.resizablePanelTop.removeEventListener('mouseleave', this.mouseLeaveEventHandler, false);
+        document.addEventListener('mousemove', this.resizeEventHandlerBinded, true);
     }
     mouseDownEventHandlerBinded = this.mouseDownEventHandler.bind(this);
 
-    resizeEventHandler(e){
+    resizeEventHandler(e) {
         e.preventDefault();
-        this.resizablePanelTop.style.height = (this.resizablePanelTop.offsetHeight + e.movementY) + "px";
+        this.resizablePanelTop.style.height = this.resizablePanelTop.offsetHeight + e.movementY + 'px';
     }
     resizeEventHandlerBinded = this.resizeEventHandler.bind(this);
 
-    mouseUpEventHandler(e){
+    mouseUpEventHandler(e) {
         this.onresize = false;
-        this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
-        document.removeEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
-        document.removeEventListener("mousemove", this.resizeEventHandlerBinded,true);
-        document.body.style.cursor = "auto";
-        this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded,false);
-        this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
+        this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
+        document.removeEventListener('mouseup', this.mouseUpEventHandlerBinded, true);
+        document.removeEventListener('mousemove', this.resizeEventHandlerBinded, true);
+        document.body.style.cursor = 'auto';
+        this.resizablePanelTop.addEventListener('mousemove', this.mouseMoveEventHandlerBinded, false);
+        this.resizablePanelTop.addEventListener('mouseleave', this.mouseLeaveEventHandler, false);
         this.mouseListenerCounter = false;
     }
     mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
@@ -151,8 +149,8 @@ export default class messagingThreadViewer extends LightningElement {
             .catch((error) => {
                 console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
             });
-    }    
-    
+    }
+
     @wire(getJournalInfo, { threadId: '$threadid' })
     wiredJournalEntries;
 
@@ -288,7 +286,7 @@ export default class messagingThreadViewer extends LightningElement {
     get registereddate() {
         return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
     }
-    
+
     get journalEntries() {
         if (this.wiredJournalEntries) {
             return this.wiredJournalEntries.data;

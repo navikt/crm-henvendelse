@@ -4,60 +4,12 @@
         <name>Close_Tab</name>
         <label>Close Tab</label>
         <locationX>176</locationX>
-        <locationY>1214</locationY>
+        <locationY>998</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
-    <decisions>
-        <name>User_notification_result</name>
-        <label>User notification result</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
-        <defaultConnector>
-            <targetReference>Close_Tab</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Sent</defaultConnectorLabel>
-        <rules>
-            <name>User_notification_not_created</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Something_is_not_OK</targetReference>
-            </connector>
-            <label>User notification not created</label>
-        </rules>
-        <rules>
-            <name>User_notification_created_but_not_sent</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Something_is_not_OK</targetReference>
-            </connector>
-            <label>User notification created, but not sent</label>
-        </rules>
-    </decisions>
     <interviewLabel>Thread Screenflow Discard Message {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Screenflow Discard Message</label>
     <processMetadataValues>
@@ -83,14 +35,20 @@
         <name>Create_Info_Message_on_Discarding</name>
         <label>Create Info Message on Discarding</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <connector>
-            <targetReference>Update_Messages</targetReference>
+            <targetReference>Trigger_sync_0</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>rollBack</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>CRM_Event_Type__c</field>
+            <value>
+                <stringValue>REDACTED</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
@@ -119,7 +77,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Innboks_User_Notification</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -140,8 +98,8 @@
     <recordRollbacks>
         <name>rollBack</name>
         <label>rollBack</label>
-        <locationX>616</locationX>
-        <locationY>878</locationY>
+        <locationX>440</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -152,7 +110,7 @@
         <locationX>176</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Update_Thread_0</targetReference>
+            <targetReference>Trigger_sync_0_0</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -182,7 +140,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -191,9 +149,9 @@
         <name>Update_Thread_0</name>
         <label>Update Thread</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
-            <targetReference>User_notification_result</targetReference>
+            <targetReference>Close_Tab</targetReference>
         </connector>
         <faultConnector>
             <targetReference>rollBack</targetReference>
@@ -215,7 +173,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -230,8 +188,8 @@
     <screens>
         <name>Failed</name>
         <label>Failed</label>
-        <locationX>616</locationX>
-        <locationY>998</locationY>
+        <locationX>440</locationX>
+        <locationY>1118</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -245,50 +203,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Something_is_not_OK</name>
-        <label>Something is not OK</label>
-        <locationX>176</locationX>
-        <locationY>998</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Close_Tab</targetReference>
-        </connector>
-        <fields>
-            <name>somethingWnetWrongText</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Noe har gått galt under kassering, se meldingene under.&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>userNotificationNotCreated</name>
-            <fieldText>&lt;p&gt;Brukernotifikasjon ble ikke opprettet og bruker har ikke blitt varslet om kasseringen.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>User_notification_not_created</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>usernotificationCreatedButNotSent</name>
-            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -306,6 +224,50 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Trigger_sync_0</name>
+        <label>Trigger sync</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_Messages</targetReference>
+        </connector>
+        <fields>
+            <name>next_0</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Trigger_sync_0_0</name>
+        <label>Trigger sync</label>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_Thread_0</targetReference>
+        </connector>
+        <fields>
+            <name>next_0_0</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -314,51 +276,11 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_Innboks_User_Notification</name>
-        <label>Create Innboks User Notification</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
-        <connector>
-            <targetReference>Trigger_sync</targetReference>
-        </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>NotificationMessageText</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>threadId</name>
-            <value>
-                <elementReference>Get_Thread.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
-    </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
     </textTemplates>
-    <variables>
-        <name>newUserNotification</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>UserNotification__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

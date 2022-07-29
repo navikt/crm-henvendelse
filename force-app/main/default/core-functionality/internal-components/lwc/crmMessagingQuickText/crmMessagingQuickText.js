@@ -163,7 +163,7 @@ export default class crmQuickText extends LightningElement {
         inputField.focus();
     }
 
-   /**
+    /**
      * Functions for conversation note/quick text
      */
     @wire(getQuicktexts, {})
@@ -272,7 +272,7 @@ export default class crmQuickText extends LightningElement {
             const lockLang = new CustomEvent('locklang');
             this.dispatchEvent(lockLang);
         }
-        
+
         if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
@@ -319,7 +319,6 @@ export default class crmQuickText extends LightningElement {
             }
         }
     }
-
 
     toPlainText(value) {
         let plainText = value ? value : '';

@@ -64,7 +64,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
     }
 
     public List<Thread__c> selectByActorId(Set<String> actorIds) {
-        List<String> threadTypes = new List<String>{'STO','STB','CHAT'};
+        List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT' };
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition(
             '(CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Type__c in :threadTypes)'
