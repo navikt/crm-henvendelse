@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <customLabels>
+        <label>Avbryt</label>
+        <name>NKS_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Ferdigstill</label>
+        <name>NKS_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Opprett oppgave</label>
+        <name>NKS_Create_NAV_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>Henvendelse startet</label>
+        <name>NKS_DIALOGUE_STARTED</name>
+    </customLabels>
+    <customLabels>
+        <label>Avslutt samtale</label>
+        <name>NKS_End_Dialogue</name>
+    </customLabels>
+    <customLabels>
+        <label>Er du sikker på at du vil avslutte denne samtalen permanent?</label>
+        <name>NKS_End_Dialogue_Alert_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Feil</label>
+        <name>NKS_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Det oppsto en uventet feil.</label>
+        <name>NKS_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Journalfør</label>
+        <name>NKS_Journal</name>
+    </customLabels>
+    <customLabels>
+        <label>Sladd</label>
+        <name>NKS_Set_To_Redaction</name>
+    </customLabels>
+</Translations>

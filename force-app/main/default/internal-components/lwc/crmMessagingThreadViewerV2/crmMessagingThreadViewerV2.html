@@ -1,0 +1,254 @@
+<template>
+    <!-- Header-->
+    <div class="slds-chat-bookend colorOverwrite">
+        <lightning-icon
+            icon-name="utility:chat"
+            alternative-text="chat-icon"
+            size="x-small"
+            title="Dialog"
+        ></lightning-icon>
+        <p>
+            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
+                date={registereddate}
+            ></c-crm-nav-formatted-date>
+        </p>
+    </div>
+
+    <!-- Messages-->
+    <section
+        role="log"
+        class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium"
+    >
+        <slot name="messages2">
+            <template for:each={messages} for:item="message">
+                <c-crm-messaging-Message-Container
+                    message={message}
+                    key={message.Id}
+                ></c-crm-messaging-Message-Container>
+            </template>
+        </slot>
+    </section>
+
+    <!-- Reply box-->
+    <div slot="footer">
+        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <div
+                        role="toolbar"
+                        class="slds-var-p-bottom_x-small slds-rich-text-editor__toolbar slds-shrink-none toolbar"
+                    >
+                        <lightning-layout>
+                            <!-- Toolbar -->
+                            <lightning-layout-item size="8">
+                                <lightning-layout horizontal-align="start">
+                                    <template if:true={showQuick}>
+                                        <lightning-button-icon
+                                            icon-name="utility:quick_text"
+                                            alternative-text="Hurtigtekst"
+                                            onclick={showQuickText}
+                                        >
+                                        </lightning-button-icon>
+                                    </template>
+                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                        <slot name="toolbar"></slot>
+                                    </lightning-button-group>
+                                    <template if:true={hasEnglishTemplate}>
+                                        <lightning-button
+                                            role="switch"
+                                            type="lang"
+                                            name="lang"
+                                            label="Engelsk"
+                                            variant={langBtnVariant}
+                                            style="min-height: 1rem"
+                                            class="slds-float_left slds-var-m-left_small"
+                                            onclick={handleLangClick}
+                                            title="Endre Språk"
+                                            disabled={langBtnLock}
+                                            aria-disabled={langBtnLock}
+                                            aria-label={langAria}
+                                        >
+                                        </lightning-button>
+                                    </template>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <template if:true={showspinner}>
+                        <div class="spinnerholder">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+                    <c-crm-messaging-quick-text-v-2
+                        conversation-note={textTemplate}
+                        reset-text-template={textTemplate}
+                        onlocklang={lockLangBtn}
+                    >
+                    </c-crm-messaging-quick-text-v-2>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12">
+                        <!-- End dialogue section -->
+                        <lightning-layout-item class="slds-size_2-of-12">
+                            <template if:true={showClose}>
+                                <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
+                                    <lightning-button
+                                        type="submit"
+                                        variant="destructive"
+                                        disabled={closedThread}
+                                        onclick={openModal}
+                                        label={labels.END_DIALOGUE_LABEL}
+                                    >
+                                    </lightning-button>
+                                </lightning-record-edit-form>
+                            </template>
+                        </lightning-layout-item>
+                        <!--Button container-->
+                        <lightning-layout-item class="slds-size_10-of-12">
+                            <lightning-button
+                                class="slds-float_right"
+                                type="submit"
+                                name="submit"
+                                label="Send"
+                                disabled={closedThread}
+                                variant="brand"
+                            >
+                            </lightning-button>
+                            <lightning-button
+                                class="slds-var-p-right_small slds-float_right"
+                                label={labels.COMPLETE_LABEL}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                            <lightning-button
+                                class="slds-var-p-right_small slds-float_right"
+                                label={labels.SEND_TO_REDACTION_LABEL}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                            <lightning-button
+                                class="slds-var-p-right_small slds-float_right"
+                                label={labels.CREATE_NAV_TASK_LABEL}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                            <lightning-button
+                                class="slds-var-p-right_small slds-float_right"
+                                label={labels.JOURNAL_LABEL}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <!--Flow section-->
+                <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
+                    <template if:true={showComplete}>
+                        <template if:true={showFlow}>
+                            <div class="slds-var-m-top_xx-small">
+                                <lightning-card>
+                                    <lightning-flow
+                                        flow-api-name={completeFlowName}
+                                        flow-input-variables={inputVariables}
+                                        onstatuschange={handleStatusChange}
+                                    >
+                                    </lightning-flow>
+                                </lightning-card>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={showRedact}>
+                        <template if:true={showFlow}>
+                            <div class="slds-var-m-top_xx-small">
+                                <lightning-card>
+                                    <lightning-flow
+                                        flow-api-name={redactFlowName}
+                                        flow-input-variables={inputVariables}
+                                        onstatuschange={handleStatusChange}
+                                    >
+                                    </lightning-flow>
+                                </lightning-card>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={showCreateNavTask}>
+                        <template if:true={showFlow}>
+                            <div class="slds-var-m-top_xx-small">
+                                <lightning-card>
+                                    <lightning-flow
+                                        flow-api-name={createNavTaskFlowName}
+                                        flow-input-variables={inputVariables}
+                                        onstatuschange={handleStatusChange}
+                                    >
+                                    </lightning-flow>
+                                </lightning-card>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={showJournal}>
+                        <template if:true={showFlow}>
+                            <div class="slds-var-m-top_xx-small">
+                                <lightning-card>
+                                    <lightning-flow
+                                        flow-api-name={journalFlowName}
+                                        flow-input-variables={inputVariables}
+                                        onstatuschange={handleStatusChange}
+                                    >
+                                    </lightning-flow>
+                                </lightning-card>
+                            </div>
+                        </template>
+                    </template>
+                    <!--Alert dialogue-->
+                    <div
+                        role="alertdialog"
+                        tabindex="-1"
+                        class={modalClass}
+                        aria-describedby="text"
+                        style="position: relative"
+                        aria-hidden={hideModal}
+                        aria-modal="true"
+                    >
+                        <div class="panel-content scrollable" id="text">
+                            <div class="slds-var-m-around_medium">
+                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="slds-grid slds-grid_align-end">
+                                <div class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large">
+                                    <div tabindex="0" onfocus={trapFocusStart}></div>
+                                    <button
+                                        type="button"
+                                        class="slds-button slds-button_neutral cancelButton"
+                                        onclick={closeModal}
+                                    >
+                                        {labels.CANCEL_LABEL}</button
+                                    ><button
+                                        type="button"
+                                        class="slds-button slds-button_destructive closeButton"
+                                        onclick={closeThread}
+                                    >
+                                        {labels.END_DIALOGUE_LABEL}
+                                    </button>
+                                    <div tabindex="0" onfocus={trapFocusEnd}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class={backdropClass} onclick={closeModal}></div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-input-field
+                field-name="CRM_From_User__c"
+                value={userid}
+                class="slds-hide"
+            ></lightning-input-field>
+            <lightning-input-field
+                class="msgText slds-hide"
+                value={text}
+                field-name="CRM_Message_Text__c"
+            ></lightning-input-field>
+        </lightning-record-edit-form>
+    </div>
+</template>

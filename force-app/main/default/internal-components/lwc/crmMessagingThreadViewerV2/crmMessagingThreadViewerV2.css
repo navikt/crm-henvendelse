@@ -1,0 +1,26 @@
+.scroller {
+    height: 35vh;
+    overflow-y: scroll;
+}
+
+.backdrop {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.colorOverwrite {
+    background-color: var(--overwrite-header-color, white);
+    color: black;
+}
+
+.toolbar {
+    display: block;
+    border-bottom: none;
+    border-top: var(--lwc-borderWidthThin, 1px) solid gray;
+    border-left: var(--lwc-borderWidthThin, 1px) solid gray;
+    border-right: var(--lwc-borderWidthThin, 1px) solid gray;
+}

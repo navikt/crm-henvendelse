@@ -1,0 +1,69 @@
+<template>
+    <article class="slds-card marginRemover">
+        <div class="slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:messaging_user" size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small slds-truncate">{cardTitle}</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body">
+            <div class="slds-is-relative" style="min-height: 2em">
+                <lightning-spinner
+                    if:true={showSpinner}
+                    alternative-text="Laster samtalekomponent"
+                    size="medium"
+                    variant="brand"
+                ></lightning-spinner>
+                <div
+                    if:true={hasError}
+                    class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+                    role="alert"
+                >
+                    <lightning-layout vertical-align="center">
+                        <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
+                        <span class="slds-assistive-text">{labels.ERROR_LABEL}</span>
+                        <h2 class="slds-var-p-left_small" style="margin-top: auto; margin-bottom: auto">
+                            {labels.ERROR_MESSAGE}
+                        </h2>
+                    </lightning-layout>
+                </div>
+                <template if:true={shownewbutton}>
+                    <lightning-button
+                        label="Klikk for å starte samtale"
+                        icon-name="utility:anywhere_chat"
+                        variant="border-filled"
+                        slot="actions"
+                        class="slds-align_absolute-center"
+                        onclick={handlenewpressed}
+                    ></lightning-button>
+                </template>
+                <template for:each={threads} for:item="thread">
+                    <c-crm-messaging-thread-Viewer-v-2
+                        onenglishevent={handleEnglishEvent}
+                        english-text-template={englishTextTemplate}
+                        key={thread.Id}
+                        text-template={textTemplate}
+                        thread={thread}
+                        show-close={showClose}
+                        show-quick={showQuick}
+                        case-id={caseId}
+                        is-thread={isThread}
+                    >
+                        <div slot="toolbar">
+                            <slot name="toolbar"></slot>
+                        </div>
+                        <div if:true={slotsNeedCheckedOrRendered.messages} slot="messages2">
+                            <slot name="messages"></slot>
+                        </div>
+                    </c-crm-messaging-thread-Viewer-v-2>
+                </template>
+            </div>
+        </div>
+    </article>
+</template>

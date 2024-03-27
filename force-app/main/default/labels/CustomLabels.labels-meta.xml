@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>NKS_Complete</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Complete</shortDescription>
+        <value>Complete</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Create_NAV_Task</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create NAV Task</shortDescription>
+        <value>Create NAV Task</value>
+    </labels>
+    <labels>
+        <fullName>NKS_End_Dialogue</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Dialogue</shortDescription>
+        <value>End dialogue</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal</shortDescription>
+        <value>Journal</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Set_To_Redaction</fullName>
+        <categories>Redaction, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Set To Redaction</shortDescription>
+        <value>Redact</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_RedactedMessageAG</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Thread Redacted Message AG</shortDescription>
-        <value>Dette er en informasjonsmelding om at tekst i en av meldingene nylig ble slettet fra våre systemer. Vi vurderte at teksten inneholdt sensitive eller andre opplysninger som ikke bør deles offentlig. Vi tar personvern på alvor og det er vårt ansvar å sikre at alle brukere føler seg trygge når det deles informasjon på vår plattform. Teksten er fjernet for å beskytte personvernet til deg og andre parter.</value>
+        <value>Dette er en informasjonsmelding om at tekst i en av meldingene nylig ble slettet fra
+            våre systemer. Vi vurderte at teksten inneholdt sensitive eller andre opplysninger som
+            ikke bør deles offentlig. Vi tar personvern på alvor og det er vårt ansvar å sikre at
+            alle brukere føler seg trygge når det deles informasjon på vår plattform. Teksten er
+            fjernet for å beskytte personvernet til deg og andre parter.</value>
     </labels>
     <labels>
         <fullName>CRMHenveldelse_Blank</fullName>
@@ -29,7 +73,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Conversation Note Discarded Message Notification Text</shortDescription>
-        <value>Innhold i referatet ditt  har blitt slettet fordi den inneholdt informasjon som ikke kan behandles, forvaltes eller lagres av denne tjenesten.</value>
+        <value>Innhold i referatet ditt har blitt slettet fordi den inneholdt informasjon som ikke
+            kan behandles, forvaltes eller lagres av denne tjenesten.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</fullName>
@@ -37,7 +82,9 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Conversation Note Redacted Message Notification Text</shortDescription>
-        <value>Deler av referatet ditt har blitt sladdet fordi det inneholdt informasjon som ikke kan behandles, forvaltes eller lagres av denne tjenesten. Opplysninger som gjelder andre og som ikke har betydning i saken din slettes derfor, og vises som sladdet i referatene.</value>
+        <value>Deler av referatet ditt har blitt sladdet fordi det inneholdt informasjon som ikke
+            kan behandles, forvaltes eller lagres av denne tjenesten. Opplysninger som gjelder andre
+            og som ikke har betydning i saken din slettes derfor, og vises som sladdet i referatene.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_InnboksBaseURL</fullName>
@@ -71,11 +118,16 @@
         <shortDescription>Thread Redacted Message Notification Text</shortDescription>
         <value>Deler av meldingen din har blitt sladdet.
 
-Vi har bare lov til å ta vare på opplysninger som er relevant for deg. Opplysninger som gjelder andre og som ikke har betydning i saken din slettes derfor, og vises som sladdet i meldinger.
+            Vi har bare lov til å ta vare på opplysninger som er relevant for deg. Opplysninger som
+            gjelder andre og som ikke har betydning i saken din slettes derfor, og vises som sladdet
+            i meldinger.
 
-Andre opplysninger som sladdes er informasjon i saker som behandles, forvaltes og lagres av ditt lokale NAV-kontor. 
+            Andre opplysninger som sladdes er informasjon i saker som behandles, forvaltes og lagres
+            av ditt lokale NAV-kontor.
 
-For henvendelser som gjelder kommunale tjenester som økonomisk sosialhjelp, bostøtte, midlertidig botilbud, kvalifiseringsprogrammet, eller økonomisk rådgivning må du kontakte oss på chat eller telefon 55 55 33 33.</value>
+            For henvendelser som gjelder kommunale tjenester som økonomisk sosialhjelp, bostøtte,
+            midlertidig botilbud, kvalifiseringsprogrammet, eller økonomisk rådgivning må du
+            kontakte oss på chat eller telefon 55 55 33 33.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_SamtalereferatURL</fullName>
@@ -100,5 +152,45 @@ For henvendelser som gjelder kommunale tjenester som økonomisk sosialhjelp, bos
         <protected>false</protected>
         <shortDescription>CRM Henvendelse - Thread URL</shortDescription>
         <value>/skriv-til-oss</value>
+    </labels>
+    <labels>
+        <fullName>NKS_End_Dialogue_Alert_Text</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Dialogue Alert Text</shortDescription>
+        <value>Are you sure you want to end this conversation permanently?</value>
+    </labels>
+    <labels>
+        <fullName>NKS_DIALOGUE_STARTED</fullName>
+        <categories>NKS, Header</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DIALOGUE STARTED</shortDescription>
+        <value>Dialogue started</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Cancel</fullName>
+        <categories>NKS, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Error</fullName>
+        <categories>NKS, Errors</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Error_Message</fullName>
+        <categories>NKS, Errors</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message</shortDescription>
+        <value>An unexpected error occurred.</value>
     </labels>
 </CustomLabels>
