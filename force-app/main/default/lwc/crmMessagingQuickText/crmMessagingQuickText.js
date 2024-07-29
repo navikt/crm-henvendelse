@@ -32,6 +32,7 @@ export default class crmQuickText extends LightningElement {
     }
 
     renderedCallback() {
+        this.textArea.value = this._conversationNote;
         if (this.initialRender === true) {
             let inputField = this.textArea;
             inputField.focus();
@@ -371,5 +372,7 @@ export default class crmQuickText extends LightningElement {
         //sets text content to the current
         this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
+        const englishstoclearevent = new CustomEvent('englishstoclearevent');
+        this.dispatchEvent(englishstoclearevent);
     }
 }

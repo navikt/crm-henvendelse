@@ -209,7 +209,6 @@ export default class MessagingThreadViewer extends LightningElement {
         }
 
         publishToAmplitude('STO', { type: 'handlesubmit on thread' });
-        this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
             this.showspinner = true;
@@ -309,8 +308,9 @@ export default class MessagingThreadViewer extends LightningElement {
 
     handleLangClick() {
         publishToAmplitude('STO', { type: 'handleLangClick' });
+        const langObj = { englishTextTemplate: !this.englishTextTemplate, userInput: this.text };
         const englishEvent = new CustomEvent('englishevent', {
-            detail: !this.englishTextTemplate
+            detail: langObj
         });
         this.langBtnAriaToggle = !this.langBtnAriaToggle;
         this.dispatchEvent(englishEvent);
@@ -322,6 +322,14 @@ export default class MessagingThreadViewer extends LightningElement {
 
     toggleEndDialogueButton() {
         this.hideModal = !this.hideModal;
+    }
+
+    handleEnglishStoClearEvent(event) {
+        const langObj = { englishTextTemplate: this.englishTextTemplate, userInput: event.detail };
+        const englishEvent = new CustomEvent('englishevent', {
+            detail: langObj
+        });
+        this.dispatchEvent(englishEvent);
     }
 
     //##################################//
