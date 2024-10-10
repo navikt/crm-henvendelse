@@ -23,49 +23,15 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <description>Insert the message content record.</description>
-        <name>Create_Message_Content</name>
-        <label>Create Message Content</label>
-        <locationX>50</locationX>
-        <locationY>288</locationY>
-        <connector>
-            <targetReference>Update_Message_Content_Relation</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>CRM_Message_Text__c</field>
-            <value>
-                <elementReference>$Record.CRM_Conversation_Note__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Message_Content__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordUpdates>
-        <name>Update_Message_Content_Relation</name>
-        <label>Update Message Content Relation</label>
-        <locationX>50</locationX>
-        <locationY>408</locationY>
-        <inputAssignments>
-            <field>CRM_Message_Content__c</field>
-            <value>
-                <elementReference>Create_Message_Content</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Create_Message_Content</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Created_By_Ident__c</field>
             <operator>NotEqualTo</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </filters>
         <object>Conversation_Note__c</object>
@@ -82,8 +48,8 @@
     <subflows>
         <name>Create_Innbox_Event</name>
         <label>Create Innbox Event</label>
-        <locationX>314</locationX>
-        <locationY>288</locationY>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
         <flowName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</flowName>
         <inputAssignments>
             <name>ConversationNote</name>
