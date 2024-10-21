@@ -161,4 +161,29 @@
         <shortDescription>Error Message</shortDescription>
         <value>An unexpected error occurred.</value>
     </labels>
+    <labels>
+        <fullName>Henvendelse_Language_Change_Alert_Text</fullName>
+        <categories>Henvendelse, Messaging, Errors</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Language Change Alert Text</shortDescription>
+        <value>You have made changes to the greeting, signature, or both. If you translate now, you
+            will lose the text you have written. Do you want to continue?</value>
+    </labels>
+    <labels>
+        <fullName>Henvendelse_Language_Change_Yes</fullName>
+        <categories>Henvendelse, Messaging, Errors</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Language Change Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>Henvendelse_Language_Change_No</fullName>
+        <categories>Henvendelse, Messaging</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Language Change No</shortDescription>
+        <value>No</value>
+    </labels>
 </CustomLabels>
