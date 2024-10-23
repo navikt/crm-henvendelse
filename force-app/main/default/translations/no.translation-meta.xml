@@ -25,4 +25,17 @@
         <label>Det oppsto en uventet feil.</label>
         <name>Henvendelse_Error_Message</name>
     </customLabels>
+    <customLabels>
+        <label>Du har gjort endringer i hilsen, signatur eller begge deler. Hvis du oversetter nå,
+            vil du miste teksten du har skrevet. Vil du fortsette?</label>
+        <name>Henvendelse_Language_Change_Alert_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Ja</label>
+        <name>Henvendelse_Language_Change_Yes</name>
+    </customLabels>
+    <customLabels>
+        <label>Nei</label>
+        <name>Henvendelse_Language_Change_No</name>
+    </customLabels>
 </Translations>
