@@ -32,6 +32,7 @@ export default class crmQuickText extends LightningElement {
     }
 
     renderedCallback() {
+        this.textArea.value = this._conversationNote;
         if (this.initialRender === true) {
             let inputField = this.textArea;
             inputField.focus();
@@ -287,6 +288,7 @@ export default class crmQuickText extends LightningElement {
      */
     _replaceWithQuickText(editor, replacement, start, end) {
         editor.setRangeText(replacement, start, end, 'end');
+        this._conversationNote = editor.value;
         this.recentlyInserted = replacement;
     }
 
@@ -343,6 +345,7 @@ export default class crmQuickText extends LightningElement {
                 }
             } else {
                 // Clear screen reader buffer for reading the next one.
+                this._conversationNote = editor.value;
                 this.recentlyInserted = '';
             }
         }
@@ -371,5 +374,7 @@ export default class crmQuickText extends LightningElement {
         //sets text content to the current
         this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
+        const englishstoclearevent = new CustomEvent('englishstoclearevent');
+        this.dispatchEvent(englishstoclearevent);
     }
 }
