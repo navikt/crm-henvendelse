@@ -7,3 +7,7 @@
     background-color: var(--overwrite-header-color, white);
     padding-bottom: var(--lwc-varSpacingVerticalSmall, 0.75rem);
 }
+
+.custom-icon {
+    --slds-c-icon-color-background: #7b6aa1;
+}
