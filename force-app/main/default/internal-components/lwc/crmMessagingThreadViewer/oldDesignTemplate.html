@@ -29,128 +29,134 @@
     <div slot="footer">
         <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true" class="stickyfooter">
-                <lightning-layout-item size="12">
-                    <div
-                        role="toolbar"
-                        class="slds-rich-text-editor__toolbar slds-shrink-none"
-                        style="display: block; border-radius: 0"
-                    >
-                        <lightning-layout>
-                            <!-- Toolbar -->
-                            <lightning-layout-item size="8">
-                                <lightning-layout horizontal-align="start">
-                                    <template if:true={showQuick}>
-                                        <lightning-button-icon
-                                            icon-name="utility:quick_text"
-                                            alternative-text="Hurtigtekst"
-                                            onclick={showQuickText}
-                                        >
-                                        </lightning-button-icon>
-                                    </template>
-                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                        <slot name="toolbar"></slot>
-                                    </lightning-button-group>
-                                    <template if:true={hasEnglishTemplate}>
-                                        <lightning-button
-                                            lwc:if={showChangeLngBtn}
-                                            role="switch"
-                                            type="lang"
-                                            name="lang"
-                                            label="Engelsk"
-                                            variant={langBtnVariant}
-                                            style="min-height: 1rem"
-                                            class="slds-float_left slds-var-m-left_small"
-                                            onclick={handleLangClick}
-                                            title="Endre Språk"
-                                            disabled={langBtnLock}
-                                            aria-disabled={langBtnLock}
-                                            aria-label={langAria}
-                                        >
-                                        </lightning-button>
-                                    </template>
-                                </lightning-layout>
-                            </lightning-layout-item>
-                            <!-- Avslutt samtalen -->
-                            <template if:true={showClose}>
-                                <lightning-layout-item size="4">
-                                    <lightning-layout horizontal-align="end">
-                                        <lightning-record-edit-form record-id={threadid} object-api-name="Thread__c">
-                                            <button
-                                                type="submit"
-                                                disabled={closedThread}
-                                                onclick={openModal}
-                                                class="endDialogueBtn slds-button slds-button_destructive"
+                <template lwc:if={closedThread}></template>
+                <template lwc:else>
+                    <lightning-layout-item size="12">
+                        <div
+                            role="toolbar"
+                            class="slds-rich-text-editor__toolbar slds-shrink-none"
+                            style="display: block; border-radius: 0"
+                        >
+                            <lightning-layout>
+                                <!-- Toolbar -->
+                                <lightning-layout-item size="8">
+                                    <lightning-layout horizontal-align="start">
+                                        <template if:true={showQuick}>
+                                            <lightning-button-icon
+                                                icon-name="utility:quick_text"
+                                                alternative-text="Hurtigtekst"
+                                                onclick={showQuickText}
                                             >
-                                                {labels.END_DIALOGUE_LABEL}
-                                            </button>
-                                        </lightning-record-edit-form>
+                                            </lightning-button-icon>
+                                        </template>
+                                        <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                            <slot name="toolbar"></slot>
+                                        </lightning-button-group>
+                                        <template if:true={hasEnglishTemplate}>
+                                            <lightning-button
+                                                lwc:if={showChangeLngBtn}
+                                                role="switch"
+                                                type="lang"
+                                                name="lang"
+                                                label="Engelsk"
+                                                variant={langBtnVariant}
+                                                style="min-height: 1rem"
+                                                class="slds-float_left slds-var-m-left_small"
+                                                onclick={handleLangClick}
+                                                title="Endre Språk"
+                                                disabled={langBtnLock}
+                                                aria-disabled={langBtnLock}
+                                                aria-label={langAria}
+                                            >
+                                            </lightning-button>
+                                        </template>
                                     </lightning-layout>
                                 </lightning-layout-item>
-                                <!-- Using a lot of uiOverlay classes to mimic chat close modal -->
-                                <div
-                                    role="alertdialog"
-                                    tabindex="-1"
-                                    class={modalClass}
-                                    aria-describedby="text"
-                                    style="
-                                        position: absolute;
-                                        top: auto;
-                                        right: var(--lwc-spacingXSmall, 0.5rem);
-                                        bottom: calc(100% + 1rem - var(--lwc-spacingXSmall, 0.5rem));
-                                        left: auto;
-                                    "
-                                    aria-hidden={hideModal}
-                                    aria-modal="true"
-                                >
-                                    <div class="container">
-                                        <div class="panel-content scrollable" id="text">
-                                            <div class="slds-var-m-around_medium">
-                                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="slds-grid slds-grid_align-end">
-                                                <div
-                                                    class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
+                                <!-- Avslutt samtalen -->
+                                <template if:true={showClose}>
+                                    <lightning-layout-item size="4">
+                                        <lightning-layout horizontal-align="end">
+                                            <lightning-record-edit-form
+                                                record-id={threadid}
+                                                object-api-name="Thread__c"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    disabled={closedThread}
+                                                    onclick={openModal}
+                                                    class="endDialogueBtn slds-button slds-button_destructive"
                                                 >
-                                                    <div tabindex="0" onfocus={trapFocusStart}></div>
-                                                    <button
-                                                        type="button"
-                                                        class="slds-button slds-button_neutral cancelButton"
-                                                        onclick={closeModal}
+                                                    {labels.END_DIALOGUE_LABEL}
+                                                </button>
+                                            </lightning-record-edit-form>
+                                        </lightning-layout>
+                                    </lightning-layout-item>
+                                    <!-- Using a lot of uiOverlay classes to mimic chat close modal -->
+                                    <div
+                                        role="alertdialog"
+                                        tabindex="-1"
+                                        class={modalClass}
+                                        aria-describedby="text"
+                                        style="
+                                            position: absolute;
+                                            top: auto;
+                                            right: var(--lwc-spacingXSmall, 0.5rem);
+                                            bottom: calc(100% + 1rem - var(--lwc-spacingXSmall, 0.5rem));
+                                            left: auto;
+                                        "
+                                        aria-hidden={hideModal}
+                                        aria-modal="true"
+                                    >
+                                        <div class="container">
+                                            <div class="panel-content scrollable" id="text">
+                                                <div class="slds-var-m-around_medium">
+                                                    <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="slds-grid slds-grid_align-end">
+                                                    <div
+                                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
                                                     >
-                                                        {labels.CANCEL_LABEL}</button
-                                                    ><button
-                                                        type="button"
-                                                        class="slds-button slds-button_destructive closeButton"
-                                                        onclick={closeThread}
-                                                    >
-                                                        {labels.END_DIALOGUE_LABEL}
-                                                    </button>
-                                                    <div tabindex="0" onfocus={trapFocusEnd}></div>
+                                                        <div tabindex="0" onfocus={trapFocusStart}></div>
+                                                        <button
+                                                            type="button"
+                                                            class="slds-button slds-button_neutral cancelButton"
+                                                            onclick={closeModal}
+                                                        >
+                                                            {labels.CANCEL_LABEL}</button
+                                                        ><button
+                                                            type="button"
+                                                            class="slds-button slds-button_destructive closeButton"
+                                                            onclick={closeThread}
+                                                        >
+                                                            {labels.END_DIALOGUE_LABEL}
+                                                        </button>
+                                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="pointer" style="position: absolute; left: 75%; top: 92%"></div>
                                     </div>
-                                    <div class="pointer" style="position: absolute; left: 75%; top: 92%"></div>
-                                </div>
-                                <div class={backdropClass} onclick={closeModal}></div>
-                            </template>
-                        </lightning-layout>
-                    </div>
-                    <h2>{showspinnner}</h2>
-                    <template if:true={showspinner}>
-                        <div class="spinnerholder">
-                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                    <div class={backdropClass} onclick={closeModal}></div>
+                                </template>
+                            </lightning-layout>
                         </div>
-                    </template>
-                    <c-crm-messaging-quick-text
-                        conversation-note={textTemplate}
-                        reset-text-template={textTemplate}
-                        onlocklang={lockLangBtn}
-                    >
-                    </c-crm-messaging-quick-text>
-                </lightning-layout-item>
+                        <h2>{showspinnner}</h2>
+                        <template if:true={showspinner}>
+                            <div class="spinnerholder">
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                        </template>
+                        <c-crm-messaging-quick-text
+                            conversation-note={textTemplate}
+                            reset-text-template={textTemplate}
+                            onlocklang={lockLangBtn}
+                        >
+                        </c-crm-messaging-quick-text>
+                    </lightning-layout-item>
+                </template>
                 <br />
                 <lightning-layout-item size="12">
                     <div
