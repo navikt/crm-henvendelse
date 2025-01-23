@@ -32,7 +32,6 @@
 
     <!-- Reply box -->
     <div slot="footer">
-        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true">
                 <template lwc:if={closedThread}> </template>
                 <template lwc:else>
@@ -87,6 +86,7 @@
                         </c-crm-messaging-quick-text>
                     </lightning-layout-item>
                 </template>
+                <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit} class="fullWidth">
                 <lightning-layout-item size="12" class="button-container">
                     <lightning-layout
                         class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end button-container"
@@ -164,21 +164,23 @@
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
+                <lightning-input-field
+                    field-name="CRM_From_User__c"
+                    value={userid}
+                    class="slds-hide"
+                ></lightning-input-field>
+                <lightning-input-field
+                    class="msgText slds-hide"
+                    value={text}
+                    field-name="CRM_Message_Text__c"
+                ></lightning-input-field>
+            </lightning-record-edit-form>
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <!-- Flow section -->
                     <slot name="flowSection"></slot>
                 </lightning-layout-item>
             </lightning-layout>
-            <lightning-input-field
-                field-name="CRM_From_User__c"
-                value={userid}
-                class="slds-hide"
-            ></lightning-input-field>
-            <lightning-input-field
-                class="msgText slds-hide"
-                value={text}
-                field-name="CRM_Message_Text__c"
-            ></lightning-input-field>
-        </lightning-record-edit-form>
+            
+        
     </div>
 </template>
