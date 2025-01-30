@@ -40,7 +40,7 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
                 this.userContactId = contactId;
             })
             .catch((error) => {
-                //Apex error
+                console.error('Problem on getting contact id: ', error);
             });
     }
 
