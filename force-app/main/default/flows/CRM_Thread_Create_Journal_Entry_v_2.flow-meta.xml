@@ -5,7 +5,7 @@
         <name>Set_Publish_Notification_And_Existing_Journal_To_True</name>
         <label>Set Publish Notification And Existing Journal To True</label>
         <locationX>182</locationX>
-        <locationY>1322</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -25,7 +25,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>446</locationX>
-        <locationY>1538</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -55,7 +55,7 @@
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry</targetReference>
         </defaultConnector>
@@ -80,7 +80,7 @@
         <name>Check_Journal_Post_Type</name>
         <label>Check Journal Post Type</label>
         <locationX>314</locationX>
-        <locationY>914</locationY>
+        <locationY>1022</locationY>
         <defaultConnector>
             <targetReference>Check_Journal_Entries</targetReference>
         </defaultConnector>
@@ -128,28 +128,30 @@
     </decisions>
     <description>Creates a journal entry ready for JOARK post related to a Thread_ID.</description>
     <formulas>
-        <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
+        <description>Defines the journal post type depending on if the dialogue was initiated by NAV
+            or the end user</description>
         <name>JOURNAL_POST_TYPE_FORMULA</name>
         <dataType>String</dataType>
         <expression>IF({!Journal_Post_Type} != null,
-    {!Journal_Post_Type},
-    IF({!Get_thread.CRM_isActive__c} == true,
-        &apos;NOTAT&apos;,
-        IF({!Get_thread.CRM_From_External__c} == true,
-        &apos;INNGAAENDE&apos;,
-        &apos;UTGAAENDE&apos;
-        )
-    )
-)</expression>
+            {!Journal_Post_Type},
+            IF({!Get_thread.CRM_isActive__c} == true,
+            &apos;NOTAT&apos;,
+            IF({!Get_thread.CRM_From_External__c} == true,
+            &apos;INNGAAENDE&apos;,
+            &apos;UTGAAENDE&apos;
+            )
+            )
+            )</expression>
     </formulas>
     <formulas>
-        <description>Formula to define if the journal post for the thread is INNGAAENDE or UTGAAENDE.</description>
+        <description>Formula to define if the journal post for the thread is INNGAAENDE or
+            UTGAAENDE.</description>
         <name>JOURNAL_POST_TYPE_INN_UT_FORMULA</name>
         <dataType>String</dataType>
         <expression>IF({!Get_thread.CRM_From_External__c} == true,
-    &apos;INNGAAENDE&apos;,
-    &apos;UTGAAENDE&apos;
-)</expression>
+            &apos;INNGAAENDE&apos;,
+            &apos;UTGAAENDE&apos;
+            )</expression>
     </formulas>
     <interviewLabel>Thread Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Create Journal Entry v. 2</label>
@@ -176,7 +178,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>446</locationX>
-        <locationY>1322</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>Update_Thread_Categorization</targetReference>
         </connector>
@@ -233,6 +235,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Theme__c</field>
             <value>
                 <elementReference>Get_Theme_Common_Code.Id</elementReference>
@@ -245,7 +253,7 @@
         <name>Create_New_NOTAT_Journal_Entry</name>
         <label>Create New NOTAT Journal Entry</label>
         <locationX>182</locationX>
-        <locationY>1022</locationY>
+        <locationY>1130</locationY>
         <connector>
             <targetReference>Check_Journal_Entries</targetReference>
         </connector>
@@ -295,6 +303,12 @@
             <field>NAV_Case_Reference__c</field>
             <value>
                 <elementReference>Journal_Case_ID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -350,6 +364,35 @@
         <queriedFields>CRM_Journal_Post_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_SF_Subtheme_Common_Code</name>
+        <label>Get SF Subtheme Common Code</label>
+        <locationX>314</locationX>
+        <locationY>914</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Journal_Post_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Journal_Subtheme_Code</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Behandlingstema</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Query the SF id to the common code to be journaled.</description>
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
@@ -357,7 +400,7 @@
         <locationY>806</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Journal_Post_Type</targetReference>
+            <targetReference>Get_SF_Subtheme_Common_Code</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -411,7 +454,7 @@
         <name>Update_Thread_Categorization</name>
         <label>Update Thread Categorization</label>
         <locationX>446</locationX>
-        <locationY>1430</locationY>
+        <locationY>1538</locationY>
         <connector>
             <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
@@ -426,6 +469,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CRM_Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CRM_Theme_Group__c</field>
             <value>
@@ -467,7 +516,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>710</locationX>
-        <locationY>1538</locationY>
+        <locationY>1646</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
@@ -529,7 +578,8 @@
         </value>
     </variables>
     <variables>
-        <description>Variable set if the flow finds an existing journal entry for the matching theme + case reference</description>
+        <description>Variable set if the flow finds an existing journal entry for the matching theme
+            + case reference</description>
         <name>Existing_Journal_Entry</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -572,6 +622,13 @@
     <variables>
         <description>Journal post type as input to allow override of the journal post type formula</description>
         <name>Journal_Post_Type</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Journal_Subtheme_Code</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
