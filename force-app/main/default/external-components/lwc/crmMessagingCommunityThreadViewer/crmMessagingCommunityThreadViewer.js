@@ -158,7 +158,7 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
         }
 
         if (this.logAmplitudeEvent) {
-            logButtonEvent(AnalyticsEvents.FORM_COMPLETED, 'Send', 'crmCommunityThreadViewer', this.name);
+            logButtonEvent(AnalyticsEvents.FORM_COMPLETED, 'Send', this.name, 'crmCommunityThreadViewer', this.name);
         }
     }
 
