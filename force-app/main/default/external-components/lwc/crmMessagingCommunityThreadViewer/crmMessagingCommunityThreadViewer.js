@@ -11,7 +11,6 @@ import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
 import { loadStyle } from 'lightning/platformResourceLoader';
 import navStyling from '@salesforce/resourceUrl/navStyling';
 import index from '@salesforce/resourceUrl/index';
-import { AnalyticsEvents, logButtonEvent } from 'c/amplitude';
 
 const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD, THREAD_TYPE_FIELD]; //Extract the name of the thread record
 
@@ -158,7 +157,7 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
         }
 
         if (this.logAmplitudeEvent) {
-            logButtonEvent(AnalyticsEvents.FORM_COMPLETED, 'Send', this.name, 'crmCommunityThreadViewer', this.name);
+            this.dispatchEvent(new CustomEvent('logevent'));
         }
     }
 
