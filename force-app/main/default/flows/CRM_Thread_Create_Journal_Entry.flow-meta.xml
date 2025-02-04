@@ -5,7 +5,7 @@
         <name>Set_status_to_started</name>
         <label>Set status to started</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>Get_thread.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -22,7 +22,7 @@
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
         <locationX>314</locationX>
-        <locationY>1346</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry</targetReference>
         </defaultConnector>
@@ -44,7 +44,7 @@
         <name>Check_Journal_Post_Type</name>
         <label>Check Journal Post Type</label>
         <locationX>314</locationX>
-        <locationY>1010</locationY>
+        <locationY>1022</locationY>
         <defaultConnector>
             <targetReference>Check_Journal_Entries</targetReference>
         </defaultConnector>
@@ -69,7 +69,7 @@
         <name>Checks_journal_status</name>
         <label>Checks journal status</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Get_Theme_Common_Code</targetReference>
         </defaultConnector>
@@ -140,7 +140,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>446</locationX>
-        <locationY>1466</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>Update_Thread_Categorization</targetReference>
         </connector>
@@ -193,6 +193,12 @@
             <field>NAV_Case_Reference__c</field>
             <value>
                 <elementReference>Journal_Case_ID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -261,6 +267,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Theme__c</field>
             <value>
                 <elementReference>Get_Theme_Common_Code.Id</elementReference>
@@ -273,7 +285,7 @@
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
         <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_thread</targetReference>
@@ -313,14 +325,43 @@
         <queriedFields>CRM_Journal_Post_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_SF_Subtheme_Common_Code</name>
+        <label>Get SF Subtheme Common Code</label>
+        <locationX>314</locationX>
+        <locationY>914</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Journal_Post_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Journal_Subtheme_Code</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Behandlingstema</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Query the SF id to the common code to be journaled.</description>
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
         <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationY>806</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Journal_Post_Type</targetReference>
+            <targetReference>Get_SF_Subtheme_Common_Code</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -348,7 +389,7 @@
         <name>Get_thread</name>
         <label>Get thread</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Checks_journal_status</targetReference>
@@ -374,7 +415,7 @@
         <name>Update_Thread_Categorization</name>
         <label>Update Thread Categorization</label>
         <locationX>446</locationX>
-        <locationY>1586</locationY>
+        <locationY>1538</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
@@ -387,6 +428,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CRM_Subtheme__c</field>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CRM_Theme_Group__c</field>
             <value>
@@ -405,7 +452,7 @@
         <name>Update_thread_status</name>
         <label>Update thread status</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Get_Theme_Common_Code</targetReference>
         </connector>
@@ -428,7 +475,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>974</locationX>
-        <locationY>1586</locationY>
+        <locationY>1538</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
@@ -523,6 +570,13 @@
     <variables>
         <description>Journal post type as input to allow override of the journal post type formula</description>
         <name>Journal_Post_Type</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Journal_Subtheme_Code</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

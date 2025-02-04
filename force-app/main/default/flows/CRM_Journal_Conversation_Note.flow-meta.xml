@@ -4,7 +4,7 @@
         <name>Generate_Document</name>
         <label>Generate Document</label>
         <locationX>446</locationX>
-        <locationY>566</locationY>
+        <locationY>782</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -12,15 +12,15 @@
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>visualForceReference</name>
-            <value>
-                <stringValue>/apex/CRM_Conversation_Note_PDF?id={!recordId}</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>requestType</name>
             <value>
                 <stringValue>GENERATE_DOCUMENT</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>visualForceReference</name>
+            <value>
+                <stringValue>/apex/CRM_Conversation_Note_PDF?id={!recordId}&amp;selectedTheme={!Get_SF_Theme_Common_Code.Name}&amp;selectedSubtheme={!Get_SF_Subtheme_Common_Code.Name}</stringValue>
             </value>
         </inputParameters>
         <outputParameters>
@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>446</locationX>
-        <locationY>1106</locationY>
+        <locationY>1322</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -72,7 +72,7 @@
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>446</locationX>
-        <locationY>782</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -109,7 +109,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>446</locationX>
-        <locationY>1622</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
@@ -175,7 +175,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>446</locationX>
-        <locationY>674</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +206,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>446</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>446</locationX>
-        <locationY>890</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -316,7 +316,7 @@
         <name>Set_Journal_Status_to_Completed</name>
         <label>Set Journal Status to Completed</label>
         <locationX>314</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -339,14 +339,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>578</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -362,15 +362,16 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description>Updates theme group and theme for conversation note to match the newest journal entry.</description>
+        <description>Updates theme group and theme for conversation note to match the newest journal
+            entry.</description>
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
         <locationX>446</locationX>
-        <locationY>1730</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -383,6 +384,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>JOURNALED_CONV_NOTE.CRM_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -416,7 +424,7 @@
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -438,11 +446,12 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
+        <description>Decision to determine if the dml should be performed directly in the flow or
+            handled by a parent calling this.</description>
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
-        <locationY>1838</locationY>
+        <locationY>1946</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -464,17 +473,20 @@
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>&apos;Samtale med NAV - &apos; + 
-LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
-LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
-TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) + 
-&apos; - &apos; + 
-{!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
+        <expression>&apos;Samtale med NAV - &apos; +
+            LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;)
+            + &apos;.&apos; +
+            LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;)
+            + &apos;.&apos; +
+            TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) +
+            &apos; - &apos; +
+            {!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
     </formulas>
     <formulas>
         <name>externalReference</name>
         <dataType>String</dataType>
-        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} + SUBSTITUTE(URLENCODE({!Journal_Sak.fagsakId}), &apos;%&apos;, &apos;_&apos;)</expression>
+        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} +
+            SUBSTITUTE(URLENCODE({!Journal_Sak.fagsakId}), &apos;%&apos;, &apos;_&apos;)</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
@@ -483,7 +495,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <expression>IF(ISBLANK({!Journal_Case_Legacy_System}), null, {!Journal_Case_Legacy_System})</expression>
     </formulas>
     <formulas>
-        <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
+        <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has
+            been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Journal_Case_ID}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
@@ -492,7 +505,9 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <description>Formula to generate name convention on journal required format (For persons)</description>
         <name>Person_Full_Name</name>
         <dataType>String</dataType>
-        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
+        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp;
+            {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos;
+            &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
     </formulas>
     <interviewLabel>POST_JOURNAL_AUTO_TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Journal Conversation Note</label>
@@ -516,11 +531,12 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <description>Inserts a journal entry record. If post failed the entry status is set to failed and should be handled in asynchronous retry</description>
+        <description>Inserts a journal entry record. If post failed the entry status is set to
+            failed and should be handled in asynchronous retry</description>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>1946</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -537,7 +553,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Generate_Document</targetReference>
+            <targetReference>Get_SF_Theme_Common_Code</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -612,13 +628,43 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <queriedFields>CRM_Theme_Name__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_SF_Subtheme_Common_Code</name>
+        <label>Get SF Subtheme Common Code</label>
+        <locationX>446</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Generate_Document</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Journal_Subtheme_Code</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Behandlingstema</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>446</locationX>
-        <locationY>1514</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
+            <targetReference>Get_SF_Subtheme_Common_Code</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -639,6 +685,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <object>Common_Code__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Parent_Code__c</queriedFields>
+        <queriedFields>Name</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -646,7 +693,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
@@ -666,7 +713,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>578</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
@@ -727,7 +774,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Logical record variable to check if a journal entry already exists for this combination.</description>
+        <description>Logical record variable to check if a journal entry already exists for this
+            combination.</description>
         <name>Existing_Journal_Entry</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -736,7 +784,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
-        <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
+        <description>Unique reference to the case in NAVs fagsystem that the journal post should
+            relate to.</description>
         <name>Journal_Case_ID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -835,7 +884,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>By default the flow performs the DML to update the records. To handle callout exceptions when handling multiple posts, this can be set to false and handled in parent.</description>
+        <description>By default the flow performs the DML to update the records. To handle callout
+            exceptions when handling multiple posts, this can be set to false and handled in parent.</description>
         <name>PERFORM_DML</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
