@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 21-03-2023
+ * @last modified on  : 27-03-2023
  * @last modified by  : mamikals
  **/
 @RestResource(urlmapping='/henvendelseinfo/henvendelseliste/*')
@@ -35,8 +35,8 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(threadList));
             returnList.sort();
-            setResponse(200, JSON.serializePretty(returnList));
             Long timeTaken = System.now().getTime() - startTime.getTime();
+            setResponse(200, JSON.serializePretty(returnList));
             logger.peek().Log_Messages__c = 'Get henvendelselist used ' + timeTaken + 'ms';
         } catch (QueryException queryEx) {
             errorResponse(500, 'Query exception: ' + queryEx.getMessage());
