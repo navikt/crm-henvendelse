@@ -99,10 +99,9 @@
                         <!-- End dialogue section -->
                         <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
-                                <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
-                                    <c-custom-button
+                                <c-custom-button
                                         class="endDialogueBtn"
-                                        type="submit"
+                                        type="button"
                                         disabled={closedThread}
                                         onclick={toggleEndDialogueButton}
                                         button-styling="danger"
@@ -110,7 +109,6 @@
                                         button-label={labels.END_DIALOGUE_LABEL}
                                         full-height
                                     ></c-custom-button>
-                                </lightning-record-edit-form>
                                 <div class="slds-is-relative">
                                     <div
                                         role="alertdialog"

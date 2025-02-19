@@ -89,13 +89,13 @@ export default class MessagingThreadViewer extends LightningElement {
         if (this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY < 10) {
             // change cursor style, and adding listener for mousedown event
             document.body.style.cursor = 'ns-resize';
-            if (this.mouseListenerCounter !== true) {
+            if (!this.mouseListenerCounter) {
                 this.resizablePanelTop.addEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = true;
             }
         } else {
             // remove listener and reset cursor when cursor is out of area of interest
-            if (this.mouseListenerCounter === true) {
+            if (this.mouseListenerCounter) {
                 this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = false;
             }
@@ -106,7 +106,7 @@ export default class MessagingThreadViewer extends LightningElement {
     mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
 
     mouseLeaveEventHandler() {
-        if (this.mouseListenerCounter === true) {
+        if (this.mouseListenerCounter) {
             this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
             this.mouseListenerCounter = false;
         }
@@ -347,22 +347,19 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get modalClass() {
-        return this.newDesign
-            ? 'slds-modal slds-show uiPanel north modalStyling' +
-                  (this.hideModal === true ? ' geir' : ' slds-fade-in-open')
-            : 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
+        return 'slds-modal slds-show ' + (this.hideModal ? '' : 'slds-fade-in-open') + (this.newDesign ? ' modalStyling' : ''); 
     }
 
     get backdropClass() {
-        return this.hideModal === true ? 'slds-hide' : 'backdrop';
+        return this.hideModal ? 'slds-hide' : 'backdrop';
     }
 
     get langBtnVariant() {
-        return this.englishTextTemplate === false ? 'neutral' : 'brand';
+        return !this.englishTextTemplate ? 'neutral' : 'brand';
     }
 
     get langAria() {
-        return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
+        return !this.langBtnAriaToggle ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
     }
 
     get hasEnglishTemplate() {
