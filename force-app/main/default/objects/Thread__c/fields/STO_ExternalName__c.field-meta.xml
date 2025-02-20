@@ -10,8 +10,8 @@
         CRM_Type__c = &apos;STO&apos; || CRM_Type__c = &apos;STB&apos; || CRM_Type__c = &apos;BTO&apos;, 
         (
             IF(
-                NOT(ISBLANK(NKS_Inbox_Type__c)), 
-                NKS_Inbox_Type__c, 
+                NOT(ISBLANK(NKS_Inbox_Title__c)), 
+                NKS_Inbox_Title__c, 
                 IF(CRM_Type__c = &apos;BTO&apos;, &apos;Beskjed til oss&apos;, &apos;Skriv til oss&apos;)
             ) &amp; 
             &apos; - &apos; &amp; 
