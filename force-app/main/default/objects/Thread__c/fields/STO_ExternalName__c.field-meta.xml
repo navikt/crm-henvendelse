@@ -8,10 +8,29 @@
     &apos;Fedrekvotesaken: Kvittering&apos;, 
     IF(
         CRM_Type__c = &apos;STO&apos; || CRM_Type__c = &apos;STB&apos; || CRM_Type__c = &apos;BTO&apos;, 
-        CRM_Theme_Group__r.Name &amp; 
-        IF(CRM_Type__c = &apos;BTO&apos;, &apos; - Beskjed til oss&apos;, &apos; - Skriv til oss&apos;) &amp; 
-        IF(ISBLANK(CRM_Closed_Date__c), &apos;&apos;, &apos;: Henvendelsen er avsluttet&apos;), 
-        IF(ISPICKVAL(CRM_Thread_Type__c, &apos;AAREG_EXP&apos;), 
+        (
+            IF(
+                NOT(ISBLANK(NKS_Inbox_Title__c)), 
+                NKS_Inbox_Title__c, 
+                IF(CRM_Type__c = &apos;BTO&apos;, &apos;Beskjed til oss&apos;, &apos;Skriv til oss&apos;)
+            ) &amp; 
+            &apos; - &apos; &amp; 
+            IF(
+                NOT(ISBLANK(NKS_Inbox_Theme__c)), 
+                IF(
+                    OR(
+                        AND(CONTAINS(NKS_Inbox_Theme__c, &quot;Helse&quot;), CONTAINS(NKS_Inbox_Theme__c, &quot;Pleiepenger&quot;)),
+                        AND(CONTAINS(NKS_Inbox_Theme__c, &quot;Familie&quot;), CONTAINS(NKS_Inbox_Theme__c, &quot;Pleiepenger&quot;))
+                    ),
+                    MID(NKS_Inbox_Theme__c, FIND(&quot;-&quot;, NKS_Inbox_Theme__c) + 1, LEN(NKS_Inbox_Theme__c)),
+                    NKS_Inbox_Theme__c
+                ), 
+                CRM_Theme_Group__r.Name
+            ) &amp; 
+            IF(ISBLANK(CRM_Closed_Date__c), &apos;&apos;, &apos;: Henvendelsen er avsluttet&apos;)
+        ), 
+        IF(
+            ISPICKVAL(CRM_Thread_Type__c, &apos;AAREG_EXP&apos;), 
             AAREG_Thread_Subject__c, 
             &apos;Chat&apos;
         )
