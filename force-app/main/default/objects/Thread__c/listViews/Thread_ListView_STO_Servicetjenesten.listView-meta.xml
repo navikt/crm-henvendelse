@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Thread_ListView_STO_Servicetjenesten</fullName>
+    <columns>NAME</columns>
+    <columns>CRM_Thread_Type__c</columns>
+    <columns>STO_Category__c</columns>
+    <columns>STO_Sensitive_Information_Date__c</columns>
+    <columns>Cause__c</columns>
+    <columns>Journaled__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>STO_Sensitive_Information__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>STO_Category__c</field>
+        <operation>equals</operation>
+        <value>Hjelpemidler</value>
+    </filters>
+    <label>Samletråder STO Servicetjenesten</label>
+</ListView>
