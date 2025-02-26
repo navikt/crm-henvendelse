@@ -50,49 +50,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterName</name>
-                    <value>Thread_ListView_STO_Servicetjenesten</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideSearchBar</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>pageSize</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:filterListCard</componentName>
-                <identifier>flexipage_filterListCard10</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.UserRole.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>HOT</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>enableInlineEdit</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>entityName</name>
-                    <value>Thread__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterName</name>
                     <value>Thread_List_View_BS</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -110,16 +67,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard1</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -227,16 +178,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -270,16 +215,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard5</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -313,16 +252,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard6</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -356,16 +289,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard7</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -399,16 +326,10 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard8</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>HOT Servicetjenesten</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
