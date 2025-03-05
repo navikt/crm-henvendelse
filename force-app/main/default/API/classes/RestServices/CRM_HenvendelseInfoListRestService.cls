@@ -36,8 +36,6 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             returnList.addAll(convertToHenvendelseList(threadList));
             returnList.sort();
             setResponse(200, JSON.serializePretty(returnList));
-            Long timeTaken = System.now().getTime() - startTime.getTime();
-            logger.peek().Log_Messages__c = 'Get henvendelselist used ' + timeTaken + 'ms';
         } catch (QueryException queryEx) {
             errorResponse(500, 'Query exception: ' + queryEx.getMessage());
             logger.error(
