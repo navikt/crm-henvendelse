@@ -12,7 +12,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             return;
 
         correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         RestRequest request = RestContext.request;
 
@@ -37,7 +36,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     );
                 }
             }
-            logger.publish();
         } catch (ValidationException valEx) {
             //Validation exception is thrown internally
             errorResponse(400, valEx.getMessage());

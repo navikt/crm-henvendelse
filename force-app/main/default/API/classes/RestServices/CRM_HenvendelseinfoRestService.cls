@@ -10,15 +10,12 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpGet
     global static void getHenvendelse() {
-        Datetime startTime = system.now();
         if (!validate()) {
             return;
         }
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
-        Long timeTaken = System.now().getTime() - startTime.getTime();
-        logger.peek().Log_Messages__c = 'Get henvendelse used ' + timeTaken + 'ms';
+ 
         try {
             String apiReference = getLastPathParameter();
             Id objectId = getObjectId(apiReference);
@@ -41,7 +38,6 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                     errorResponse(400, 'Invalid reference value for henv/thread ID: ' + apiReference);
                 }
             }
-            logger.publish();
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error(

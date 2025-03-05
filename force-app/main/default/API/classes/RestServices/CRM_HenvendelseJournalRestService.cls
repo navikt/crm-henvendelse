@@ -12,7 +12,6 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             return;
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         //Perform validation of the request
         if (!validateRequest(request)) {
@@ -53,9 +52,9 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                         CRM_ApplicationDomain.Domain.NKS,
                         correlationId
                     );
+                    logger.publish();
                 }
             }
-            logger.publish();
             return;
         } catch (Exception ex) {
             errorResponse(500, ex.getMessage());
