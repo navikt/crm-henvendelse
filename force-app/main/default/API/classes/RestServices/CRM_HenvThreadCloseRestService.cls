@@ -11,7 +11,6 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
 
         String navIdent = getActingNavIdent();
         correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         String apiReference = getRequestParam('kjedeId');
 
         try {
