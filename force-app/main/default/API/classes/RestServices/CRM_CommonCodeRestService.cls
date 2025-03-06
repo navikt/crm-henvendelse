@@ -8,7 +8,7 @@ global without sharing class CRM_CommonCodeRestService extends ApexRestService {
         }
 
         String correlationId = getXCorrelation();
-        
+
         try {
             List<Temagruppe> retGroups = new List<Temagruppe>();
             for (Common_Code__c comCode : [

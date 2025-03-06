@@ -30,9 +30,9 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     errorResponse(
                         400,
                         'Invalid henvendelse type: ' +
-                        henvType +
-                        '\n Approved types are: ' +
-                        JSON.serializePretty(HENVENDELSE_TYPE.values())
+                            henvType +
+                            '\n Approved types are: ' +
+                            JSON.serializePretty(HENVENDELSE_TYPE.values())
                     );
                 }
             }
@@ -48,10 +48,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
             logger.error(
-                'Unknown error: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Unknown error: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId
@@ -153,7 +150,12 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     }
 
     private static String getNKSThreadRecordtype() {
-        List<RecordType> recordType = [SELECT Id FROM RecordType WHERE SObjectType = 'Thread__c' AND Name = 'NKS Thread' LIMIT 1];
+        List<RecordType> recordType = [
+            SELECT Id
+            FROM RecordType
+            WHERE SObjectType = 'Thread__c' AND Name = 'NKS Thread'
+            LIMIT 1
+        ];
         return recordType.isEmpty() ? null : recordType[0].Id;
     }
 

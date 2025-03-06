@@ -37,10 +37,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
         } catch (Exception ex) {
             errorResponse(500, 'Failed to close thread: ' + ex.getMessage());
             logger.error(
-                'Failed to close thread: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Failed to close thread: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId

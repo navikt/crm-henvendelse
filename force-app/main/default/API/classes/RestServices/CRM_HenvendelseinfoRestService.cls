@@ -15,7 +15,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         }
 
         String correlationId = getXCorrelation();
- 
+
         try {
             String apiReference = getLastPathParameter();
             Id objectId = getObjectId(apiReference);
@@ -41,10 +41,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error(
-                'Exception: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Exception: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId

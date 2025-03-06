@@ -86,10 +86,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         } catch (Exception ex) {
             errorResponse(500, 'Failed to update: ' + ex.getMessage());
             logger.error(
-                'Failed to update: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Failed to update: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId
