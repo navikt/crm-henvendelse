@@ -8,7 +8,6 @@ global without sharing class CRM_CommonCodeRestService extends ApexRestService {
         }
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         try {
             List<Temagruppe> retGroups = new List<Temagruppe>();
@@ -19,7 +18,6 @@ global without sharing class CRM_CommonCodeRestService extends ApexRestService {
             ]) {
                 retGroups.add(new Temagruppe(comCode));
             }
-            logger.publish();
             setResponse(200, JSON.serializePretty(retGroups));
         } catch (Exception ex) {
             errorResponse(500, ex.getMessage());

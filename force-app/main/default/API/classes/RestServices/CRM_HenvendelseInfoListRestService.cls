@@ -18,7 +18,6 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         }
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         if (String.isBlank(actorId)) {
             errorResponse(400, 'Missing required query input: aktorid');
@@ -56,10 +55,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             System.debug(ex.getStackTraceString());
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error(
-                'Exception: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Exception: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId
