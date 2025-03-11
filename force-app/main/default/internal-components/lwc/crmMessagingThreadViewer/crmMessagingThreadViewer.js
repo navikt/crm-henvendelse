@@ -335,7 +335,7 @@ export default class MessagingThreadViewer extends LightningElement {
     //##################################//
 
     get quickTextCmp() {
-        return this.template.querySelector('c-crm-quick-text');
+        return this.template.querySelector('c-crm-messaging-quick-text');
     }
 
     get text() {
