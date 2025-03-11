@@ -134,6 +134,7 @@ export default class CrmQuickText extends LightningElement {
     }
 
     setFocus(el) {
+        // eslint-disable-next-line consistent-return
         return new Promise((resolve) => {
             if (el.disabled || (el.tagName === LIGHTNING_INPUT_FIELD && el.required)) {
                 return resolve(false);
