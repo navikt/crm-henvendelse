@@ -34,6 +34,7 @@ public with sharing class CRM_HenvendelseQuicktextController {
             }
         }
     }
+
     /**
      * WIll extract a all quicktexts that are marked as type=Abbreviation
      * @Author Lars Petter Johnsen

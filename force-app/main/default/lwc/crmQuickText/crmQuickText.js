@@ -1,38 +1,38 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchRecords';
 import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
+import { publishToAmplitude } from 'c/amplitude';
 
 const ESC_KEY_CODE = 27;
 const ESC_KEY_STRING = 'Escape';
 const TAB_KEY_CODE = 9;
 const TAB_KEY_STRING = 'Tab';
 const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
-//all invalid key presses
-// prettier-ignore
-const keyCodes = [0, 3, 9, 13, 16, 17, 18, 19, 20, 21, 25, 27, 28, 29, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 91, 92, 93, 95, 112, 113, 114, 115, 116, 117, 119, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 151, 166, 167, 172, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 224, 225, 230, 233, 255];
 const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', ','];
-export default class crmQuickText extends LightningElement {
-    labels = { BLANK_ERROR };
-    _conversationNote;
-    loadingData = false;
-    qmap;
-    initialRender = true;
+const keyCodes = [
+    0, 3, 9, 13, 16, 17, 18, 19, 20, 21, 25, 27, 28, 29, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 91, 92, 93,
+    95, 112, 113, 114, 115, 116, 117, 119, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135,
+    136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 151, 166, 167, 172, 174, 175, 176, 177, 178, 179, 180, 181, 182,
+    183, 224, 225, 230, 233, 255
+];
 
+export default class CrmQuickText extends LightningElement {
     @api comments;
     @api required = false;
     @api resetTextTemplate = '';
-
-    @track data = [];
+    @api useForConversationNote = false;
 
     recentlyInserted = '';
-
-    get textArea() {
-        return this.template.querySelector('.conversationNoteTextArea');
-    }
+    labels = { BLANK_ERROR };
+    _conversationNote;
+    qmap;
+    initialRender = true;
+    loadingData = false;
+    data = [];
 
     renderedCallback() {
-        if (this.initialRender === true) {
+        if (this.initialRender) {
             let inputField = this.textArea;
             inputField.focus();
             inputField.blur();
@@ -59,20 +59,14 @@ export default class crmQuickText extends LightningElement {
         }
     }
 
-    get cssClass() {
-        const baseClasses = ['slds-modal'];
-        baseClasses.push([this.isOpen ? 'slds-visible slds-fade-in-open' : 'slds-hidden']);
-        return baseClasses.join(' ');
-    }
-
-    get modalAriaHidden() {
-        return !this.isOpen;
-    }
-
     @api
     showModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
+
+        if (this.useForConversationNote) {
+            publishToAmplitude('Quicktext', { type: 'Quicktext opened' });
+        }
     }
 
     hideModal() {
@@ -120,6 +114,7 @@ export default class crmQuickText extends LightningElement {
 
     async focusFirstChild() {
         const children = [...this.querySelectorAll('*')];
+        /* eslint-disable no-await-in-loop */
         for (let child of children) {
             let hasBeenFocused = false;
             if (this._getSlotName(child) === 'body') {
@@ -146,9 +141,10 @@ export default class crmQuickText extends LightningElement {
             const promiseListener = () => resolve(true);
             try {
                 el.addEventListener('focus', promiseListener);
-                el.focus && el.focus();
+                el.focus();
                 el.removeEventListener('focus', promiseListener);
 
+                // eslint-disable-next-line @lwc/lwc/no-async-operation, @locker/locker/distorted-window-set-timeout
                 setTimeout(() => resolve(false), 0);
             } catch (ex) {
                 return resolve(false);
@@ -171,7 +167,7 @@ export default class crmQuickText extends LightningElement {
     @wire(getQuicktexts, {})
     wiredQuicktexts({ error, data }) {
         if (error) {
-            console.log(error);
+            console.error('Problem getting quick texts: ', error);
         } else if (data) {
             this.qmap = data.map((key) => {
                 return {
@@ -180,24 +176,6 @@ export default class crmQuickText extends LightningElement {
                 };
             });
         }
-    }
-
-    @api
-    get conversationNote() {
-        return this._conversationNote;
-    }
-
-    set conversationNote(value) {
-        this._conversationNote = value;
-    }
-
-    @api
-    get conversationNoteRich() {
-        return this._conversationNote;
-    }
-
-    set conversationNoteRich(value) {
-        this._conversationNote = value;
     }
 
     insertText(event) {
@@ -216,11 +194,16 @@ export default class crmQuickText extends LightningElement {
             detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
-        const lockLang = new CustomEvent('locklang');
-        this.dispatchEvent(lockLang);
+
+        if (!this.useForConversationNote) {
+            this.dispatchEvent(new CustomEvent('locklang'));
+        }
     }
 
     handleChange(event) {
+        if (this.useForConversationNote) {
+            this[event.target.name] = event.target.value;
+        }
         this._conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
@@ -237,10 +220,16 @@ export default class crmQuickText extends LightningElement {
             'end'
         );
         evt.preventDefault();
-    }
 
-    handlePaste() {
-        handleChange();
+        if (this.useForConversationNote) {
+            evt.stopImmediatePropagation();
+
+            this._conversationNote = editor.value;
+            const attributeChangeEvent = new CustomEvent('commentschange', {
+                detail: this.conversationNote
+            });
+            this.dispatchEvent(attributeChangeEvent);
+        }
     }
 
     handleKeyUp(evt) {
@@ -280,6 +269,7 @@ export default class crmQuickText extends LightningElement {
                 return item;
             }
         }
+        return null;
     }
 
     /**
@@ -291,7 +281,7 @@ export default class crmQuickText extends LightningElement {
     }
 
     insertquicktext(event) {
-        if (!keyCodes.includes(event.keyCode)) {
+        if (!keyCodes.includes(event.keyCode) && !this.useForConversationNote) {
             //to lock langBtn if a valid key is pressed
             const lockLang = new CustomEvent('locklang');
             this.dispatchEvent(lockLang);
@@ -311,11 +301,12 @@ export default class crmQuickText extends LightningElement {
 
             let obj = this._getQmappedItem(lastWord);
 
-            if (obj !== undefined) {
+            if (obj != null) {
                 const quickText = obj.content.message;
                 const isCaseSensitive = obj.content.isCaseSensitive;
                 const startindex = carretPositionEnd - lastWord.length - 1;
                 const lastChar = event.key === 'Enter' ? '\n' : event.key;
+                if (obj.content.message === lastWord) return;
 
                 if (isCaseSensitive) {
                     const words = quickText.split(' ');
@@ -371,5 +362,41 @@ export default class crmQuickText extends LightningElement {
         //sets text content to the current
         this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
+    }
+
+    @api
+    get conversationNote() {
+        return this._conversationNote;
+    }
+
+    set conversationNote(value) {
+        this._conversationNote = value;
+    }
+
+    @api
+    get conversationNoteRich() {
+        return this._conversationNote;
+    }
+
+    set conversationNoteRich(value) {
+        this._conversationNote = value;
+    }
+
+    get cssClass() {
+        const baseClasses = ['slds-modal'];
+        baseClasses.push([this.isOpen ? 'slds-visible slds-fade-in-open' : 'slds-hidden']);
+        return baseClasses.join(' ');
+    }
+
+    get modalAriaHidden() {
+        return !this.isOpen;
+    }
+
+    get textArea() {
+        return this.template.querySelector('.conversationNoteTextArea');
+    }
+
+    get placeHolderText() {
+        return this.useForConversationNote ? '' : 'Skriv melding her';
     }
 }
