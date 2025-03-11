@@ -30,6 +30,7 @@ export default class CrmQuickText extends LightningElement {
     initialRender = true;
     loadingData = false;
     data = [];
+    _isOpen = false;
 
     renderedCallback() {
         if (this.initialRender) {
@@ -47,13 +48,8 @@ export default class CrmQuickText extends LightningElement {
         document.removeEventListener('click', this.outsideClickListener);
     }
 
-    @api
-    isOpen() {
-        return this.template.querySelector('[data-id="modal"]').className === 'modalShow';
-    }
-
     toggleModal() {
-        this.isOpen = !this.isOpen;
+        this._isOpen = !this._isOpen;
         if (this.isOpen) {
             this.focusFirstChild();
         }
@@ -61,6 +57,7 @@ export default class CrmQuickText extends LightningElement {
 
     @api
     showModal() {
+        this._isOpen = true;
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
 
@@ -70,6 +67,7 @@ export default class CrmQuickText extends LightningElement {
     }
 
     hideModal() {
+        this._isOpen = false;
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
 
@@ -114,12 +112,12 @@ export default class CrmQuickText extends LightningElement {
 
     async focusFirstChild() {
         const children = [...this.querySelectorAll('*')];
-        /* eslint-disable no-await-in-loop */
         for (let child of children) {
             let hasBeenFocused = false;
             if (this._getSlotName(child) === 'body') {
                 continue;
             }
+            // eslint-disable-next-line no-await-in-loop
             await this.setFocus(child).then((res) => {
                 hasBeenFocused = res;
             });
@@ -144,7 +142,6 @@ export default class CrmQuickText extends LightningElement {
                 el.addEventListener('focus', promiseListener);
                 el.focus();
                 el.removeEventListener('focus', promiseListener);
-
                 // eslint-disable-next-line @lwc/lwc/no-async-operation, @locker/locker/distorted-window-set-timeout
                 setTimeout(() => resolve(false), 0);
             } catch (ex) {
@@ -189,7 +186,7 @@ export default class CrmQuickText extends LightningElement {
             'select'
         );
 
-        this.hideModal(undefined);
+        this.hideModal();
         this._conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
@@ -224,7 +221,6 @@ export default class CrmQuickText extends LightningElement {
 
         if (this.useForConversationNote) {
             evt.stopImmediatePropagation();
-
             this._conversationNote = editor.value;
             const attributeChangeEvent = new CustomEvent('commentschange', {
                 detail: this.conversationNote
@@ -350,10 +346,10 @@ export default class CrmQuickText extends LightningElement {
 
     @api
     validate() {
-        if (this.required === true) {
+        if (this.required) {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
-                : { isValid: false, errorMessage: this.labels.BLANK_ERROR }; //CUSTOM LABEL HERE
+                : { isValid: false, errorMessage: this.labels.BLANK_ERROR };
         }
         return { isValid: true };
     }
@@ -363,6 +359,15 @@ export default class CrmQuickText extends LightningElement {
         //sets text content to the current
         this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
+    }
+
+    @api
+    get isOpen() {
+        return this._isOpen;
+    }
+
+    set isOpen(value) {
+        this._isOpen = value;
     }
 
     @api
