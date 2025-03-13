@@ -18,6 +18,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global List<CRM_Melding> meldinger;
     global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
+    global CRM_MessageFrom lukketAv;
     global String henvendelseId; //Legacy ID for verification purposes, not included in swagger documentation
 
     global CRM_Henvendelse() {
@@ -135,7 +136,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.sladding = thread.STO_Sensitive_Information__c;
 
         for (Message__c message : messages) {
-            this.meldinger.add(new CRM_Melding(message));
+            if (message.CRM_Type__c == 'Event') {
+                if (message.CRM_Event_Type__c == 'END_OF_CHAT')
+                    this.lukketAv = new CRM_MessageFrom(message);
+            } else {
+                this.meldinger.add(new CRM_Melding(message));
+            }
         }
 
         if (jeList != null && jeList.size() > 0) {
