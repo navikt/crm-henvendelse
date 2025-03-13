@@ -213,7 +213,7 @@ export default class MessagingThreadViewer extends LightningElement {
         publishToAmplitude('STO', { type: 'handlesubmit on thread' });
         this.lockLangBtn();
         event.preventDefault();
-        if (!this.quickTextCmp.isOpen()) {
+        if (!this.quickTextCmp.isOpen) {
             this.showspinner = true;
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
