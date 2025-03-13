@@ -25,4 +25,8 @@
         <label>Det oppsto en uventet feil.</label>
         <name>Henvendelse_Error_Message</name>
     </customLabels>
+    <customLabels>
+        <label>Samtalereferatet kan ikke være tomt!</label>
+        <name>CRMHenveldelse_Blank</name>
+    </customLabels>
 </Translations>
