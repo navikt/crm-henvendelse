@@ -211,10 +211,17 @@ export default class CrmQuickText extends LightningElement {
 
     handlePaste(evt) {
         const editor = this.textArea;
+        editor.setRangeText(
+            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'end'
+        );
+        evt.preventDefault();
+        this._conversationNote = editor.value;
 
         if (this.useForConversationNote) {
             evt.stopImmediatePropagation();
-            this._conversationNote = editor.value;
             const attributeChangeEvent = new CustomEvent('commentschange', {
                 detail: this.conversationNote
             });
