@@ -211,13 +211,6 @@ export default class CrmQuickText extends LightningElement {
 
     handlePaste(evt) {
         const editor = this.textArea;
-        editor.setRangeText(
-            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
-            editor.selectionStart,
-            editor.selectionEnd,
-            'end'
-        );
-        evt.preventDefault();
 
         if (this.useForConversationNote) {
             evt.stopImmediatePropagation();
