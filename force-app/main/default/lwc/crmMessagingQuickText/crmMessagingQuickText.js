@@ -218,10 +218,10 @@ export default class CrmQuickText extends LightningElement {
             'end'
         );
         evt.preventDefault();
+        this._conversationNote = editor.value;
 
         if (this.useForConversationNote) {
             evt.stopImmediatePropagation();
-            this._conversationNote = editor.value;
             const attributeChangeEvent = new CustomEvent('commentschange', {
                 detail: this.conversationNote
             });
