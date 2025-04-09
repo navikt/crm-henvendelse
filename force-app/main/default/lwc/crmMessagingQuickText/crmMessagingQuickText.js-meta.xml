@@ -15,6 +15,13 @@
             <property name="comments" type="String" label="Comments" />
             <property name="useForConversationNote" type="Boolean" label="Use for conversation note"
                 default="false" role="inputOnly" />
+            <property name="standardSignature" type="Boolean"
+                label="Show standard signature" default="false"
+                role="inputOnly" />
+            <property name="standardSignatureText" type="String"
+                label="Signature template" default=""/>
+            <property name="conversationNoteWithSignature" type="String" label="Conversation Note With Signature Output"
+                role="outputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
