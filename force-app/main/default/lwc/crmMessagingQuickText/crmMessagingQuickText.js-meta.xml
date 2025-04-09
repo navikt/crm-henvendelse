@@ -8,7 +8,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="conversationNote" type="String" label="Conversation Note Output"
-                role="OutputOnly" />
+                role="outputOnly" />
             <property name="conversationNoteRich" type="String" label="Conversation Note Input" />
             <property name="required" type="Boolean" label="Required" default="false"
                 role="inputOnly" />
