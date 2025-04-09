@@ -269,20 +269,12 @@ export default class CrmQuickText extends LightningElement {
         let noteArea = this.template.querySelector('.conversationNoteTextArea');
         if (event.detail.value.includes('Standard')) {
             this.checkBoxValue = 'Standard';
-            signature.className = signature.className
-                .split(' ')
-                .filter((e) => e !== 'signature-textarea-hidden')
-                .concat('signature-textarea')
-                .join(' ');
+            signature.classList.replace('signature-textarea-hidden', 'signature-textarea');
             noteArea.style.height = noteArea.offsetHeight - signature.offsetHeight + 'px';
         } else {
             this.checkBoxValue = 'Ingen';
             noteArea.style.height = noteArea.offsetHeight + signature.offsetHeight + 'px';
-            signature.className = signature.className
-                .split(' ')
-                .filter((e) => e !== 'signature-textarea')
-                .concat('signature-textarea-hidden')
-                .join(' ');
+            signature.classList.replace('signature-textarea', 'signature-textarea-hidden');
         }
     }
 
