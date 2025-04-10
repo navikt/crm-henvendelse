@@ -22,7 +22,9 @@ export default class CrmQuickText extends LightningElement {
     @api required = false;
     @api resetTextTemplate = '';
     @api useForConversationNote = false;
+    @api standardSignature = false;
 
+    checkBoxValue = 'Standard';
     recentlyInserted = '';
     labels = { BLANK_ERROR };
     _conversationNote;
@@ -31,12 +33,20 @@ export default class CrmQuickText extends LightningElement {
     loadingData = false;
     data = [];
     _isOpen = false;
+    _standardSignatureText = '';
 
     renderedCallback() {
         if (this.initialRender) {
             let inputField = this.textArea;
             inputField.focus();
             inputField.blur();
+
+            if (this.standardSignature === true) {
+                let signature = this.template.querySelector('.standardSignature');
+                let noteArea = this.template.querySelector('.conversationNoteTextArea');
+                noteArea.style.height = noteArea.offsetHeight - signature.offsetHeight + 'px';
+            }
+
             this.initialRender = false;
         }
     }
@@ -254,6 +264,20 @@ export default class CrmQuickText extends LightningElement {
         }
     }
 
+    handleCheckBoxChange(event) {
+        let signature = this.template.querySelector('.standardSignature');
+        let noteArea = this.template.querySelector('.conversationNoteTextArea');
+        if (event.detail.value.includes('Standard')) {
+            this.checkBoxValue = 'Standard';
+            signature.classList.replace('signature-textarea-hidden', 'signature-textarea');
+            noteArea.style.height = noteArea.offsetHeight - signature.offsetHeight + 'px';
+        } else {
+            this.checkBoxValue = 'Ingen';
+            noteArea.style.height = noteArea.offsetHeight + signature.offsetHeight + 'px';
+            signature.classList.replace('signature-textarea', 'signature-textarea-hidden');
+        }
+    }
+
     _getQmappedItem(abbreviation) {
         for (const item of this.qmap) {
             if (item.abbreviation.toUpperCase() !== item.content.message) {
@@ -387,7 +411,23 @@ export default class CrmQuickText extends LightningElement {
     set conversationNoteRich(value) {
         this._conversationNote = value;
     }
-
+    @api
+    get conversationNoteWithSignature() {
+        if (this.standardSignature === true && this.checkBoxValue === 'Standard' && this.standardSignatureText !== '') {
+            return this.conversationNote + '\n\n' + this.standardSignatureText;
+        }
+        return this.conversationNote;
+    }
+    set conversationNoteWithSignature(value) {
+        //readonly
+    }
+    @api
+    get standardSignatureText() {
+        return this._standardSignatureText;
+    }
+    set standardSignatureText(value) {
+        this._standardSignatureText = value;
+    }
     get cssClass() {
         const baseClasses = ['slds-modal'];
         baseClasses.push([this.isOpen ? 'slds-visible slds-fade-in-open' : 'slds-hidden']);
@@ -404,5 +444,8 @@ export default class CrmQuickText extends LightningElement {
 
     get placeHolderText() {
         return this.useForConversationNote ? '' : 'Skriv melding her';
+    }
+    get checkBoxOptions() {
+        return [{ label: 'Standard signatur', value: 'Standard' }];
     }
 }
