@@ -32,6 +32,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         ERROR_LABEL,
         ERROR_MESSAGE
     };
+    _iconName = 'standard:messaging_user';
 
     renderedCallback() {
         this.handleSlotChanges();
@@ -70,6 +71,15 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         return this.newDesign
             ? 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none'
             : 'slds-card__header slds-grid paddingAndCustomColor';
+    }
+
+    get iconName() {
+        return this._iconName;
+    }
+
+    @api
+    set iconName(newIconName) {
+        this._iconName = newIconName;
     }
 
     handlenewpressed() {
