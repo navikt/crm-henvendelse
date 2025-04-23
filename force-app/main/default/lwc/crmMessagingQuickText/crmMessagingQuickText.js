@@ -27,7 +27,7 @@ export default class CrmQuickText extends LightningElement {
     checkBoxValue = 'Standard';
     recentlyInserted = '';
     labels = { BLANK_ERROR };
-    _conversationNote;
+    _conversationNote = '';
     qmap;
     initialRender = true;
     loadingData = false;
