@@ -30,10 +30,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard3</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -67,10 +73,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard1</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -104,10 +116,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -141,10 +159,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -178,10 +202,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard4</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -215,10 +245,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard5</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -252,10 +288,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard6</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -289,10 +331,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard7</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -326,10 +374,16 @@
                 <componentName>flexipage:filterListCard</componentName>
                 <identifier>flexipage_filterListCard8</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -347,10 +401,16 @@
                 <componentName>desktopDashboards:embeddedDashboard</componentName>
                 <identifier>desktopDashboards_embeddedDashboard</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.UserRole.Name}</leftValue>
                         <operator>NE</operator>
                         <rightValue>HOT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HOT Tolk Formidler</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
