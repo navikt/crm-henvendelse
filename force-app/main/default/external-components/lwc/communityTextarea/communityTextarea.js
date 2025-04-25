@@ -102,4 +102,8 @@ export default class CommunityTextarea extends LightningElement {
     get textAreaContainer() {
         return this.errorState ? 'navds-textarea__wrapper' : 'navds-textarea__wrapper textarea-container';
     }
+
+    get placeholderText() {
+        return 'Teksten lagres ikke automatisk. Hvis du er inaktiv i 30 minutter, kan du bli logget ut og miste det du har skrevet.';
+    }
 }
