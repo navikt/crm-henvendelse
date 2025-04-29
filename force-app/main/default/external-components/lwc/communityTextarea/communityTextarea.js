@@ -104,6 +104,6 @@ export default class CommunityTextarea extends LightningElement {
     }
 
     get placeholderText() {
-        return 'Teksten lagres ikke automatisk. Hvis du er inaktiv i 30 minutter, kan du bli logget ut og miste det du har skrevet.';
+        return 'Teksten lagres ikke automatisk. Hvis du er på denne siden i mer enn 30 minutter, kan du bli logget ut og miste det du har skrevet.';
     }
 }
