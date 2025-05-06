@@ -225,6 +225,18 @@
                     },
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "aktorid",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Aktørid til person for meldingstråden som skal lukkes"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
                     }
                 ],
                 "responses": {
