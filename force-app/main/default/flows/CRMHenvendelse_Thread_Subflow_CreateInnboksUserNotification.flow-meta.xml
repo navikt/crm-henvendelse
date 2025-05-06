@@ -4,7 +4,7 @@
         <name>Create_Innboks_Notification</name>
         <label>Create Innboks Notification</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>674</locationY>
         <actionName>UN_InnboksAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
@@ -100,7 +100,7 @@
         <name>Log_error_from_subflow</name>
         <label>Log error from subflow</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>782</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -153,7 +153,7 @@
         <name>Assign_errors</name>
         <label>Assign errors</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>isSuccess</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +173,7 @@
         <name>Assign_existing_user_notification_to_return_parameter</name>
         <label>Assign existing user notification to return parameter</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>newInnboksNotification</assignToReference>
             <operator>Assign</operator>
@@ -200,9 +200,9 @@
         <name>Has_Open_User_Notification</name>
         <label>Has Open User Notification</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>Get_Person</targetReference>
+            <targetReference>Get_Organization</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -224,7 +224,10 @@
     <formulas>
         <name>URL</name>
         <dataType>String</dataType>
-        <expression> {!$Label.CRMHenvendelse_InnboksBaseURL} + 
+        <expression>IF({!Get_Organization.IsSandbox},
+{!$Label.CRMHenvendelse_InnboksBaseURL_dev},
+ {!$Label.CRMHenvendelse_InnboksBaseURL}
+) + 
 IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;), 
 {!$Label.CRMHenvendelse_BTOURL}+{!Thread.Id}, 
 {!$Label.CRMHenvendelse_ThreadURL}+&apos;/&apos;+{!Thread.Id}+&apos;/&apos;+{!Thread.CRM_API_Reference__c})</expression>
@@ -251,10 +254,26 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Get organization details to determine baseURL for notification (dev/prod)</description>
+        <name>Get_Organization</name>
+        <label>Get Organization</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Person</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Organization</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>IsSandbox</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Person</name>
         <label>Get Person</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Innboks_Notification</targetReference>
@@ -275,7 +294,7 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <name>Thread</name>
         <label>Thread</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>User_Notification</targetReference>
@@ -296,7 +315,7 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <name>User_Notification</name>
         <label>User Notification</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Has_Open_User_Notification</targetReference>
