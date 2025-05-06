@@ -110,6 +110,26 @@
             >
                 {conversationNote}
             </textarea>
+            <template lwc:if={standardSignature}>
+                <div class="slds-rich-text-editor__toolbar slds-rich-text-editor__toolbar_bottom toolbar-no-padding">
+                    <textarea
+                        class="standardSignature signature-textarea slds-rich-text-editor__textarea slds-grid slds-textarea"
+                        rows="3"
+                        readonly
+                        name="Signatur"
+                    >
+                {standardSignatureText}
+                </textarea
+                    >
+                    <div class="slds-var-p-around_xx-small">
+                        <lightning-checkbox-group
+                            options={checkBoxOptions}
+                            value={checkBoxValue}
+                            onchange={handleCheckBoxChange}
+                        ></lightning-checkbox-group>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 </template>

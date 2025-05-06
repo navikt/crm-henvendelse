@@ -143,6 +143,39 @@
                                 </template>
                             </lightning-layout>
                         </div>
+                        <template lwc:if={_showLanguageChangeModal}>
+                            <lightning-layout-item size="8">
+                                <div class="slds-var-p-bottom_medium">
+                                    <div
+                                        class="slds-box slds-border_right slds-border_top slds-border_bottom slds-border_left"
+                                    >
+                                        <div class="panel-content scrollable">
+                                            <div class="slds-var-p-bottom_medium wrapped-content">
+                                                <p>{labels.LANGUAGE_CHANGE_ALERT_TEXT}</p>
+                                            </div>
+                                            <div class="slds-grid slds-grid_align-end">
+                                                <div class="slds-float_right">
+                                                    <lightning-button
+                                                        label={labels.LANGUAGE_CHANGE_NO}
+                                                        variant="brand-outline"
+                                                        class="slds-var-p-right_small cancelButton"
+                                                        onclick={closeLanguageChangeModal}
+                                                    >
+                                                    </lightning-button>
+                                                    <lightning-button
+                                                        label={labels.LANGUAGE_CHANGE_YES}
+                                                        variant="brand"
+                                                        class="closeButton"
+                                                        onclick={changeTemplate}
+                                                    >
+                                                    </lightning-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
                         <h2>{showspinnner}</h2>
                         <template if:true={showspinner}>
                             <div class="spinnerholder">
@@ -152,7 +185,7 @@
                         <c-crm-messaging-quick-text
                             conversation-note={textTemplate}
                             reset-text-template={textTemplate}
-                            onlocklang={lockLangBtn}
+                            onenglishstoclearevent={handleEnglishStoClearEvent}
                         >
                         </c-crm-messaging-quick-text>
                     </lightning-layout-item>
