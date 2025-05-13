@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <customLabels>
+        <label>Avbryt</label>
+        <name>Henvendelse_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Henvendelse startet</label>
+        <name>Henvendelse_Dialogue_Started</name>
+    </customLabels>
+    <customLabels>
+        <label>Avslutt samtale</label>
+        <name>Henvendelse_End_Dialogue</name>
+    </customLabels>
+    <customLabels>
+        <label>Er du sikker på at du vil avslutte denne samtalen permanent?</label>
+        <name>Henvendelse_End_Dialogue_Alert_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Feil</label>
+        <name>Henvendelse_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Det oppsto en uventet feil.</label>
+        <name>Henvendelse_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Samtalereferatet kan ikke være tomt!</label>
+        <name>CRMHenveldelse_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label>Du har gjort endringer i hilsen, signatur eller begge deler. Hvis du oversetter nå,
+            vil du miste teksten du har skrevet. Vil du fortsette?</label>
+        <name>Henvendelse_Language_Change_Alert_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Ja</label>
+        <name>Henvendelse_Language_Change_Yes</name>
+    </customLabels>
+    <customLabels>
+        <label>Nei</label>
+        <name>Henvendelse_Language_Change_No</name>
+    </customLabels>
+</Translations>

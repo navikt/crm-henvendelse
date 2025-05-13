@@ -23,68 +23,9 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Message_Content</name>
-        <label>Create Message Content</label>
-        <locationX>50</locationX>
-        <locationY>408</locationY>
-        <connector>
-            <targetReference>Update_Message_Content_Relation</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>CRM_Message_Text__c</field>
-            <value>
-                <elementReference>$Record.CRM_Message_Text__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Message_Content__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_new_message_event</name>
-        <label>Create new message event</label>
-        <locationX>50</locationX>
-        <locationY>288</locationY>
-        <connector>
-            <targetReference>Create_Message_Content</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>CRM_Message_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CRM_Related_Object_Id__c</field>
-            <value>
-                <elementReference>$Record.CRM_Thread__r.CRM_Related_Object__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>New_Message__e</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordUpdates>
-        <name>Update_Message_Content_Relation</name>
-        <label>Update Message Content Relation</label>
-        <locationX>50</locationX>
-        <locationY>528</locationY>
-        <inputAssignments>
-            <field>CRM_Message_Content__c</field>
-            <value>
-                <elementReference>Create_Message_Content</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Create_new_message_event</targetReference>
-        </connector>
         <object>Message__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -97,53 +38,10 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>314</locationX>
-        <locationY>408</locationY>
-        <flowName>Flow_Create_Application_Log</flowName>
-        <inputAssignments>
-            <name>Application_Domain</name>
-            <value>
-                <stringValue>NKS</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Error_Payload</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Error_Source</name>
-            <value>
-                <stringValue>Flow - Message After Insert</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Log_Category</name>
-            <value>
-                <stringValue>Henvendelse Message Insert</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Log_Level</name>
-            <value>
-                <stringValue>Error</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Log_Message</name>
-            <value>
-                <stringValue>Error when publishing platform event</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Thread_recalculate_message_summary</name>
         <label>Thread - recalculate message summary</label>
-        <locationX>578</locationX>
-        <locationY>288</locationY>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
         <flowName>CRMHenvendelse_Thread_Subflow_RecalculateMessageSummary</flowName>
         <inputAssignments>
             <name>threadId</name>

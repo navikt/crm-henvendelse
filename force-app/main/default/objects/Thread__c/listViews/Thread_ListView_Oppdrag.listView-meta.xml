@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Thread_ListView_Oppdrag</fullName>
+    <booleanFilter>1 AND 2</booleanFilter>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>STO_Sensitive_Information__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>CRM_Thread_Type__c</field>
+        <operation>equals</operation>
+        <value>HOT_TOLK-FORMIDLER</value>
+    </filters>
+    <label>Samtaletråder Oppdrag</label>
+</ListView>

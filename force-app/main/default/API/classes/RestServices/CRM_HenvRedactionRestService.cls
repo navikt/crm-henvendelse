@@ -12,7 +12,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     global static void markForRedaction() {
         String navIdent = getActingNavIdent();
         correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
+
         try {
             RestRequest request = RestContext.request;
             SladdingRequest slRequest = (SladdingRequest) JSON.deserialize(
@@ -70,7 +70,6 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                     setResponse(204);
                 } else {
                     errorResponse(400, 'Invalid reference value for kjedeId: ' + slRequest.kjedeId);
-                    logger.publish();
                     return;
                 }
             }
@@ -80,14 +79,13 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
         } catch (Exception ex) {
             errorResponse(500, 'Failed to update: ' + ex.getMessage());
             logger.error(
-                'Failed to update: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Failed to update: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId
             );
+        } finally {
+            logger.publish();
         }
     }
 
@@ -117,7 +115,6 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     @HttpGet
     global static void getRedactionCauses() {
         correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         String kjedeId = getLastPathParameter();
 
         Id objectId = getObjectId(kjedeId);
@@ -134,7 +131,6 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
             }
             when else {
                 errorResponse(400, 'Invalid reference value for kjedeId: ' + kjedeId);
-                logger.publish();
                 return;
             }
         }

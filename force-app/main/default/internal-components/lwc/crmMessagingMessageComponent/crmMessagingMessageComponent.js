@@ -2,23 +2,37 @@ import { LightningElement, api, track, wire } from 'lwc';
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';
+import ERROR_LABEL from '@salesforce/label/c.Henvendelse_Error';
+import ERROR_MESSAGE from '@salesforce/label/c.Henvendelse_Error_Message';
 
 export default class CrmMessagingMessageComponent extends LightningElement {
+    @api recordId;
+    @api singleThread;
+    @api showClose;
+    @api showQuick;
+    @api englishTextTemplate;
+    @api textTemplate; //Support for conditional text template
+    @api newDesign = false;
+    @api submitButtonLabel = 'Send';
+    @api isThread;
+    @api showLanguageChangeModal = false;
+    @api hideChangeLngBtn = false;
+
+    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+
     showmodal = false;
     showtaskmodal = false;
     activeSectionMessage = '';
     threads;
     singlethread;
     _threadsforRefresh;
-    @api recordId;
-    @api singleThread;
-    @api showClose;
-    @api showQuick;
-    setCardTitle;
+    actualCardTitle;
     hasError = false;
-    @api englishTextTemplate;
-    @api textTemplate; //Support for conditional text template
-    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+    labels = {
+        ERROR_LABEL,
+        ERROR_MESSAGE
+    };
+    _iconName = 'standard:messaging_user';
 
     renderedCallback() {
         this.handleSlotChanges();
@@ -31,17 +45,9 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         if (result.error) {
             this.error = result.error;
             this.hasError = true;
-            console.log(JSON.stringify(result.error, null, 2));
         } else if (result.data) {
             this.threads = result.data;
         }
-    }
-    handlenewpressed() {
-        createThread({ recordId: this.recordId })
-            .then((result) => {
-                return refreshApex(this._threadsforRefresh);
-            })
-            .catch((error) => {});
     }
 
     get showSpinner() {
@@ -53,12 +59,37 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get cardTitle() {
-        return this.setCardTitle ?? (this.singleThread === true ? 'Samtale' : 'Samtaler');
+        return this.actualCardTitle ?? (this.singleThread ? 'Samtale' : 'Samtaler');
     }
 
     @api
     set cardTitle(cardTitle) {
-        this.setCardTitle = cardTitle;
+        this.actualCardTitle = cardTitle;
+    }
+
+    get cardClass() {
+        return this.newDesign
+            ? 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none'
+            : 'slds-card__header slds-grid paddingAndCustomColor';
+    }
+
+    get iconName() {
+        return this._iconName;
+    }
+
+    @api
+    set iconName(newIconName) {
+        this._iconName = newIconName;
+    }
+
+    handlenewpressed() {
+        createThread({ recordId: this.recordId })
+            .then(() => {
+                return refreshApex(this._threadsforRefresh);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     handleEnglishEvent(event) {
@@ -72,9 +103,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     // If the slot is not rendered in the DOM we have no way of checking it's content
     @api
     checkSlotChange(slotName) {
-        console.log('Api call');
-        console.log(slotName);
-        console.log(this.slotsNeedCheckedOrRendered[slotName]);
         this.slotsNeedCheckedOrRendered[slotName] = true;
     }
 
@@ -96,5 +124,13 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             const hasContent = slot.assignedElements().length !== 0;
             this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
         }
+    }
+
+    handleSumbit() {
+        this.dispatchEvent(new CustomEvent('submitfromchild'));
+    }
+
+    forwardEvent(event) {
+        this.dispatchEvent(new CustomEvent(event.type));
     }
 }

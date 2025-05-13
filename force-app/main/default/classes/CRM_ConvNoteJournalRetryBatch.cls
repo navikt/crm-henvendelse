@@ -32,7 +32,9 @@ public without sharing class CRM_ConvNoteJournalRetryBatch implements Database.B
                 Journal_Entry__c.Subtheme__c,
                 Journal_Entry__c.Theme__c,
                 Journal_Entry__c.CRM_NAV_Case_Legacy_System__c,
-                Journal_Entry__c.CRM_Journal_Post_Type__c
+                Journal_Entry__c.CRM_Journal_Post_Type__c,
+                Journal_Entry__c.Journal_Entry_Status__c,
+                Journal_Entry__c.Journal_Entry_ID__c
             };
         }
 

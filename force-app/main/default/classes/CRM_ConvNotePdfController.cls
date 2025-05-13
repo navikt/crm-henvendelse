@@ -7,12 +7,12 @@ public without sharing class CRM_ConvNotePdfController {
     public CRM_ConvNotePdfController(ApexPages.StandardController stdController) {
         convNoteId = stdController.getId();
         Conversation_Note__c convNote = [
-            SELECT CRM_Message_Content__r.CRM_Message_Text__c
+            SELECT CRM_Conversation_Note__c
             FROM Conversation_Note__c
             WHERE Id = :convNoteId
             LIMIT 1
         ];
-        messageText = splitter.splitWordsInMessage(convNote.CRM_Message_Content__r.CRM_Message_Text__c);
+        messageText = splitter.splitWordsInMessage(convNote.CRM_Conversation_Note__c);
     }
 
     public class LongWordSplitter {

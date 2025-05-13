@@ -16,8 +16,8 @@
     </filters>
     <filters>
         <field>CRM_Thread_Type__c</field>
-        <operation>notEqual</operation>
-        <value>STO,CHAT,AG_MLØNN,BTO</value>
+        <operation>equals</operation>
+        <value>STB</value>
     </filters>
     <label>Samtaletråder Brukerstøtte</label>
 </ListView>

@@ -1,28 +1,21 @@
-import { LightningElement, wire, api, track } from 'lwc';
-import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import markAsRead from '@salesforce/apex/CRM_MessageHelper.markAsRead';
+import { LightningElement, wire, api } from 'lwc';
+import getmessages from '@salesforce/apex/CRM_MessageHelperExperience.getMessagesFromThread';
+import markAsRead from '@salesforce/apex/CRM_MessageHelperExperience.markAsRead';
 import { refreshApex } from '@salesforce/apex';
-import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
+import getContactId from '@salesforce/apex/CRM_MessageHelperExperience.getUserContactId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
+import createmsg from '@salesforce/apex/CRM_MessageHelperExperience.createMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
-
 import { loadStyle } from 'lightning/platformResourceLoader';
 import navStyling from '@salesforce/resourceUrl/navStyling';
 import index from '@salesforce/resourceUrl/index';
 
 const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD, THREAD_TYPE_FIELD]; //Extract the name of the thread record
 
-export default class crmMessagingCommunityThreadViewer extends LightningElement {
-    _mySendForSplitting;
-    messages = [];
-    buttonisdisabled = false;
+export default class CrmMessagingCommunityThreadViewer extends LightningElement {
     @api recordId;
-    @track msgVal;
-    userContactId;
-    thread;
     @api alerttext = 'Dialogen er lukket.';
     @api header;
     @api secondheader;
@@ -30,6 +23,14 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api maxLength;
     @api overrideValidation = false;
     @api errorList = { title: '', errors: [] };
+    @api logAmplitudeEvent = false;
+
+    _mySendForSplitting;
+    messages = [];
+    buttonisdisabled = false;
+    msgVal;
+    userContactId;
+    thread;
 
     connectedCallback() {
         markAsRead({ threadId: this.recordId });
@@ -38,7 +39,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
                 this.userContactId = contactId;
             })
             .catch((error) => {
-                //Apex error
+                console.error('Problem on getting contact id: ', error);
             });
     }
 
@@ -50,6 +51,17 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @wire(getRecord, { recordId: '$recordId', fields })
     wirethread(result) {
         this.thread = result;
+    }
+
+    @wire(getmessages, { threadId: '$recordId' }) //Calls apex and extracts messages related to this record
+    wiremessages(result) {
+        this._mySendForSplitting = result;
+        if (result.error) {
+            this.error = result.error;
+        } else if (result.data) {
+            this.messages = result.data;
+            this.showspinner = false;
+        }
     }
 
     get isSTO() {
@@ -68,16 +80,6 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
         return getFieldValue(this.thread.data, THREADNAME_FIELD);
     }
 
-    @wire(getmessages, { threadId: '$recordId' }) //Calls apex and extracts messages related to this record
-    wiremessages(result) {
-        this._mySendForSplitting = result;
-        if (result.error) {
-            this.error = result.error;
-        } else if (result.data) {
-            this.messages = result.data;
-            this.showspinner = false;
-        }
-    }
     get isclosed() {
         return getFieldValue(this.thread.data, THREADCLOSED_FIELD);
     }
@@ -112,8 +114,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
                 {
                     Id: 1,
                     EventItem: '',
-                    Text:
-                        'Vil du <a href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss">sende en ny melding</a>, kan du gjøre det her. Husk å kopiere det du har skrevet.'
+                    Text: 'Vil du <a href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss">sende en ny melding</a>, kan du gjøre det her. Husk å kopiere det du har skrevet.'
                 }
             ]
         };
@@ -153,6 +154,10 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
         } else {
             // Using default validation
             this.createMessage(this.valid());
+        }
+
+        if (this.logAmplitudeEvent) {
+            this.dispatchEvent(new CustomEvent('logevent'));
         }
     }
 

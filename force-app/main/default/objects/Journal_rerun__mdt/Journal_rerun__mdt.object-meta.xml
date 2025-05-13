@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Creates a job to reupload Journal documents with missing content, such as blank
+        PDFs. Appends a suffix to externalReference to avoid conflict with the original Journal
+        post.
+        PS: If you create a journal rerun record you must contact Team Dokumenthåndtering to
+        register the original documents as &quot;Feilregistrert&quot;</description>
+    <label>Journal rerun</label>
+    <pluralLabel>Journal reruns</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

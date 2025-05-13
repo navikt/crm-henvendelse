@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>512</locationX>
+        <locationY>350</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -32,8 +32,8 @@
         <description>Calls journal utils to perform the API post action</description>
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
-        <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationX>512</locationX>
+        <locationY>1190</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -68,11 +68,27 @@
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>Add_externalReferenceSuffix</name>
+        <label>Add externalReferenceSuffix</label>
+        <locationX>380</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>externalReferenceSuffix</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Post_Journal_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Add document variants to document list and assign document title</description>
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationX>512</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -109,8 +125,8 @@
         <description>Assigns needed values to document variant wrapper</description>
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>512</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -140,8 +156,8 @@
         <description>Assigns needed values to the journal requests and adds the document list.</description>
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
-        <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationX>512</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -198,16 +214,23 @@
                 <elementReference>Journal_Entry_SF.CRM_Theme_Code__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>externalReference</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Post_Journal_Request</targetReference>
+            <targetReference>Check_if_externalReferenceSuffix_is_blank</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Assigns necessary values to the Sak wrapper for journal entry.</description>
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationX>512</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -234,31 +257,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Post_Completed</name>
-        <label>Set Post Completed</label>
-        <locationX>50</locationX>
-        <locationY>1238</locationY>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Journal Completed</stringValue>
-            </value>
-        </assignmentItems>
+        <name>Set_Journal_Date</name>
+        <label>Set Journal Date</label>
+        <locationX>512</locationX>
+        <locationY>1982</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -271,10 +273,70 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Journal_Status_to_Completed_and_Journal_Entry_Id</name>
+        <label>Set Journal Status to Completed and Journal Entry Id</label>
+        <locationX>402</locationX>
+        <locationY>1514</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Journal_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Journal_Status_to_Duplicate</name>
+        <label>Set Journal Status to Duplicate</label>
+        <locationX>138</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Duplicate</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Duplicate_Journal_Entry_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Journal_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
-        <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationX>930</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -290,14 +352,30 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_DML_Input</targetReference>
+            <targetReference>Set_Journal_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Rerun_failed</name>
+        <label>Set Rerun failed</label>
+        <locationX>666</locationX>
+        <locationY>1514</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rerun Failed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Journal_Date</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Check_DML_Input</name>
         <label>Check DML Input</label>
-        <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationX>512</locationX>
+        <locationY>2090</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -316,12 +394,119 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Post_State</name>
-        <label>Check Post State</label>
-        <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <name>Check_if_already_Completed</name>
+        <label>Check if already Completed</label>
+        <locationX>50</locationX>
+        <locationY>1514</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Status_to_Duplicate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not completed</defaultConnectorLabel>
+        <rules>
+            <name>Already_completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.Journal_Entry_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.Journal_Entry_ID__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Journal_Date</targetReference>
+            </connector>
+            <label>Already completed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Duplicate</name>
+        <label>Check if Duplicate</label>
+        <locationX>226</locationX>
+        <locationY>1406</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Status_to_Completed_and_Journal_Entry_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>New</defaultConnectorLabel>
+        <rules>
+            <name>Duplicate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Post_Journal_Request.duplicate</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_already_Completed</targetReference>
+            </connector>
+            <label>Duplicate</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_externalReferenceSuffix_is_blank</name>
+        <label>Check if externalReferenceSuffix is blank</label>
+        <locationX>512</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>Post_Journal_Request</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_externalReferenceSuffix</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>externalReferenceSuffix</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_externalReferenceSuffix</targetReference>
+            </connector>
+            <label>Has externalReferenceSuffix</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_rerun_failed</name>
+        <label>Check if rerun failed</label>
+        <locationX>798</locationX>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Rerun_failed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>externalReferenceSuffix</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Rerun_failed</targetReference>
+            </connector>
+            <label>Rerun failed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Post_State</name>
+        <label>Check Post State</label>
+        <locationX>512</locationX>
+        <locationY>1298</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_rerun_failed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Post Failed</defaultConnectorLabel>
         <rules>
@@ -335,7 +520,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Post_Completed</targetReference>
+                <targetReference>Check_if_Duplicate</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -345,6 +530,11 @@
         <name>Document_Title</name>
         <dataType>String</dataType>
         <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c})))</expression>
+    </formulas>
+    <formulas>
+        <name>externalReference</name>
+        <dataType>String</dataType>
+        <expression>{!Conversation_Note_Record.Id} + {!Journal_Entry_SF.CRM_Theme_Code__c} + SUBSTITUTE(URLENCODE({!Journal_Sak.fagsakId}), &apos;%&apos;, &apos;_&apos;)</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
@@ -383,8 +573,8 @@
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>512</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Generate_Document</targetReference>
@@ -405,8 +595,8 @@
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>512</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
@@ -430,15 +620,15 @@
         <description>Updates field on the conversation note to reflect the journal state</description>
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
-        <locationX>50</locationX>
-        <locationY>1694</locationY>
+        <locationX>380</locationX>
+        <locationY>2306</locationY>
         <inputReference>Conversation_Note_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
-        <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationX>380</locationX>
+        <locationY>2198</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -446,7 +636,7 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>56</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Necessary_Record_Info</targetReference>
@@ -469,6 +659,14 @@
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>String to append to the end of externalReference in the case of a rerun</description>
+        <name>externalReferenceSuffix</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

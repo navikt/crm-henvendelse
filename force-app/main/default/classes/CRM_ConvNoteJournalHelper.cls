@@ -22,9 +22,9 @@ public with sharing class CRM_ConvNoteJournalHelper {
         } catch (Exception ex) {
             logger.error(
                 'Journal flow failed for conversation note with ID: ' +
-                flowInputs.get('recordId') +
-                '\n' +
-                ex.getMessage(),
+                    flowInputs.get('recordId') +
+                    '\n' +
+                    ex.getMessage(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS
             );
@@ -42,6 +42,8 @@ public with sharing class CRM_ConvNoteJournalHelper {
         public String Journal_Case_Legacy_System;
         @invocableVariable
         public String Journal_Theme_Code;
+        @invocableVariable
+        public String Journal_Subtheme_Code;
         @invocableVariable
         public String Journal_Entry_Unit;
         @invocableVariable

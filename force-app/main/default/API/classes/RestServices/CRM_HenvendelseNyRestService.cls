@@ -12,7 +12,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             return;
 
         correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         RestRequest request = RestContext.request;
 
@@ -31,13 +30,12 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     errorResponse(
                         400,
                         'Invalid henvendelse type: ' +
-                        henvType +
-                        '\n Approved types are: ' +
-                        JSON.serializePretty(HENVENDELSE_TYPE.values())
+                            henvType +
+                            '\n Approved types are: ' +
+                            JSON.serializePretty(HENVENDELSE_TYPE.values())
                     );
                 }
             }
-            logger.publish();
         } catch (ValidationException valEx) {
             //Validation exception is thrown internally
             errorResponse(400, valEx.getMessage());
@@ -50,10 +48,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
             logger.error(
-                'Unknown error: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Unknown error: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId
@@ -114,6 +109,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 Thread__c newThread = newMessage.CRM_Thread__r;
                 newThread.CRM_Assignee__c = threadAssignee;
                 newThread.CRM_Assignee_NAV_Unit__c = newMessage.CRM_From_NAV_Unit__c;
+                newThread.recordTypeId = getNKSThreadRecordtype();
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
             } else {
@@ -151,6 +147,16 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
      **/
     private static String getAccountId(String actorId) {
         return [SELECT CRM_Account__c FROM Person__c WHERE INT_ActorId__c = :actorId]?.CRM_Account__c;
+    }
+
+    private static String getNKSThreadRecordtype() {
+        List<RecordType> recordType = [
+            SELECT Id
+            FROM RecordType
+            WHERE SObjectType = 'Thread__c' AND Name = 'NKS Thread'
+            LIMIT 1
+        ];
+        return recordType.isEmpty() ? null : recordType[0].Id;
     }
 
     /**

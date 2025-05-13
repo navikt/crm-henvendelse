@@ -8,10 +8,7 @@ export default class CommunityMessageContainer extends LightningElement {
     userId = uId;
 
     get isoutbound() {
-        return (
-            (this.userId && this.userId == this.message.CRM_From_User__c) ||
-            (this.userContactId && this.userContactId == this.message.CRM_From_Contact__c)
-        );
+        return this.message.CRM_External_Message__c;
     }
 
     get isevent() {

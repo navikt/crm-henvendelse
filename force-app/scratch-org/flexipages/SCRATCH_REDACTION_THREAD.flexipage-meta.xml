@@ -11,33 +11,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Thread__c.Complete_Redaction</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Thread__c.Abort_Redaction</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Thread__c.Discard_Messages</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -74,12 +50,6 @@
                 <componentName>crmMessagingRedactThreadViewer</componentName>
                 <identifier>c_crmMessagingRedactThreadViewer</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -101,14 +71,8 @@
                 <componentName>crmMessagingMessageComponent</componentName>
                 <identifier>c_crmMessagingMessageComponent</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>false</rightValue>
                     </criteria>

@@ -3,18 +3,18 @@
         <div class="body-wrapper">
             <div class="snakkeboble snakkeboble--venstre">
                 <lightning-layout class="slds-m-top_x-small slds-p-top_small" multiple-rows="false">
-                    <lightning-layout-item padding="horizontalSmall" size="1" small-device-size="1" class="iconholder slds-show_small">
-                        <img src={navlogo} alt="Fra NAV" class="ikon nav-ikon" />
-                    </lightning-layout-item>
                     <lightning-layout-item
                         padding="horizontalSmall"
-                        size="11"
-                        small-device-size="9"
-                        flexibility="auto"
+                        size="1"
+                        small-device-size="1"
+                        class="iconholder slds-show_small"
                     >
+                        <img src={navlogo} alt="Fra Nav" class="ikon nav-ikon" />
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="horizontalSmall" size="11" small-device-size="9" flexibility="auto">
                         <div class="panel snakkeboble-panel">
                             <div class="snakkeboble-panel__tekst" aria-label="Melding fra NAV ansatt">
-                                <h2 class="message-from inline-block">NAV</h2>
+                                <h2 class="message-from inline-block">Nav</h2>
                                 <span class="datewrapper inline-block">
                                     <c-crm-nav-formatted-date
                                         date={message.CRM_Sent_date__c}

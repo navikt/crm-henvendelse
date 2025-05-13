@@ -30,10 +30,10 @@ export default class CommunityErrorSummary extends LightningElement {
     }
 
     get showWarnings() {
-        return this.errorList.errors.length !== 0;
+        return this.errorList != null && this.errorList?.errors.length !== 0;
     }
 
     get title() {
-        return (!this.errorList.title || this.errorList.title === 0) ? this.errorList.title : this.originalTitle;
+        return !this.errorList.title || this.errorList.title === 0 ? this.errorList.title : this.originalTitle;
     }
 }

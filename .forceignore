@@ -53,3 +53,7 @@
 **/workflows/CustomOpportunity__c*
 **/workflows/Contract__c*
 **/layouts/CustomOpportunity__c-Custom Opportunity Layout.layout-meta.xml
+
+**/tsconfig.json
+
+**/*.ts

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>STO_Sensitive_Information_Date__c</fullName>
-    <description>Date and time when Sensitive Information was activated.</description>
+    <fullName>NKS_Inbox_Theme__c</fullName>
     <externalId>false</externalId>
-    <label>Sensitive Information Date</label>
+    <label>Inbox Theme</label>
+    <length>255</length>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>DateTime</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

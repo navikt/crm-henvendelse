@@ -133,7 +133,14 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "$ref": "#/components/schemas/Henvendelse"
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
@@ -178,7 +185,14 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "$ref": "#/components/schemas/Henvendelse"
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
@@ -208,6 +222,18 @@
                             "type": "string"
                         },
                         "description": "Unik kjedeId til meldingstråden som skal lukkes"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "aktorid",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Aktørid til person for meldingstråden som skal lukkes"
                     },
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
@@ -540,21 +566,32 @@
                             "FS38",
                             "FS36",
                             "UFM",
+                            "OEBS",
+                            "OB36",
                             "AO01",
                             "AO11",
                             "IT01",
-                            "OEBS",
                             "PP01",
                             "K9",
                             "BISYS",
                             "BA",
                             "EF",
-                            "EY",
                             "KONT",
                             "SUPSTONAD",
                             "OMSORGSPENGER",
                             "HJELPEMIDLER",
-                            "NEESSI"
+                            "BARNEBRILLER",
+                            "EY",
+                            "KELVIN",
+                            "DAGPENGER",
+                            "KOMPYS",
+                            "ARGUS",
+                            "NEESSI",
+                            "TILLEGGSSTONADER",
+                            "ARBEIDSOPPFOLGING",
+                            "TILTAKSPENGER",
+                            "TILTAKSADMINISTRASJON",
+                            "FIA"
                         ],
                         "description": "Fagsystemet som saken behandles i, required hvis saksId er definert",
                         "example": "AO01"
@@ -607,21 +644,32 @@
                             "FS38",
                             "FS36",
                             "UFM",
+                            "OEBS",
+                            "OB36",
                             "AO01",
                             "AO11",
                             "IT01",
-                            "OEBS",
                             "PP01",
                             "K9",
                             "BISYS",
                             "BA",
                             "EF",
-                            "EY",
                             "KONT",
                             "SUPSTONAD",
                             "OMSORGSPENGER",
                             "HJELPEMIDLER",
-                            "NEESSI"
+                            "BARNEBRILLER",
+                            "EY",
+                            "KELVIN",
+                            "DAGPENGER",
+                            "KOMPYS",
+                            "ARGUS",
+                            "NEESSI",
+                            "TILLEGGSSTONADER",
+                            "ARBEIDSOPPFOLGING",
+                            "TILTAKSPENGER",
+                            "TILTAKSADMINISTRASJON",
+                            "FIA"
                         ],
                         "description": "Fagsystemet som saken behandles i.",
                         "example": "AO01"

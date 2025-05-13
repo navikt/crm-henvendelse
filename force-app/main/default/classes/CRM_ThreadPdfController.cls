@@ -13,7 +13,7 @@ public without sharing class CRM_ThreadPdfController {
                 CRM_From_Contact__r.Name,
                 CRM_From_Ident_Formula__c,
                 CRM_Sent_date__c,
-                CRM_Message_Content__r.CRM_Message_Text__c
+                CRM_Message_Text__c
             FROM Message__c
             WHERE CRM_Thread__c = :threadId
             ORDER BY CRM_Sent_date__c ASC
@@ -40,7 +40,7 @@ public without sharing class CRM_ThreadPdfController {
             this.fromName = message.CRM_From_Contact__r.Name;
             this.fromIdent = message.CRM_From_Ident_Formula__c;
             this.sentDate = message.CRM_Sent_date__c;
-            this.messageText = splitter.splitWordsInMessage(message.CRM_Message_Content__r.CRM_Message_Text__c);
+            this.messageText = splitter.splitWordsInMessage(message.CRM_Message_Text__c);
         }
     }
 

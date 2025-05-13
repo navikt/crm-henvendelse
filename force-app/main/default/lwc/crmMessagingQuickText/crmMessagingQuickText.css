@@ -6,6 +6,7 @@
 .modalHide {
     display: none;
 }
+
 .conversationNoteTextArea {
     border: 0;
 }
@@ -18,4 +19,17 @@
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+.signature-textarea {
+    resize: none;
+    text-wrap: nowrap;
+}
+.signature-textarea-hidden {
+    resize: none;
+    text-wrap: nowrap;
+    display: none;
+}
+.toolbar-no-padding {
+    padding: 0;
 }

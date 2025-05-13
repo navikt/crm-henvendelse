@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Run_date__c</fullName>
+    <description>The date the request should be ran, must be a future date. And the rerun will be scheduled at 1:15 for that day.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Run date</label>
+    <required>true</required>
+    <type>Date</type>
+</CustomField>

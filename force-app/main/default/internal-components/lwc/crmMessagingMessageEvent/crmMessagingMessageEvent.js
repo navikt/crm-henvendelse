@@ -17,7 +17,7 @@ export default class MessageEvent extends LightningElement {
         } else {
             userName = '';
         }
-        return this.external === true ? userName : 'NAV';
+        return this.external === true ? userName : 'Nav';
     }
 
     get transferMessage() {

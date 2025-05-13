@@ -10,7 +10,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         }
         String navIdent = getActingNavIdent();
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
+
         try {
             CRM_Henvendelse req = (CRM_Henvendelse) JSON.deserialize(
                 request.requestBody.toString(),
@@ -69,7 +69,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     return;
                 }
             }
-            logger.publish();
         } catch (DmlException dmlEx) {
             if (!Test.isRunningTest() && StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
                 errorResponse(400, dmlEx.getMessage());
@@ -87,10 +86,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         } catch (Exception ex) {
             errorResponse(500, 'Failed to update: ' + ex.getMessage());
             logger.error(
-                'Failed to update: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Failed to update: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 correlationId

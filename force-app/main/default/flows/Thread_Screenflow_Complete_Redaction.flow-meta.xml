@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Close_tab</name>
         <label>Close tab</label>
-        <locationX>534</locationX>
-        <locationY>1346</locationY>
+        <locationX>798</locationX>
+        <locationY>1214</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -12,8 +12,8 @@
     <actionCalls>
         <name>Log_exception</name>
         <label>Log exception</label>
-        <locationX>1282</locationX>
-        <locationY>1466</locationY>
+        <locationX>1810</locationX>
+        <locationY>1322</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -51,7 +51,7 @@
         <name>Send_notification</name>
         <label>Send notification</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </defaultConnector>
@@ -75,8 +75,8 @@
     <decisions>
         <name>Thread_type</name>
         <label>Thread type</label>
-        <locationX>534</locationX>
-        <locationY>518</locationY>
+        <locationX>798</locationX>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Create_Info_Message_On_Redaction</targetReference>
         </defaultConnector>
@@ -95,6 +95,56 @@
                 <targetReference>Get_redacted_message</targetReference>
             </connector>
             <label>Arbeidsgiver</label>
+        </rules>
+        <rules>
+            <name>HOT</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_BRUKER-TOLK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_BESTILLER-FORMIDLER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_TOLK-FORMIDLER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_TOLK-RESSURSKONTOR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_TOLK-TOLK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOT_BRUKER-FORMIDLER</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_redact_info_message_HOT</targetReference>
+            </connector>
+            <label>HOT</label>
         </rules>
     </decisions>
     <interviewLabel>Thread Screenflow Complete Redaction {!$Flow.CurrentDateTime}</interviewLabel>
@@ -122,8 +172,8 @@
         <description>Create a message to inform the user about redaction.</description>
         <name>Create_Info_Message_On_Redaction</name>
         <label>Create Info Message On Redaction</label>
-        <locationX>754</locationX>
-        <locationY>638</locationY>
+        <locationX>1282</locationX>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
@@ -162,7 +212,7 @@
         <name>Create_redact_info_message_AG</name>
         <label>Create redact info message AG</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
@@ -197,11 +247,51 @@
         <object>Message__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <description>Create a message to inform the user about redaction.</description>
+        <name>Create_redact_info_message_HOT</name>
+        <label>Create redact info message HOT</label>
+        <locationX>754</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Set_thread_to_redacted</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>CRM_Event_Type__c</field>
+            <value>
+                <stringValue>REDACTED</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Message_Text__c</field>
+            <value>
+                <elementReference>Redacted_Message_Notification_HOT</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Thread__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Type__c</field>
+            <value>
+                <stringValue>Info</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Message__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_redacted_message</name>
         <label>Get redacted message</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_notification</targetReference>
@@ -230,8 +320,8 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>534</locationX>
-        <locationY>158</locationY>
+        <locationX>798</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Trigger_sync</targetReference>
@@ -255,8 +345,8 @@
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>1282</locationX>
-        <locationY>1346</locationY>
+        <locationX>1810</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
         </connector>
@@ -264,8 +354,8 @@
     <recordUpdates>
         <name>Set_Messages_to_Redacted</name>
         <label>Set Messages to Redacted</label>
-        <locationX>534</locationX>
-        <locationY>398</locationY>
+        <locationX>798</locationX>
+        <locationY>350</locationY>
         <connector>
             <targetReference>Thread_type</targetReference>
         </connector>
@@ -299,8 +389,8 @@
     <recordUpdates>
         <name>Set_thread_to_redacted</name>
         <label>Set thread to redacted</label>
-        <locationX>534</locationX>
-        <locationY>1226</locationY>
+        <locationX>798</locationX>
+        <locationY>1106</locationY>
         <connector>
             <targetReference>Close_tab</targetReference>
         </connector>
@@ -333,8 +423,8 @@
     <screens>
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
-        <locationX>1282</locationX>
-        <locationY>1586</locationY>
+        <locationX>1810</locationX>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -350,8 +440,8 @@
     <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
-        <locationX>534</locationX>
-        <locationY>278</locationY>
+        <locationX>798</locationX>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -370,7 +460,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>408</locationX>
+        <locationX>672</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
@@ -381,6 +471,11 @@
         <name>Redacted_Message_Notification_AG</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Label.CRMHenvendelse_RedactedMessageAG}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Redacted_Message_Notification_HOT</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Deler av meldingen din har blitt sladdet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Vi har bare lov til å ta vare på opplysninger som er relevant for deg, og som er direkte knyttet til dette oppdraget.  Opplysninger som gjelder andre, og som ikke vurderes å ha betydning for dette oppdraget, slettes derfor.  Dette vises som sladdet i meldingen.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Ta kontakt med din lokale tolketjeneste ved eventuelle spørsmål.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>

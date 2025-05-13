@@ -1,9 +1,9 @@
 <template>
-    <article class="slds-card slds-card_narrow marginRemover">
-        <div class="slds-card__header slds-grid paddingAndCustomColor">
+    <article class="slds-card marginRemover">
+        <div class={cardClass}>
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
-                    <lightning-icon icon-name="standard:messaging_user" size="small"></lightning-icon>
+                    <lightning-icon icon-name={iconName} size="small"></lightning-icon>
                 </div>
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">
@@ -16,25 +16,25 @@
             <div class="slds-is-relative" style="min-height: 2em">
                 <!-- Singlethread true - WIll only ever be one thread in the iteration-->
                 <lightning-spinner
-                    if:true={showSpinner}
+                    lwc:if={showSpinner}
                     alternative-text="Laster samtalekomponent"
                     size="medium"
                     variant="brand"
                 ></lightning-spinner>
                 <div
-                    if:true={hasError}
+                    lwc:if={hasError}
                     class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
                     role="alert"
                 >
                     <lightning-layout vertical-align="center">
                         <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
-                        <span class="slds-assistive-text">Feil</span>
-                        <h2 class="slds-p-left_small" style="margin-top: auto; margin-bottom: auto">
-                            Det oppsto en uventet feil
+                        <span class="slds-assistive-text">{labels.ERROR_LABEL}</span>
+                        <h2 class="slds-var-p-left_small" style="margin-top: auto; margin-bottom: auto">
+                            {labels.ERROR_MESSAGE}
                         </h2>
                     </lightning-layout>
                 </div>
-                <template if:true={shownewbutton}>
+                <template lwc:if={shownewbutton}>
                     <lightning-button
                         label="Klikk for å starte samtale"
                         icon-name="utility:anywhere_chat"
@@ -53,13 +53,26 @@
                         thread={thread}
                         show-close={showClose}
                         show-quick={showQuick}
+                        new-design={newDesign}
+                        submit-button-label={submitButtonLabel}
+                        onsubmitfromgrandchild={handleSumbit}
+                        is-thread={isThread}
+                        onclosedevent={forwardEvent}
+                        show-language-change-modal={showLanguageChangeModal}
+                        hide-change-lng-btn={hideChangeLngBtn}
                     >
                         <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">
                             <slot name="toolbar"></slot>
                         </div>
-                        <div if:true={slotsNeedCheckedOrRendered.messages} slot="messages2">
+                        <div lwc:if={slotsNeedCheckedOrRendered.messages} slot="messages2">
                             <slot name="messages"></slot>
+                        </div>
+                        <div slot="buttonContainer">
+                            <slot name="buttonContainer"></slot>
+                        </div>
+                        <div slot="flowSection">
+                            <slot name="flowSection"></slot>
                         </div>
                     </c-crm-messaging-thread-Viewer>
                 </template>

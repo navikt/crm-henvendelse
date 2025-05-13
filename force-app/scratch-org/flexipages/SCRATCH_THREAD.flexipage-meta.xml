@@ -43,7 +43,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>showClose</name>
-                    <value>false</value>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showQuick</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>singleThread</name>

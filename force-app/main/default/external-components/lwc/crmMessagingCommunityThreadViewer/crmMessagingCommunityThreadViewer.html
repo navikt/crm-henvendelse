@@ -16,66 +16,70 @@
                 ></c-crm-messaging-Community-Message-Container>
             </template>
         </div>
-        <div>
-            <template if:false={isclosed}>
-                <lightning-layout horizontal-align="center">
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-var-p-top_medium slds-var-p-horizontal_medium largePadding"
-                    >
-                        <lightning-messages></lightning-messages>
-                        <lightning-input-field
-                            class="msgText slds-hidden"
-                            field-name="CRM_Message_Text__c"
-                        ></lightning-input-field>
-                        <div class="body-wrapper" style="">
-                            <div class="example__inner">
-                                <div class="">
-                                    <c-community-textarea
-                                        max-length={maxLength}
-                                        class="inputTextbox slds-var-m-bottom_medium"
-                                        ontextchanged={handleTextChange}
-                                    ></c-community-textarea>
-                                    <div style="text-align: end;">
-                                        <button
-                                            disabled={buttonisdisabled}
-                                            class="sendbutton navds-button navds-button--primary navds-button--medium"
-                                            type="submit"
-                                            style="padding: calc(0.475rem - 1px) 2.5rem calc(0.525rem - 1px) 2.5rem"
-                                            aria-disabled="false"
-                                            label="Send"
-                                            onclick={handleSendButtonClick}>
-                                            Send
-                                        </button>
+
+        <slot name="messageArea">
+            <div>
+                <template if:false={isclosed}>
+                    <lightning-layout horizontal-align="center">
+                        <lightning-layout-item
+                            size="12"
+                            class="slds-var-p-top_medium slds-var-p-horizontal_medium largePadding"
+                        >
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field
+                                class="msgText slds-hidden"
+                                field-name="CRM_Message_Text__c"
+                            ></lightning-input-field>
+                            <div class="body-wrapper" style="">
+                                <div class="example__inner">
+                                    <div class="">
+                                        <c-community-textarea
+                                            max-length={maxLength}
+                                            class="inputTextbox slds-var-m-bottom_medium"
+                                            ontextchanged={handleTextChange}
+                                        ></c-community-textarea>
+                                        <div style="text-align: end">
+                                            <button
+                                                disabled={buttonisdisabled}
+                                                class="sendbutton navds-button navds-button--primary navds-button--medium"
+                                                type="submit"
+                                                style="padding: calc(0.475rem - 1px) 2.5rem calc(0.525rem - 1px) 2.5rem"
+                                                aria-disabled="false"
+                                                onclick={handleSendButtonClick}
+                                            >
+                                                Send
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <template if:true={showopenwarning}>
+                                    <c-crm-community-alert-stripe
+                                        class="alertbox closebox"
+                                        type="info"
+                                        alerttext={alertopen}
+                                    ></c-crm-community-alert-stripe>
+                                </template>
                             </div>
-                            <template if:true={showopenwarning}>
-                                <c-crm-community-alert-stripe
-                                    class="alertbox closebox"
-                                    type="info"
-                                    alerttext={alertopen}
-                                ></c-crm-community-alert-stripe>
-                            </template>
-                        </div>
 
-                        <lightning-input-field
-                            field-name="CRM_From_Contact__c"
-                            value={userContactId}
-                            class="slds-hidden"
-                        ></lightning-input-field>
-                        <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </template>
-        </div>
-        <template if:true={showClosedText}>
-            <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding">
-                <c-crm-community-alert-stripe
-                    class="alertbox"
-                    type="info"
-                    alerttext={alerttext}
-                ></c-crm-community-alert-stripe></div
-        ></template></div
-></template>
+                            <lightning-input-field
+                                field-name="CRM_From_Contact__c"
+                                value={userContactId}
+                                class="slds-hidden"
+                            ></lightning-input-field>
+                            <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </div>
+            <template if:true={showClosedText}>
+                <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding">
+                    <c-crm-community-alert-stripe
+                        class="alertbox"
+                        type="info"
+                        alerttext={alerttext}
+                    ></c-crm-community-alert-stripe></div
+            ></template>
+        </slot>
+    </div>
+</template>

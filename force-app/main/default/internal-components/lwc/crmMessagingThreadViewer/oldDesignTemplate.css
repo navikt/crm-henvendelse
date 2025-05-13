@@ -2,8 +2,7 @@
     height: 35vh;
     overflow-y: scroll;
 }
-.stickyfooter {
-}
+
 .backdrop {
     position: fixed;
     z-index: 999;
@@ -12,10 +11,11 @@
     right: 0;
     bottom: 0;
 }
-.endDialogBtn {
-    line-height: unset;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+
+.endDialogueBtn {
+    line-height: 1.275rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
 .colorOverwrite {

@@ -1,0 +1,89 @@
+:host {
+    --modal-width: 400px;
+}
+
+.scroller {
+    height: 35vh;
+    overflow-y: scroll;
+}
+
+.colorOverwrite {
+    background-color: var(--overwrite-header-color, white);
+    color: black;
+}
+
+.toolbar {
+    display: block;
+    border: 0;
+}
+
+.englishBtn {
+    min-height: 1rem;
+}
+
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    line-height: 1.2;
+    height: auto;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.button-container {
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.5rem;
+    --slds-c-button-outline-brand-spacing-inline-end: 0.5rem;
+    --slds-c-button-outline-brand-spacing-inline-start: 0.5rem;
+    --slds-c-button-brand-spacing-inline-end: 0.5rem;
+    --slds-c-button-brand-spacing-inline-start: 0.5rem;
+    --slds-c-button-destructive-spacing-inline-end: 0.5rem;
+    --slds-c-button-destructive-spacing-inline-start: 0.5rem;
+}
+
+.button-class {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+}
+
+.backdrop {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.modalStyling {
+    position: absolute;
+    top: auto;
+    right: var(--lwc-spacingXSmall, 0.5rem);
+    bottom: calc(100% + 3.5rem - var(--lwc-spacingXSmall, 0.5rem));
+    left: var(--lwc-spacingXSmall, 0.5rem);
+    min-width: var(--modal-width);    
+    border: darkgray;
+    border-width: 0.1px;
+    border-radius: 0.5rem;
+    border-style: solid;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+@media only screen and (max-width: 2300px) {
+    .button-class {
+        margin-left: 0;
+        justify-content: center;
+    }
+    :host {
+        --modal-width: 225px;
+    }
+}

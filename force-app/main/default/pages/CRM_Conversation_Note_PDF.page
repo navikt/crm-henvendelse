@@ -17,7 +17,16 @@
         </div>
 
         <div class="content">
-            <h2>Journalført henvendelse</h2>
+            <h2>
+                Journalført henvendelse 
+                <apex:outputText value="{!IF(NOT(ISBLANK($CurrentPage.parameters.selectedTheme)), 
+                                              ' ' & $CurrentPage.parameters.selectedTheme, 
+                                              ' ' & conversation_note__c.CRM_Theme__r.Name)}" />
+                <apex:outputText value="{!IF(NOT(ISBLANK($CurrentPage.parameters.selectedTheme)), 
+                                            ' ' & $CurrentPage.parameters.selectedSubtheme, 
+                                            ' ' & conversation_note__c.CRM_Subtheme__r.Name)}"  />
+            </h2>
+            
 
             <span> <b>Navn: </b>{!conversation_note__c.CRM_Account__r.Name} <br /> </span>
             <span> <b>Fødselsnummer: </b>{!conversation_note__c.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
