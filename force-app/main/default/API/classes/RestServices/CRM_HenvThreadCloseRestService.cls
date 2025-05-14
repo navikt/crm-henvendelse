@@ -19,7 +19,10 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
                 thread.CRM_isActive__c = false;
                 thread.CRM_Last_Edited_By__c = navIdent;
                 update thread;
-                setResponse(204);
+                setResponse(
+                    200,
+                    JSON.serialize(new Map<String, String>{ 'aktorId' => thread.CRM_External_ActorId_Formula__c })
+                );
             } else {
                 errorResponse(404, 'No thread found with reference: ' + apiReference);
             }
