@@ -17,6 +17,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api isThread;
     @api showLanguageChangeModal = false;
     @api hideChangeLngBtn = false;
+    @api isCaseReserved;
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
@@ -132,5 +133,9 @@ export default class CrmMessagingMessageComponent extends LightningElement {
 
     forwardEvent(event) {
         this.dispatchEvent(new CustomEvent(event.type));
+    }
+
+    handleSetCaseToInProgress() {
+        this.dispatchEvent(new CustomEvent('setcasetoinprogress'));
     }
 }
