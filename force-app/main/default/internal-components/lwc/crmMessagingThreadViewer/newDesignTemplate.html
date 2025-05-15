@@ -103,7 +103,7 @@
                                     class="endDialogueBtn"
                                     type="button"
                                     disabled={closedThread}
-                                    onclick={toggleEndDialogueButton}
+                                    onbuttonclick={toggleEndDialogueButton}
                                     button-styling="danger"
                                     aria-expanded={buttonExpanded}
                                     button-label={labels.END_DIALOGUE_LABEL}
@@ -158,7 +158,7 @@
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
                             <c-custom-button
-                                type="submit"
+                                button-type="submit"
                                 name="submit"
                                 disabled={closedThread}
                                 button-label={submitButtonLabel}

@@ -7,7 +7,7 @@ export default class CustomButton extends LightningElement {
     @api elementDataId = 'buttonDataId';
     @api autofocus = false;
     @api disabled = false;
-    @api type = 'button'; // Button, Submit, Reset
+    @api buttonType = 'button'; // Button, Submit, Reset
     @api value;
     @api name = 'button';
     // @ts-ignore
