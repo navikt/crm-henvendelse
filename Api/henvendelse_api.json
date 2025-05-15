@@ -12,7 +12,7 @@
             "url": "https://sf-henvendelse-api-proxy.intern.nav.no/api"
         },
         {
-            "url": "https://navdialog--uat.my.salesforce.com/services/apexrest"
+            "url": "https://navdialog--sit2.sandbox.my.salesforce.com/services/apexrest"
         },
         {
             "url": "http://sf-henvendelse-api-proxy.teamnks.svc.nais.local/api"
