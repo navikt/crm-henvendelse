@@ -31,6 +31,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api submitButtonLabel = 'Send';
     @api isThread;
     @api hideChangeLngBtn = false;
+    @api isCaseReserved;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -360,6 +361,10 @@ export default class MessagingThreadViewer extends LightningElement {
     changeTemplate() {
         this.resetTemplate = true;
         this.handleLangClick();
+    }
+
+    handleSetCaseToInProgress() {
+        this.dispatchEvent(new CustomEvent('setcasetoinprogress'));
     }
 
     //##################################//

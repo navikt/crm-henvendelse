@@ -99,17 +99,33 @@
                     </ul>
                 </div>
             </template>
-            <textarea
-                onkeyup={insertquicktext}
-                onchange={handleChange}
-                onpaste={handlePaste}
-                class="slds-rich-text-editor__textarea slds-grid slds-textarea conversationNoteTextArea"
-                rows="15"
-                placeholder={placeHolderText}
-                title={placeHolderText}
-            >
+
+            <div>
+                <template lwc:if={isCaseReserved}>
+                    <div class="overlay slds-align_absolute-center slds-grid_vertical">
+                        <lightning-button
+                            variant="brand"
+                            label="Svar på henvendelse"
+                            is-case-reserved={isCaseReserved}
+                            onclick={handleCaseStatusChange}
+                        ></lightning-button>
+                    </div>
+                </template>
+
+                <textarea
+                    onkeyup={insertquicktext}
+                    onchange={handleChange}
+                    onpaste={handlePaste}
+                    disabled={isCaseReserved}
+                    class="slds-rich-text-editor__textarea slds-grid slds-textarea conversationNoteTextArea"
+                    rows="15"
+                    placeholder={placeHolderText}
+                    title={placeHolderText}
+                >
                 {conversationNote}
-            </textarea>
+            </textarea
+                >
+            </div>
             <template lwc:if={standardSignature}>
                 <div class="slds-rich-text-editor__toolbar slds-rich-text-editor__toolbar_bottom toolbar-no-padding">
                     <textarea
