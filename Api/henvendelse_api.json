@@ -136,7 +136,6 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
                                     "$ref": "#/components/schemas/Henvendelse"
                                 }
                             }
@@ -188,7 +187,6 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
                                     "$ref": "#/components/schemas/Henvendelse"
                                 }
                             }
@@ -222,9 +220,6 @@
                             "type": "string"
                         },
                         "description": "Unik kjedeId til meldingstråden som skal lukkes"
-                    },
-                    {
-                        "$ref": "#/components/parameters/X-Correlation-ID"
                     },
                     {
                         "name": "aktorid",
@@ -286,7 +281,6 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
                                     "$ref": "#/components/schemas/Henvendelse"
                                 }
                             }
