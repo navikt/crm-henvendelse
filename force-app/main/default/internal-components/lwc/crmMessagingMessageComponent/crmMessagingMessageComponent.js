@@ -134,8 +134,4 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     forwardEvent(event) {
         this.dispatchEvent(new CustomEvent(event.type));
     }
-
-    handleSetCaseToInProgress() {
-        this.dispatchEvent(new CustomEvent('setcasetoinprogress'));
-    }
 }

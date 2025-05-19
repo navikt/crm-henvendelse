@@ -363,10 +363,6 @@ export default class MessagingThreadViewer extends LightningElement {
         this.handleLangClick();
     }
 
-    handleSetCaseToInProgress() {
-        this.dispatchEvent(new CustomEvent('setcasetoinprogress'));
-    }
-
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//

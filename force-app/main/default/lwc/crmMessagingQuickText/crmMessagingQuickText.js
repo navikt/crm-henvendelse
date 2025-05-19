@@ -373,7 +373,12 @@ export default class CrmQuickText extends LightningElement {
     }
 
     handleCaseStatusChange() {
-        this.dispatchEvent(new CustomEvent('setcasetoinprogress'));
+        this.dispatchEvent(
+            new CustomEvent('setcasetoinprogress', {
+                composed: true,
+                bubbles: true
+            })
+        );
     }
 
     @api
