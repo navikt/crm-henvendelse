@@ -680,7 +680,7 @@
                         "example": "509934220"
                     }
                 },
-                "required": ["journalforerNavIdent", "journalfortDato", "journalfortTema"]
+                "required": ["journalfortDato", "journalfortTema"]
             },
             "MeldingFra": {
                 "type": "object",
