@@ -480,7 +480,7 @@
                         "example": "3410"
                     }
                 },
-                "required": ["markeringstype", "markertDato", "markertAv"]
+                "required": ["markeringstype"]
             },
             "MeldingRequest": {
                 "type": "object",
@@ -743,7 +743,7 @@
                         "$ref": "#/components/schemas/MeldingFra"
                     }
                 },
-                "required": ["sendtDato", "fra", "meldingsId"]
+                "required": ["sendtDato", "fra"]
             },
             "Henvendelse": {
                 "type": "object",
@@ -840,8 +840,7 @@
                     "opprettetDato",
                     "kontorsperre",
                     "feilsendt",
-                    "kjedeId",
-                    "gjeldendeTemagruppe"
+                    "kjedeId"
                 ]
             },
             "Temagruppe": {
