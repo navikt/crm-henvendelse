@@ -23,6 +23,7 @@ export default class CrmQuickText extends LightningElement {
     @api resetTextTemplate = '';
     @api useForConversationNote = false;
     @api standardSignature = false;
+    @api isCaseReserved = false;
 
     checkBoxValue = 'Standard';
     recentlyInserted = '';
@@ -369,6 +370,15 @@ export default class CrmQuickText extends LightningElement {
         plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
         plainText = plainText.replace(/&nbsp;/g, ' '); //Removes &nbsp; from the html that can arise from copy-paste
         return plainText;
+    }
+
+    handleCaseStatusChange() {
+        this.dispatchEvent(
+            new CustomEvent('setcasetoinprogress', {
+                composed: true,
+                bubbles: true
+            })
+        );
     }
 
     @api
