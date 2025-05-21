@@ -28,7 +28,7 @@ export default class CustomButton extends LightningElement {
         const styleMap = {
             primary: 'slds-button_brand',
             secondary: 'slds-button_outline-brand',
-            danger: 'slds-button_destructive'
+            danger: 'slds-button_text-destructive'
         };
         return baseClass + (styleMap[buttonStyle] || 'slds-button_brand');
     }
