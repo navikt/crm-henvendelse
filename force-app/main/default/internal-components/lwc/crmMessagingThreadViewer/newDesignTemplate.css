@@ -67,7 +67,7 @@
     right: var(--lwc-spacingXSmall, 0.5rem);
     bottom: calc(100% + 3.5rem - var(--lwc-spacingXSmall, 0.5rem));
     left: var(--lwc-spacingXSmall, 0.5rem);
-    min-width: var(--modal-width);    
+    min-width: var(--modal-width);
     border: darkgray;
     border-width: 0.1px;
     border-radius: 0.5rem;
@@ -76,6 +76,10 @@
 
 .fullWidth {
     width: 100%;
+}
+
+.container {
+    background-color: white;
 }
 
 @media only screen and (max-width: 2300px) {

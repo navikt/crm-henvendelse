@@ -119,33 +119,31 @@
                                         aria-hidden={hideModal}
                                         aria-modal="true"
                                     >
-                                        <div class="container">
-                                            <div class="panel-content scrollable" id="text">
-                                                <div class="slds-var-m-around_medium">
-                                                    <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
-                                                </div>
+                                        <div class="panel-content scrollable" id="text">
+                                            <div class="slds-var-m-around_medium">
+                                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
                                             </div>
-                                            <div class="panel-footer">
-                                                <div class="slds-grid slds-grid_align-end">
-                                                    <div
-                                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="slds-grid slds-grid_align-end">
+                                                <div
+                                                    class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
+                                                >
+                                                    <div tabindex="0" onfocus={trapFocusStart}></div>
+                                                    <button
+                                                        type="button"
+                                                        class="slds-button slds-button_neutral slds-var-m-left_x-small cancelButton"
+                                                        onclick={closeModal}
                                                     >
-                                                        <div tabindex="0" onfocus={trapFocusStart}></div>
-                                                        <button
-                                                            type="button"
-                                                            class="slds-button slds-button_neutral slds-var-m-left_x-small cancelButton"
-                                                            onclick={closeModal}
-                                                        >
-                                                            {labels.CANCEL_LABEL}</button
-                                                        ><button
-                                                            type="button"
-                                                            class="slds-button slds-button_destructive closeButton"
-                                                            onclick={closeThread}
-                                                        >
-                                                            {labels.END_DIALOGUE_LABEL}
-                                                        </button>
-                                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
-                                                    </div>
+                                                        {labels.CANCEL_LABEL}</button
+                                                    ><button
+                                                        type="button"
+                                                        class="slds-button slds-button_text-destructive closeButton"
+                                                        onclick={closeThread}
+                                                    >
+                                                        {labels.END_DIALOGUE_LABEL}
+                                                    </button>
+                                                    <div tabindex="0" onfocus={trapFocusEnd}></div>
                                                 </div>
                                             </div>
                                         </div>
