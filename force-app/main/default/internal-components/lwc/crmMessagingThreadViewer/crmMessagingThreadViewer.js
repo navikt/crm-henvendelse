@@ -31,6 +31,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api submitButtonLabel = 'Send';
     @api isThread;
     @api hideChangeLngBtn = false;
+    @api isCaseReserved;
 
     labels = {
         END_DIALOGUE_LABEL,
