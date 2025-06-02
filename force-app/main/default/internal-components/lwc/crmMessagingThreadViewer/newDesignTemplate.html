@@ -102,9 +102,9 @@
                             <template lwc:if={showClose}>
                                 <c-custom-button
                                     class="endDialogueBtn"
-                                    button-type="button"
+                                    type="button"
                                     disabled={closedThread}
-                                    onbuttonclick={toggleEndDialogueButton}
+                                    onclick={toggleEndDialogueButton}
                                     button-styling="danger"
                                     aria-expanded={buttonExpanded}
                                     button-label={labels.END_DIALOGUE_LABEL}
@@ -159,7 +159,7 @@
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
                             <c-custom-button
-                                button-type="submit"
+                                type="submit"
                                 name="submit"
                                 disabled={closedThread}
                                 button-label={submitButtonLabel}
