@@ -158,13 +158,9 @@
                         <!-- Button Container -->
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
-                            <c-custom-button
-                                type="submit"
-                                name="submit"
-                                disabled={closedThread}
-                                button-label={submitButtonLabel}
-                                full-height
-                            ></c-custom-button>
+                            <div>
+                                <button class="slds-button slds-button_stretch slds-button_brand slds-var-p-vertical_x-small testings" type="submit" title={submitButtonLabel} disabled={closedThread}>{submitButtonLabel}</button>
+                            </div>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
