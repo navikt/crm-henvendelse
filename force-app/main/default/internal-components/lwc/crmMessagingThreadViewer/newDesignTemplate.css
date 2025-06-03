@@ -78,7 +78,7 @@
     width: 100%;
 }
 
-.testings {
+.button-heights {
     height: 100%;
     line-height: var(--slds-g-font-lineheight-2, 1.25);
 }
