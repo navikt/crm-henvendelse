@@ -214,7 +214,6 @@ export default class MessagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        console.log('Haha');
         if (this.newDesign) {
             this.dispatchEvent(new CustomEvent('submitfromgrandchild'));
         }
