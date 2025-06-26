@@ -798,9 +798,14 @@
                         "description": "Definerer om henvendelsen er markert som kontorsperret. Markeringsinformasjon finnes i listen av markeringer",
                         "example": false
                     },
-                    "sistEndretAv": {
+                    "avsluttetAv": {
                         "type": "string",
-                        "description": "Identen til den siste som gjorde endring på tråden.",
+                        "description": "Identen/fnr til den som avsluttet tråden.",
+                        "example": "Z994035"
+                    },
+                    "sattTilSladdingAv": {
+                        "type": "string",
+                        "description": "Identen til den som aktiverte sladding på tråden.",
                         "example": "Z994035"
                     },
                     "sladding": {

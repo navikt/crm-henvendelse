@@ -17,7 +17,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
             Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
             if (thread != null) {
                 thread.CRM_isActive__c = false;
-                thread.CRM_Last_Edited_By__c = navIdent;
+                thread.CRM_Closed_By__c = navIdent;
                 update thread;
                 setResponse(
                     200,

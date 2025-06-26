@@ -8,7 +8,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         if (!validate()) {
             return;
         }
-        String navIdent = getActingNavIdent();
         String correlationId = getXCorrelation();
 
         try {
@@ -24,7 +23,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 when 'Thread__c' {
                     Thread__c thread = convertToThread(req);
                     thread.Id = objectId;
-                    thread.CRM_Last_Edited_By__c = navIdent; //Removes the fields that the calling part do not have access to update
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Thread__c>{ thread },
@@ -49,7 +47,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNote = convertToConvNote(req);
                     convNote.Id = objectId;
-                    convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Conversation_Note__c>{ convNote },

@@ -25,9 +25,9 @@ public class CRM_HenvThreadCloseRestService_Test {
         CRM_HenvThreadCloseRestService.closeThread();
         Test.stopTest();
 
-        thread = [SELECT Id, CRM_isActive__c, CRM_Last_Edited_By__c FROM Thread__c WHERE ID = :thread.Id];
+        thread = [SELECT Id, CRM_isActive__c, CRM_Closed_By__c FROM Thread__c WHERE ID = :thread.Id];
         System.assertEquals(200, RestContext.response.statusCode);
-        System.assertEquals(thread.CRM_Last_Edited_By__c, 'Z999999');
+        System.assertEquals(thread.CRM_Closed_By__c, 'Z999999');
     }
 
     @isTest

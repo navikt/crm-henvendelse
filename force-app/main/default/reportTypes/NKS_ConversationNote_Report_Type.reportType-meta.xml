@@ -3,7 +3,8 @@
     <baseObject>Conversation_Note__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>The report type is used to count number of records on list views for ConversationNote on Sladding.</description>
+    <description>The report type is used to count number of records on list views for
+        ConversationNote on Sladding.</description>
     <label>NKS ConversationNote Report Type</label>
     <sections>
         <columns>
@@ -138,7 +139,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Last_Edited_By__c</field>
+            <field>CRM_Redaction_Activated_By__c</field>
             <table>Conversation_Note__c</table>
         </columns>
         <columns>

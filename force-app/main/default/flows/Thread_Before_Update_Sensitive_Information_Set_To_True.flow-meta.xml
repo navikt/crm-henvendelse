@@ -18,7 +18,7 @@
                 <leftValueReference>$User.CRM_NAV_Ident__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue />
                 </rightValue>
             </conditions>
             <conditions>
@@ -34,7 +34,8 @@
             <label>Activated Through API</label>
         </rules>
     </decisions>
-    <interviewLabel>Thread - Before Update - Sensitive Information Set To True {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Thread - Before Update - Sensitive Information Set To True
+        {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Update - Sensitive Information Set To True</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -63,7 +64,7 @@
         <inputAssignments>
             <field>STO_Sensitive_Information_Activated_By__c</field>
             <value>
-                <elementReference>$Record.CRM_Last_Edited_By__c</elementReference>
+                <elementReference>$Record.CRM_Redaction_Activated_By__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
