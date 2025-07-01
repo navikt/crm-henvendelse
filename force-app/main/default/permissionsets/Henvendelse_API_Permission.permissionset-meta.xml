@@ -151,7 +151,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Redaction_Activated_By_c</field>
+        <field>Conversation_Note__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -431,7 +431,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Thread__c.CRM_Redaction_Activated_By_c</field>
+        <field>Thread__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
