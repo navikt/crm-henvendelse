@@ -47,7 +47,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -67,7 +67,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -89,7 +89,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -110,7 +110,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 

@@ -15,7 +15,7 @@ public class CRM_CommonCodeRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/kodeverk/temagrupper';
         req.httpMethod = 'GET';
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -34,7 +34,7 @@ public class CRM_CommonCodeRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/kodeverk/temagrupper';
         req.httpMethod = 'GET';
-        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('X-Correlation-ID', '123TEST');
         RestContext.request = req;
         RestContext.response = resp;
 
