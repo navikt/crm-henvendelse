@@ -22,7 +22,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('x-correlation-id', '123RANDOM');
-        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
@@ -59,7 +59,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('x-correlation-id', '123RANDOM');
-        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
@@ -85,7 +85,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('x-correlation-id', '123RANDOM');
-        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
@@ -110,7 +110,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('x-correlation-id', '123RANDOM');
-        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
@@ -134,7 +134,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
-        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;

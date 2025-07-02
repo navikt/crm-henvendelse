@@ -17,7 +17,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -42,7 +42,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         RestContext.request = req;
         RestContext.response = resp;
 
@@ -66,7 +66,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         RestContext.request = req;
         RestContext.response = resp;
 

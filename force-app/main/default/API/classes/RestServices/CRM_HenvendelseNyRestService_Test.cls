@@ -216,7 +216,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -251,7 +251,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -281,7 +281,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -310,7 +310,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -341,7 +341,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -372,7 +372,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', fakeThreadId);
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -393,7 +393,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', 'fakeThreadId');
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize('[]'));
         RestContext.request = req;
         RestContext.response = resp;
@@ -422,7 +422,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -451,7 +451,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.headers.put('x-correlation-id', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
