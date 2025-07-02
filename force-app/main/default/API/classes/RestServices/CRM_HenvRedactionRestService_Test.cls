@@ -18,7 +18,7 @@ public class CRM_HenvRedactionRestService_Test {
             '/services/apexrest/henvendelse/sladding/aarsaker/' +
             apiReference;
         req.httpMethod = 'GET';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         RestContext.request = req;
         RestContext.response = resp;
@@ -42,7 +42,7 @@ public class CRM_HenvRedactionRestService_Test {
             '/services/apexrest/henvendelse/sladding/aarsaker/' +
             'somethingRandom';
         req.httpMethod = 'GET';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         RestContext.request = req;
         RestContext.response = resp;
@@ -67,7 +67,7 @@ public class CRM_HenvRedactionRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/sladding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(slRequest));
         RestContext.request = req;
@@ -94,7 +94,7 @@ public class CRM_HenvRedactionRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/sladding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(slRequest));
         RestContext.request = req;
@@ -135,7 +135,7 @@ public class CRM_HenvRedactionRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/sladding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(slRequest));
         RestContext.request = req;
@@ -171,7 +171,7 @@ public class CRM_HenvRedactionRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/sladding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(slRequest));
         RestContext.request = req;
@@ -198,7 +198,7 @@ public class CRM_HenvRedactionRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/sladding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('x-correlation-id', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(slRequest));
         RestContext.request = req;
