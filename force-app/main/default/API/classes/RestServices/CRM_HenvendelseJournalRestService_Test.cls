@@ -21,7 +21,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.kjedeId = convNote.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
-        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
@@ -58,7 +58,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.kjedeId = thread.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
-        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
@@ -84,7 +84,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.kjedeId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
 
         RestRequest restReq = new RestRequest();
-        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
@@ -109,7 +109,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
-        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
