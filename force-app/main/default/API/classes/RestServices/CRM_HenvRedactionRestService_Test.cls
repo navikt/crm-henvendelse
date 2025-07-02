@@ -104,8 +104,8 @@ public class CRM_HenvRedactionRestService_Test {
         CRM_HenvRedactionRestService.markForRedaction();
         Test.stopTest();
 
-        System.assertEquals(204, RestContext.response.statusCode);
         System.assertEquals(null, RestContext.response.responseBody);
+        System.assertEquals(204, RestContext.response.statusCode);
         System.assertEquals(1, [SELECT COUNT() FROM Message__c WHERE CRM_Sensitive_Information__c = TRUE]);
     }
 
