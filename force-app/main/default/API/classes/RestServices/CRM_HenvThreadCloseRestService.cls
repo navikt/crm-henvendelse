@@ -10,6 +10,11 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
             return;
 
         String navIdent = getActingNavIdent();
+        if (navIdent == null) {
+            errorResponse(400, 'Missing Nav Ident in request header');
+            return;
+        }
+
         correlationId = getXCorrelation();
         String apiReference = getRequestParam('kjedeId');
 

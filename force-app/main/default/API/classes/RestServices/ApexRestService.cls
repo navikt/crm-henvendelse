@@ -88,7 +88,11 @@ global virtual class ApexRestService {
      **/
     global static String getRequestHeader(String headerName) {
         RestRequest request = RestContext.request;
-        return request.headers.containsKey(headerName) ? request.headers.get(headerName) : null;
+        return request.headers.containsKey(headerName)
+            ? request.headers.get(headerName)
+            : (request.headers.containsKey(headerName.toLowerCase())
+                  ? request.headers.get(headerName.toLowerCase())
+                  : null);
     }
 
     /**
@@ -124,7 +128,7 @@ global virtual class ApexRestService {
         RestRequest request = RestContext.request;
         Boolean valid = String.isNotBlank(getXCorrelation());
         if (!valid) {
-            errorResponse(400, 'Missing required parameter: X-Correlation-ID');
+            errorResponse(400, 'Missing required parameter: x-correlation-id');
         }
         return valid;
     }
