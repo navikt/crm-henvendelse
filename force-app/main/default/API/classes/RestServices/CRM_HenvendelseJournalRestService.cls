@@ -23,7 +23,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             Id objectId = getObjectId(apiReference);
             String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
             if (getActingNavIdent() == null) {
-                errorResponse(400, 'Missing Actor ID in request header');
+                errorResponse(400, 'Missing Nav Ident in request header');
                 return;
             }
 

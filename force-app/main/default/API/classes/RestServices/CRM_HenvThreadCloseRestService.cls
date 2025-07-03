@@ -11,7 +11,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
 
         String navIdent = getActingNavIdent();
         if (navIdent == null) {
-            errorResponse(400, 'Missing Actor ID in request header');
+            errorResponse(400, 'Missing Nav Ident in request header');
             return;
         }
 
