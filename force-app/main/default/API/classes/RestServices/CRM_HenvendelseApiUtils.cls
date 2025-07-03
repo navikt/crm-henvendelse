@@ -120,10 +120,11 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @return String
      **/
     public static String getActingNavIdent() {
-        if (RestContext.request.headers.containsKey('X-ACTING-NAV-IDENT')) { 
-            return getRequestHeader('X-ACTING-NAV-IDENT');
+        String ident = getRequestHeader('X-ACTING-NAV-IDENT');
+        if (ident == null) {
+            throw new ValidationException('Missing Actor ID in request header');
         }
-        return getRequestHeader('x-acting-nav-ident');
+        return ident;
     }
 
     /**
