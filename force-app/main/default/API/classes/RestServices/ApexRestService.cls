@@ -88,7 +88,11 @@ global virtual class ApexRestService {
      **/
     global static String getRequestHeader(String headerName) {
         RestRequest request = RestContext.request;
-        return request.headers.containsKey(headerName) ? request.headers.get(headerName) : null;
+        return request.headers.containsKey(headerName)
+            ? request.headers.get(headerName)
+            : (request.headers.containsKey(headerName.toLowerCase())
+                  ? request.headers.get(headerName.toLowerCase())
+                  : null);
     }
 
     /**
@@ -135,10 +139,7 @@ global virtual class ApexRestService {
      * @return String
      **/
     global static String getXCorrelation() {
-        if (RestContext.request.headers.containsKey('X-Correlation-ID')) { 
-            return getRequestHeader('X-Correlation-ID');
-        }
-        return getRequestHeader('x-correlation-id');
+        return getRequestHeader('X-Correlation-ID');
     }
 
     public class Error {

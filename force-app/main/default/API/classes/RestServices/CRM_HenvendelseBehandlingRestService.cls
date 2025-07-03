@@ -9,6 +9,10 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             return;
         }
         String navIdent = getActingNavIdent();
+        if (navIdent == null) {
+            errorResponse(400, 'Missing Nav Ident in request header');
+            return;
+        }
         String correlationId = getXCorrelation();
 
         try {
