@@ -5,7 +5,8 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String avsluttetDato;
     global String opprettetDato;
     global Boolean kontorsperre;
-    global String sistEndretAv;
+    global String avsluttetAv;
+    global String sattTilSladdingAv;
     global Boolean sladding;
     global Boolean feilsendt;
     global String kjedeId;
@@ -120,7 +121,8 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.henvendelseId = thread.CRM_HenvendelseId__c;
         this.fnr = thread.CRM_External_Person_Ident_Formula__c;
         this.aktorId = thread.CRM_External_ActorId_Formula__c;
-        this.sistEndretAv = thread.CRM_Last_Edited_By__c;
+        this.sattTilSladdingAv = thread.CRM_Redaction_Activated_By__c;
+        this.avsluttetAv = thread.CRM_Closed_By__c;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
