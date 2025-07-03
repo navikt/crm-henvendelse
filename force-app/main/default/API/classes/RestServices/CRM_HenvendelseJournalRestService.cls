@@ -22,6 +22,10 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             String apiReference = request.kjedeId;
             Id objectId = getObjectId(apiReference);
             String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
+            if (getActingNavIdent() == null) {
+                errorResponse(400, 'Missing Actor ID in request header');
+                return;
+            }
 
             switch on objectName {
                 when 'Conversation_Note__c' {

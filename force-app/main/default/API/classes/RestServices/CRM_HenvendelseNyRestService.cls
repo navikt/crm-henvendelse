@@ -15,6 +15,11 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         RestRequest request = RestContext.request;
 
+        if (getActingNavIdent() == null) {
+            errorResponse(400, 'Missing Actor ID in request header');
+            return;
+        }
+
         try {
             HENVENDELSE_TYPE henvType = getHenvendelseType(getLastPathParameter());
             String kjedeId = getRequestParam('kjedeId');

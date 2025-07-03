@@ -11,6 +11,11 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     @HttpPost
     global static void markForRedaction() {
         String navIdent = getActingNavIdent();
+        if (navIdent == null) {
+            errorResponse(400, 'Missing Actor ID in request header');
+            return;
+        }
+
         correlationId = getXCorrelation();
 
         try {
