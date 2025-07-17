@@ -302,10 +302,11 @@ export default class MessagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
-        this.showspinner = false;
-        this.refreshMessages();
         if (this.threadType === 'BTO') {
             this.closeThread();
+        } else {
+            this.showspinner = false;
+            this.refreshMessages();
         }
     }
 
