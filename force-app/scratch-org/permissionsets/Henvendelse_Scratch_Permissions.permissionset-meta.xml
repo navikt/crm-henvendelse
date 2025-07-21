@@ -175,11 +175,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Date_Registered__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Date_Time_Registered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -245,16 +240,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Legacy_Case_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Number_of_API_Retries__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -291,11 +276,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.CRM_Registered_Datetime_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Sent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -494,11 +474,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Message__c.CRM_Is_logged_in_User__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Message__c.CRM_Message_Text__c</field>
         <readable>true</readable>
@@ -686,11 +661,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Thread__c.CRM_Original_Person_NAV_Unit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Thread__c.CRM_Recipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

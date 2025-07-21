@@ -269,11 +269,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Date_Registered__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Date_Time_Registered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -338,19 +333,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Legacy_Case_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.CRM_Message_Content__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Number_of_API_Retries__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -390,11 +375,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Conversation_Note__c.CRM_Registered_Datetime_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Sent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -620,11 +600,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Message__c.CRM_Is_Redacted__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Message__c.CRM_Is_logged_in_User__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

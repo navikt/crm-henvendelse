@@ -3,7 +3,8 @@
     <baseObject>Conversation_Note__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>The report type is used to count number of records on list views for ConversationNote on Sladding.</description>
+    <description>The report type is used to count number of records on list views for
+        ConversationNote on Sladding.</description>
     <label>NKS ConversationNote Report Type</label>
     <sections>
         <columns>
@@ -78,11 +79,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Date_Registered__c</field>
-            <table>Conversation_Note__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CRM_Date_Time_Registered__c</field>
             <table>Conversation_Note__c</table>
         </columns>
@@ -139,16 +135,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CRM_Last_Edited_By__c</field>
-            <table>Conversation_Note__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Legacy_Case_Id__c</field>
-            <table>Conversation_Note__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Number_of_API_Retries__c</field>
             <table>Conversation_Note__c</table>
         </columns>
         <columns>
@@ -244,11 +230,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CRM_Registered_Datetime_Formula__c</field>
-            <table>Conversation_Note__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Sent__c</field>
             <table>Conversation_Note__c</table>
         </columns>
         <columns>
