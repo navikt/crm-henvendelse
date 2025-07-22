@@ -1,27 +1,35 @@
 <template>
     <div class={wrapperClass}>
-        <div class={textAreaContainer}>
-            <label for="textareaInput" class="sr-only">{labelText}</label>
-            <textarea
-                aria-invalid={errorState}
-                name="textbox"
-                onchange={handleChange}
-                oninput={handleMessage}
-                label="Skriv din melding her"
-                class="navds-textarea__input navds-body-short navds-body-medium navds-textarea--counter tekstboks minRow"
-                onfocusout={checkError}
-                id="textareaInput"
-            >
+        <label for="textareaInput" class="navds-form-field__label navds-label">{label}</label>
+        <textarea
+            aria-invalid={errorState}
+            onchange={handleChange}
+            oninput={handleMessage}
+            class="navds-textarea__input navds-body-short navds-body-short--medium navds-textarea--counter min-row textBox"
+            onfocusout={checkError}
+            id="textareaInput"
+        >
             {message}
-            </textarea>
-            <div aria-hidden="true" class="mirror minRow" tabindex="-1"></div>
-            <template if:true={limitCharacters}>
-                <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
-            </template>
-        </div>
+            </textarea
+        >
+        <div aria-hidden="true" class="mirror minRow" tabindex="-1"></div>
+        <template if:true={limitCharacters}>
+            <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
+        </template>
         <div aria-relevant="additions removals" aria-live="polite">
-            <template if:true={errorState}>
-                <div class="navds-error-message navds-error-message--medium navds-label">{errorMessage}</div>
+            <template lwc:if={errorState}>
+                <div class="navds-error-message navds-label navds-error-message--show-icon">
+                    <div class="slds-grid slds-p-bottom_small">
+                        <lightning-icon
+                            icon-name="utility:warning"
+                            size="x-small"
+                            variant="error"
+                            class="slds-p-right_xx-small"
+                        >
+                        </lightning-icon
+                        >{errorMessage}
+                    </div>
+                </div>
             </template>
         </div>
     </div>

@@ -1,4 +1,4 @@
-.tekstboks {
+.textBox {
     overflow-y: hidden;
 }
 
@@ -20,10 +20,6 @@
     top: 0;
 }
 
-.minRow {
+.min-row {
     min-height: 12rem;
-}
-
-.textarea-container {
-    margin-bottom: 1.5rem;
 }
