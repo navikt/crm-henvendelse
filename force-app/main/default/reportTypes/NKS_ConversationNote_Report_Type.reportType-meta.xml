@@ -139,6 +139,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CRM_Number_of_API_Retries__c</field>
+            <table>Conversation_Note__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CRM_Office_Restriction_Activated_By__c</field>
             <table>Conversation_Note__c</table>
         </columns>
