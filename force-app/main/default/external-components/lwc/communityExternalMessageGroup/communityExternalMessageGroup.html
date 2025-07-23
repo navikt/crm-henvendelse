@@ -1,0 +1,44 @@
+<template>
+    <div
+        class="navds-chat navds-chat--right navds-chat--top-text-right navds-chat--medium navds-chat--neutral"
+        data-color="neutral"
+        data-variant="neutral"
+    >
+        <div class="navds-chat__avatar" aria-hidden="true">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                fill="none"
+                viewBox="0 0 24 24"
+                focusable="false"
+                role="img"
+            >
+                <path
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                    d="M8.25 7.5a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0M12 2.25a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5M8.288 17.288A5.25 5.25 0 0 1 17.25 21a.75.75 0 0 0 1.5 0 6.75 6.75 0 0 0-13.5 0 .75.75 0 0 0 1.5 0 5.25 5.25 0 0 1 1.538-3.712"
+                    clip-rule="evenodd"
+                ></path>
+            </svg>
+        </div>
+        <div class="navds-chat__bubble-wrapper navds-body-long navds-body-long--medium">
+            <template for:each={messages} for:item="msgWrap">
+                <div key={msgWrap.message.Id} class="navds-chat__bubble">
+                    <template lwc:if={msgWrap.showHeader}>
+                        <h3 class="navds-chat__top-text navds-heading navds-heading--xsmall">
+                            <span class="navds-detail">{msgWrap.message.CRM_From_First_Name__c}</span>
+                            <span aria-hidden="true" class="navds-detail">•</span>
+                            <span class="navds-detail">
+                                <c-crm-nav-formatted-date
+                                    date={msgWrap.message.CRM_Sent_date__c}
+                                ></c-crm-nav-formatted-date>
+                            </span>
+                        </h3>
+                    </template>
+                    <lightning-formatted-text value={msgWrap.message.CRM_Message_Text__c}></lightning-formatted-text>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

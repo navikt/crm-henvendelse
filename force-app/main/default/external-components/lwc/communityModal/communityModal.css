@@ -1,16 +1,20 @@
-.modalpadding {
+.modal-padding {
     max-width: calc(992px - 2rem);
     padding: 2em;
     color: #3e3832;
 }
-.lukknapp-positioning {
-    position: absolute !important;
-    top: 1rem;
-    right: 1rem;
+
+.remove-modal-padding {
+    padding: 0;
 }
 
 .overrides {
     max-width: var(--override-max-width, none);
+}
+
+.modal {
+    max-width: 800px;
+    max-height: 400px;
 }
 
 @media only screen and (max-width: 1024px) {

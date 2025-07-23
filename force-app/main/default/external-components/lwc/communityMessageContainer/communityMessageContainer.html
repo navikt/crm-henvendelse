@@ -1,0 +1,17 @@
+<template>
+    <div class="navds-stack navds-vstack navds-stack-gap navds-stack-direction">
+        <template for:each={messageGroups} for:item="group">
+            <c-community-external-message-group
+                lwc:if={group.isExternal}
+                key={group.groupKey}
+                messages={group.messages}
+                class="external-message-group"
+            ></c-community-external-message-group>
+            <c-community-internal-message-group
+                lwc:else
+                key={group.groupKey}
+                messages={group.messages}
+            ></c-community-internal-message-group>
+        </template>
+    </div>
+</template>
