@@ -1,0 +1,40 @@
+<template>
+    <div class="navds-chat navds-chat--left navds-chat--top-text-left navds-chat--medium" data-color="" data-variant="">
+        <div class="navds-chat__avatar" aria-hidden="true">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                fill="none"
+                viewBox="0 0 24 24"
+                focusable="false"
+                role="img"
+            >
+                <path
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                    d="M8.25 7.5A3.75 3.75 0 1 1 9 9.75h1.5a.75.75 0 0 0 0-1.5H8.325a3.8 3.8 0 0 1-.075-.75M12 12.75a5.25 5.25 0 0 1-4.745-3H5A.75.75 0 0 1 4.25 9V6.5a.75.75 0 0 1 1.5 0v1.75h1.053A5.25 5.25 0 1 1 12 12.75m-3.712 4.538A5.25 5.25 0 0 1 17.25 21a.75.75 0 0 0 1.5 0 6.75 6.75 0 0 0-13.5 0 .75.75 0 0 0 1.5 0 5.25 5.25 0 0 1 1.538-3.712M19.75 6.5a.75.75 0 0 0-1.5 0v2a.75.75 0 0 0 1.5 0z"
+                    clip-rule="evenodd"
+                ></path>
+            </svg>
+        </div>
+        <div class="navds-chat__bubble-wrapper navds-body-long navds-body-long--medium">
+            <template for:each={messages} for:item="msgWrap">
+                <div key={msgWrap.message.Id} class="navds-chat__bubble">
+                    <template lwc:if={msgWrap.showHeader}>
+                        <h3 class="navds-chat__top-text navds-heading navds-heading--xsmall">
+                            <span class="navds-detail">Nav</span>
+                            <span aria-hidden="true" class="navds-detail">•</span>
+                            <span class="navds-detail">
+                                <c-crm-nav-formatted-date
+                                    date={msgWrap.message.CRM_Sent_date__c}
+                                ></c-crm-nav-formatted-date>
+                            </span>
+                        </h3>
+                    </template>
+                    <lightning-formatted-text value={msgWrap.message.CRM_Message_Text__c}></lightning-formatted-text>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

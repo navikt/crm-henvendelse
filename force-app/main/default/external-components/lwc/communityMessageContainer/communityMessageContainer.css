@@ -1,0 +1,9 @@
+.navds-stack {
+    margin-bottom: var(--a-spacing-10);
+    --__ac-stack-gap-xs: var(--a-spacing-10);
+    --__ac-stack-direction-xs: column;
+}
+
+.external-message-group {
+    align-self: flex-end;
+}

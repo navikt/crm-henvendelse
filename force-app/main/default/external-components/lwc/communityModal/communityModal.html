@@ -1,39 +1,41 @@
 <template>
-    <div if:true={showModal} class="modal__overlay">
-        <div tabindex="0" class="firstfocusable" onfocus={handleFocus}></div>
+    <div lwc:if={showModal} class="modal__overlay">
+        <div tabindex="0" class="firstFocusable" onfocus={handleFocus}></div>
         <div class={modalClasses} role="dialog" aria-modal="true" tabindex="-1">
-            <button
-                class="navds-modal__button navds-modal__button--shake navds-button navds-button--tertiary navds-button--small navds-button--icon-only modalFocus"
-                onclick={closeModal}
-                aria-label="Lukk"
-            >
-                <span class="navds-button__icon"
-                    ><svg
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        role="img"
-                        aria-labelledby="title-navds-id-128"
-                    >
-                        <title id="title-navds-id-128">Lukk modalvindu</title>
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M21 4.385 13.385 12 21 19.615 19.615 21 12 13.385 4.385 21 3 19.615 10.615 12 3 4.385 4.385 3 12 10.615 19.615 3 21 4.385Z"
-                            fill="currentColor"
-                        ></path></svg
-                ></span>
-            </button>
+            <template lwc:if={showCloseButton}>
+                <button
+                    class="navds-modal__button navds-modal__button--shake navds-button navds-button--tertiary navds-button--small navds-button--icon-only modalFocus"
+                    onclick={closeModal}
+                    aria-label="Lukk"
+                >
+                    <span class="navds-button__icon"
+                        ><svg
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            focusable="false"
+                            role="img"
+                            aria-labelledby="title-navds-id-128"
+                        >
+                            <title id="title-navds-id-128">Lukk modalvindu</title>
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M21 4.385 13.385 12 21 19.615 19.615 21 12 13.385 4.385 21 3 19.615 10.615 12 3 4.385 4.385 3 12 10.615 19.615 3 21 4.385Z"
+                                fill="currentColor"
+                            ></path></svg
+                    ></span>
+                </button>
+            </template>
             <slot name="modalHeader"></slot>
             <slot name="modalContent"></slot>
-            <template if:true={hideFooterLine}>
+            <template lwc:if={hideFooterLine}>
                 <hr class="blokk-m" />
             </template>
             <slot name="modalFooter"></slot>
         </div>
-        <div tabindex="0" class="lastfocusable" onfocus={handleFocus}></div>
+        <div tabindex="0" class="lastFocusable" onfocus={handleFocus}></div>
     </div>
 </template>

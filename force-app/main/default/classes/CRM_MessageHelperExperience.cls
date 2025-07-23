@@ -88,4 +88,82 @@ public with sharing class CRM_MessageHelperExperience {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<MessageGroupWrapper> getGroupedMessagesFromThread(Id threadId) {
+        try {
+            List<Message__c> messages = [
+                SELECT
+                    Id,
+                    CRM_Message_Text__c,
+                    CRM_Type__c,
+                    CRM_Event_Type__c,
+                    CRM_Sent_date__c,
+                    CRM_From_User__c,
+                    CRM_From_Contact__c,
+                    CRM_From_First_Name__c,
+                    CRM_External_Message__c,
+                    CRM_From_Label__c,
+                    CRM_Sensitive_Information__c
+                FROM Message__c
+                WHERE CRM_Thread__c = :threadId
+                ORDER BY CRM_Sent_date__c ASC
+            ];
+
+            List<MessageGroupWrapper> grouped = new List<MessageGroupWrapper>();
+            MessageGroupWrapper currentGroup;
+            Boolean lastIsExternal = null;
+
+            for (Message__c m : messages) {
+                if (m.CRM_Message_Text__c == null) {
+                    continue;
+                }
+
+                Boolean isExternal = m.CRM_External_Message__c;
+
+                // Start a new group if this is the first message or if sender changed from previous message
+                if (lastIsExternal == null || lastIsExternal != isExternal) {
+                    String groupKey = (isExternal ? 'external' : 'internal') + '_' + m.Id; // Use first message Id
+                    currentGroup = new MessageGroupWrapper(isExternal, groupKey);
+                    grouped.add(currentGroup);
+                }
+
+                Boolean showHeader = currentGroup.messages.isEmpty(); // first message in group
+                currentGroup.messages.add(new MessageWithHeader(m, showHeader));
+
+                lastIsExternal = isExternal; // update for next loop
+            }
+
+            return grouped;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    public class MessageGroupWrapper {
+        @AuraEnabled
+        public String groupKey { get; set; }
+        @AuraEnabled
+        public Boolean isExternal { get; set; }
+        @AuraEnabled
+        public List<MessageWithHeader> messages { get; set; }
+
+        public MessageGroupWrapper(Boolean isExternal, String groupKey) {
+            this.isExternal = isExternal;
+            this.groupKey = groupKey;
+            this.messages = new List<MessageWithHeader>();
+        }
+    }
+
+    public class MessageWithHeader {
+        @AuraEnabled
+        public Message__c message { get; set; }
+        @AuraEnabled
+        public Boolean showHeader { get; set; }
+
+        public MessageWithHeader(Message__c message, Boolean showHeader) {
+            this.message = message;
+            this.showHeader = showHeader;
+        }
+    }
 }

@@ -1,0 +1,7 @@
+.navds-chat__bubble {
+    --ac-chat-bubble-bg: var(--a-surface-action-subtle);
+}
+
+.navds-chat__avatar {
+    --ac-chat-avatar-bg: var(--a-surface-action-subtle);
+}
