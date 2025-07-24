@@ -239,6 +239,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CRM_Sent__c</field>
+            <table>Conversation_Note__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CRM_Subtheme_Code__c</field>
             <table>Conversation_Note__c</table>
         </columns>
