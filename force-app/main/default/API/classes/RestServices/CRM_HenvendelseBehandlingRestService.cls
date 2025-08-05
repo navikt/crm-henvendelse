@@ -28,7 +28,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
 
             switch on objectName {
                 when 'Thread__c' {
-                    Thread__c thread = convertToThread(req);
+                    Thread__c thread = convertToThread(req, navIdent);
                     thread.Id = objectId;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -52,7 +52,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     );
                 }
                 when 'Conversation_Note__c' {
-                    Conversation_Note__c convNote = convertToConvNote(req);
+                    Conversation_Note__c convNote = convertToConvNote(req, navIdent);
                     convNote.Id = objectId;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
