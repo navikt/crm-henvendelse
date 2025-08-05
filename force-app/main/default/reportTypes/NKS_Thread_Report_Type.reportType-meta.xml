@@ -184,11 +184,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Recipient__c</field>
-            <table>Thread__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CRM_Related_Object_Type__c</field>
             <table>Thread__c</table>
         </columns>

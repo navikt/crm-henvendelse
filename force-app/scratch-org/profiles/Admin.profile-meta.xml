@@ -269,11 +269,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Date_Registered__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Date_Time_Registered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -335,11 +330,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Conversation_Note__c.CRM_Redaction_Activated_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Legacy_Case_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
