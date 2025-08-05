@@ -27,7 +27,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -63,7 +64,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.addParameter('kjedeId', behandlingskjedeId);
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -88,7 +90,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
         req.requestBody = Blob.valueOf(requestBody);
         RestContext.request = req;
         RestContext.response = resp;
@@ -116,7 +118,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -144,7 +147,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -166,7 +170,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/invalidtype';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('x-correlation-id', '123RANDOM');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -215,8 +219,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -230,8 +234,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         System.assertEquals('Z999999', [SELECT Id, CRM_From_Ident__c FROM Message__c LIMIT 1]?.CRM_From_Ident__c);
         System.assertEquals(
             'Z999999',
-            [SELECT Id, CRM_Assignee__c FROM Thread__c WHERE CRM_Assignee_NAV_Unit__c = '4100' LIMIT 1]
-            ?.CRM_Assignee__c
+            [SELECT Id, CRM_Assignee__c FROM Thread__c WHERE CRM_Assignee_NAV_Unit__c = '4100' LIMIT 1]?.CRM_Assignee__c
         );
     }
 
@@ -250,8 +253,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -280,8 +283,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -309,8 +312,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -340,8 +343,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -371,8 +374,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', fakeThreadId);
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -392,8 +395,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', 'fakeThreadId');
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize('[]'));
         RestContext.request = req;
         RestContext.response = resp;
@@ -421,8 +424,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
@@ -450,8 +453,8 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.headers.put('X-Correlation-ID', '123RANDOM');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123RANDOM');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
