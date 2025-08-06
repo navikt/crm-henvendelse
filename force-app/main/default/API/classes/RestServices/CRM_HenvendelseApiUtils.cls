@@ -35,11 +35,15 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         }
         if (henv.kontorsperre != null) {
             convertedThread.CRM_Office_Restriction__c = henv.kontorsperre;
-            convertedThread.CRM_Office_Restriction_Activated_By__c = navIdent;
+            if (henv.kontorsperre) {
+                convertedThread.CRM_Office_Restriction_Activated_By__c = navIdent;
+            }
         }
         if (henv.feilsendt != null) {
             convertedThread.CRM_Incorrectly_Sent__c = henv.feilsendt;
-            convertedThread.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+            if (henv.feilsendt) {
+                convertedThread.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+            }
         }
         if (henv.sladding != null && henv.sladding == true) {
             convertedThread.STO_Sensitive_Information__c = henv.sladding;
@@ -70,11 +74,15 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (henv.kontorsperre != null) {
             //Update to set the correct sensoring fields
             convNote.CRM_Office_Restriction__c = henv.kontorsperre;
-            convNote.CRM_Office_Restriction_Activated_By__c = navIdent;
+            if (henv.kontorsperre) {
+                convNote.CRM_Office_Restriction_Activated_By__c = navIdent;
+            }
         }
         if (henv.feilsendt != null) {
             convNote.CRM_Incorrectly_Sent__c = henv.feilsendt;
-            convNote.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+            if (henv.feilsendt) {
+                convNote.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+            }
         }
         if (henv.sladding != null && henv.sladding == true) {
             convNote.STO_Sensitive_Information__c = henv.sladding;
