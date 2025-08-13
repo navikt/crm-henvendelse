@@ -88,7 +88,7 @@ public class CRM_HenvRedactionRestService_Test {
         RestResponse resp = new RestResponse();
 
         CRM_HenvRedactionRestService.SladdingRequest slRequest = new CRM_HenvRedactionRestService.SladdingRequest();
-        slRequest.aarsak = 'Andre årsaker';
+        slRequest.aarsak = 'Sendt feil bruker';
         slRequest.kjedeId = msg.CRM_Thread__r.CRM_API_Reference__c;
         slRequest.meldingsIder = new List<String>{ msg.CRM_API_Reference__c };
 

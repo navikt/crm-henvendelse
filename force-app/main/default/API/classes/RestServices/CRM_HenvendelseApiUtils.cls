@@ -28,16 +28,17 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @param henv
      * @return Thread__
      **/
-    public static Thread__c convertToThread(CRM_Henvendelse henv) {
+    public static Thread__c convertToThread(CRM_Henvendelse henv, String navIdent) {
         Thread__c convertedThread = new Thread__c();
         if (String.isNotBlank(henv.kasseringsDato)) {
             convertedThread.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
         }
-        if (henv.kontorsperre != null) {
-            convertedThread.CRM_Office_Restriction__c = henv.kontorsperre;
-        }
         if (henv.feilsendt != null) {
             convertedThread.CRM_Incorrectly_Sent__c = henv.feilsendt;
+            if (henv.feilsendt) {
+                convertedThread.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+                convertedThread.CRM_Incorrectly_Sent_Date__c = Datetime.now();
+            }
         }
         if (henv.sladding != null && henv.sladding == true) {
             convertedThread.STO_Sensitive_Information__c = henv.sladding;
@@ -59,18 +60,18 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @param henv
      * @return Conversation_Note__c
      **/
-    public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
+    public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv, String navIdent) {
         Conversation_Note__c convNote = new Conversation_Note__c();
 
         if (String.isNotBlank(henv.kasseringsDato)) {
             convNote.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
         }
-        if (henv.kontorsperre != null) {
-            //Update to set the correct sensoring fields
-            convNote.CRM_Office_Restriction__c = henv.kontorsperre;
-        }
         if (henv.feilsendt != null) {
             convNote.CRM_Incorrectly_Sent__c = henv.feilsendt;
+            if (henv.feilsendt) {
+                convNote.CRM_Incorrectly_Sent_Activated_By__c = navIdent;
+                convNote.CRM_Incorrectly_Sent_Date__c = Datetime.now();
+            }
         }
         if (henv.sladding != null && henv.sladding == true) {
             convNote.STO_Sensitive_Information__c = henv.sladding;
