@@ -33,13 +33,6 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (String.isNotBlank(henv.kasseringsDato)) {
             convertedThread.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
         }
-        if (henv.kontorsperre != null) {
-            convertedThread.CRM_Office_Restriction__c = henv.kontorsperre;
-            if (henv.kontorsperre) {
-                convertedThread.CRM_Office_Restriction_Activated_By__c = navIdent;
-                convertedThread.CRM_Office_Restriction_Date__c = Datetime.now();
-            }
-        }
         if (henv.feilsendt != null) {
             convertedThread.CRM_Incorrectly_Sent__c = henv.feilsendt;
             if (henv.feilsendt) {
@@ -72,14 +65,6 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
 
         if (String.isNotBlank(henv.kasseringsDato)) {
             convNote.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
-        }
-        if (henv.kontorsperre != null) {
-            //Update to set the correct sensoring fields
-            convNote.CRM_Office_Restriction__c = henv.kontorsperre;
-            if (henv.kontorsperre) {
-                convNote.CRM_Office_Restriction_Activated_By__c = navIdent;
-                convNote.CRM_Office_Restriction_Date__c = Datetime.now();
-            }
         }
         if (henv.feilsendt != null) {
             convNote.CRM_Incorrectly_Sent__c = henv.feilsendt;

@@ -7,7 +7,6 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return new List<Schema.SObjectField>{
             Thread__c.CRM_isActive__c,
             Thread__c.CRM_Date_Time_Registered__c,
-            Thread__c.CRM_Office_Restriction__c,
             Thread__c.CRM_Closed_By__c,
             Thread__c.CRM_Redaction_Activated_By__c,
             Thread__c.Id,
@@ -15,8 +14,6 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.Name,
             Thread__c.CRM_Related_Object__c,
             Thread__c.OwnerId,
-            Thread__c.CRM_Office_Restriction_Activated_By__c,
-            Thread__c.CRM_Office_Restriction_Date__c,
             Thread__c.CRM_Incorrectly_Sent_Activated_By__c,
             Thread__c.CRM_Incorrectly_Sent_Date__c,
             Thread__c.CRM_Incorrectly_Sent__c,
@@ -28,8 +25,6 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_Theme_Code__c,
             Thread__c.CRM_External_ActorId_Formula__c,
             Thread__c.CRM_External_Person_Ident_Formula__c,
-            Thread__c.CRM_Original_Person_GT__c,
-            Thread__c.CRM_Original_Person_NAV_Unit__c,
             Thread__c.CRM_API_Reference__c,
             Thread__c.STO_Sensitive_Information__c
         };
