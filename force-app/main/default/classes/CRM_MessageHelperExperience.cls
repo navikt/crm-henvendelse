@@ -113,6 +113,7 @@ public with sharing class CRM_MessageHelperExperience {
             List<MessageGroupWrapper> grouped = new List<MessageGroupWrapper>();
             MessageGroupWrapper currentGroup;
             Boolean lastIsExternal = null;
+            DateTime lastHeaderTime = null;
 
             for (Message__c m : messages) {
                 if (m.CRM_Message_Text__c == null) {
@@ -120,17 +121,32 @@ public with sharing class CRM_MessageHelperExperience {
                 }
 
                 Boolean isExternal = m.CRM_External_Message__c;
+                DateTime sentDate = m.CRM_Sent_date__c;
 
                 // Start a new group if this is the first message or if sender changed from previous message
                 if (lastIsExternal == null || lastIsExternal != isExternal) {
                     String groupKey = (isExternal ? 'external' : 'internal') + '_' + m.Id; // Use first message Id
                     currentGroup = new MessageGroupWrapper(isExternal, groupKey);
                     grouped.add(currentGroup);
+                    lastHeaderTime = null;
                 }
 
-                Boolean showHeader = currentGroup.messages.isEmpty(); // first message in group
-                currentGroup.messages.add(new MessageWithHeader(m, showHeader));
+                Boolean showHeader = false;
 
+                if (currentGroup.messages.isEmpty()) {
+                    // Always show header for the first message in group
+                    showHeader = true;
+                    lastHeaderTime = sentDate;
+                } else if (lastHeaderTime != null && sentDate != null) {
+                    Long diff = sentDate.getTime() - lastHeaderTime.getTime();
+                    // If at least 1 hour (3600000 ms) has passed since last header
+                    if (diff >= 3600000) {
+                        showHeader = true;
+                        lastHeaderTime = sentDate;
+                    }
+                }
+
+                currentGroup.messages.add(new MessageWithHeader(m, showHeader));
                 lastIsExternal = isExternal; // update for next loop
             }
 
