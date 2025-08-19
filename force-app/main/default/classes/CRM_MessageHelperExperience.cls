@@ -146,7 +146,7 @@ public with sharing class CRM_MessageHelperExperience {
                     }
                 }
 
-                currentGroup.messages.add(new MessageWithHeader(m, showHeader));
+                currentGroup.messages.add(new Message(m, showHeader));
                 lastIsExternal = isExternal; // update for next loop
             }
 
@@ -162,24 +162,27 @@ public with sharing class CRM_MessageHelperExperience {
         @AuraEnabled
         public Boolean isExternal { get; set; }
         @AuraEnabled
-        public List<MessageWithHeader> messages { get; set; }
+        public List<Message> messages { get; set; }
 
         public MessageGroupWrapper(Boolean isExternal, String groupKey) {
             this.isExternal = isExternal;
             this.groupKey = groupKey;
-            this.messages = new List<MessageWithHeader>();
+            this.messages = new List<Message>();
         }
     }
 
-    public class MessageWithHeader {
+    public class Message {
         @AuraEnabled
         public Message__c message { get; set; }
         @AuraEnabled
         public Boolean showHeader { get; set; }
+        @AuraEnabled
+        public Boolean isEvent { get; set; }
 
-        public MessageWithHeader(Message__c message, Boolean showHeader) {
+        public Message(Message__c message, Boolean showHeader) {
             this.message = message;
             this.showHeader = showHeader;
+            this.isEvent = message.CRM_Type__c == 'Event';
         }
     }
 }
