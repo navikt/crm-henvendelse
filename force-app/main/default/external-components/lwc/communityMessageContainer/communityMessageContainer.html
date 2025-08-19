@@ -1,6 +1,6 @@
 <template>
     <div class="navds-stack navds-vstack navds-stack-gap navds-stack-direction">
-        <template for:each={messageGroups} for:item="group">
+        <template for:each={decoratedGroups} for:item="group">
             <c-community-external-message-group
                 lwc:if={group.isExternal}
                 key={group.groupKey}
