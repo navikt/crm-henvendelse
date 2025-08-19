@@ -110,47 +110,70 @@ public with sharing class CRM_MessageHelperExperience {
                 ORDER BY CRM_Sent_date__c ASC
             ];
 
-            List<MessageGroupWrapper> grouped = new List<MessageGroupWrapper>();
-            MessageGroupWrapper currentGroup;
-            Boolean lastIsExternal = null;
+            List<MessageGroupWrapper> groups = new List<MessageGroupWrapper>();
+            List<Message> buffer = new List<Message>();
+            Boolean currentIsExternal = null;
             DateTime lastHeaderTime = null;
 
             for (Message__c m : messages) {
-                if (m.CRM_Message_Text__c == null) {
+                if (m.CRM_Message_Text__c == null)
                     continue;
-                }
 
+                Boolean isEvent = m.CRM_Type__c == 'Event';
                 Boolean isExternal = m.CRM_External_Message__c;
                 DateTime sentDate = m.CRM_Sent_date__c;
 
-                // Start a new group if this is the first message or if sender changed from previous message
-                if (lastIsExternal == null || lastIsExternal != isExternal) {
-                    String groupKey = (isExternal ? 'external' : 'internal') + '_' + m.Id; // Use first message Id
-                    currentGroup = new MessageGroupWrapper(isExternal, groupKey);
-                    grouped.add(currentGroup);
+                if (isEvent) {
+                    if (!buffer.isEmpty()) {
+                        MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
+                        groupBlock.blockId = 'group_' + buffer[0].message.Id;
+                        groupBlock.groupMessages = buffer;
+                        groupBlock.groupIsExternal = currentIsExternal;
+                        groups.add(groupBlock);
+                        buffer = new List<Message>();
+                    }
+                    MessageGroupWrapper eventBlock = new MessageGroupWrapper('event');
+                    eventBlock.blockId = 'event_' + m.Id;
+                    eventBlock.eventMessage = m;
+                    eventBlock.eventIsExternal = isExternal;
+                    groups.add(eventBlock);
                     lastHeaderTime = null;
-                }
-
-                Boolean showHeader = false;
-
-                if (currentGroup.messages.isEmpty()) {
-                    // Always show header for the first message in group
-                    showHeader = true;
-                    lastHeaderTime = sentDate;
-                } else if (lastHeaderTime != null && sentDate != null) {
-                    Long diff = sentDate.getTime() - lastHeaderTime.getTime();
-                    // If at least 1 hour (3600000 ms) has passed since last header
-                    if (diff >= 3600000) {
+                } else {
+                    Boolean showHeader = false;
+                    if (buffer.isEmpty()) {
                         showHeader = true;
                         lastHeaderTime = sentDate;
+                    } else if (lastHeaderTime != null && sentDate != null) {
+                        Long diff = sentDate.getTime() - lastHeaderTime.getTime();
+                        if (diff >= 3600000) {
+                            showHeader = true;
+                            lastHeaderTime = sentDate;
+                        }
                     }
+                    if (buffer.isEmpty() || currentIsExternal == null || currentIsExternal != isExternal) {
+                        if (!buffer.isEmpty()) {
+                            MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
+                            groupBlock.blockId = 'group_' + buffer[0].message.Id;
+                            groupBlock.groupMessages = buffer;
+                            groupBlock.groupIsExternal = currentIsExternal;
+                            groups.add(groupBlock);
+                            buffer = new List<Message>();
+                        }
+                        currentIsExternal = isExternal;
+                        lastHeaderTime = sentDate;
+                        showHeader = true;
+                    }
+                    buffer.add(new Message(m, showHeader));
                 }
-
-                currentGroup.messages.add(new Message(m, showHeader));
-                lastIsExternal = isExternal; // update for next loop
             }
-
-            return grouped;
+            if (!buffer.isEmpty()) {
+                MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
+                groupBlock.blockId = 'group_' + buffer[0].message.Id;
+                groupBlock.groupMessages = buffer;
+                groupBlock.groupIsExternal = currentIsExternal;
+                groups.add(groupBlock);
+            }
+            return groups;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -158,16 +181,20 @@ public with sharing class CRM_MessageHelperExperience {
 
     public class MessageGroupWrapper {
         @AuraEnabled
-        public String groupKey { get; set; }
+        public String type;
         @AuraEnabled
-        public Boolean isExternal { get; set; }
+        public String blockId;
         @AuraEnabled
-        public List<Message> messages { get; set; }
+        public List<Message> groupMessages;
+        @AuraEnabled
+        public Boolean groupIsExternal;
+        @AuraEnabled
+        public Message__c eventMessage;
+        @AuraEnabled
+        public Boolean eventIsExternal;
 
-        public MessageGroupWrapper(Boolean isExternal, String groupKey) {
-            this.isExternal = isExternal;
-            this.groupKey = groupKey;
-            this.messages = new List<Message>();
+        public MessageGroupWrapper(String type) {
+            this.type = type;
         }
     }
 
