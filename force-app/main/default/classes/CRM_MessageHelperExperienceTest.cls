@@ -113,19 +113,22 @@ public with sharing class CRM_MessageHelperExperienceTest {
         Assert.areEqual(3, grouped.size(), 'Expected 3 groups: external, internal, external');
 
         // Validate group 1
-        Assert.areEqual(true, grouped[0].isExternal, 'First group should be external');
-        Assert.areEqual(2, grouped[0].messages.size(), 'First group should have 2 messages');
-        Assert.areEqual(true, grouped[0].messages[0].showHeader, 'First message should show header');
-        Assert.areEqual(false, grouped[0].messages[1].showHeader, 'Second message should not show header');
+        Assert.areEqual('group', grouped[0].type, 'First block should be a group');
+        Assert.areEqual(true, grouped[0].groupIsExternal, 'First group should be external');
+        Assert.areEqual(2, grouped[0].groupMessages.size(), 'First group should have 2 messages');
+        Assert.areEqual(true, grouped[0].groupMessages[0].showHeader, 'First message should show header');
+        Assert.areEqual(false, grouped[0].groupMessages[1].showHeader, 'Second message should not show header');
 
         // Validate group 2
-        Assert.areEqual(false, grouped[1].isExternal, 'Second group should be internal');
-        Assert.areEqual(1, grouped[1].messages.size(), 'Second group should have 1 message');
-        Assert.areEqual(true, grouped[1].messages[0].showHeader, 'Only message should show header');
+        Assert.areEqual('group', grouped[1].type, 'Second block should be a group');
+        Assert.areEqual(false, grouped[1].groupIsExternal, 'Second group should be internal');
+        Assert.areEqual(1, grouped[1].groupMessages.size(), 'Second group should have 1 message');
+        Assert.areEqual(true, grouped[1].groupMessages[0].showHeader, 'Only message should show header');
 
         // Validate group 3
-        Assert.areEqual(true, grouped[2].isExternal, 'Third group should be external');
-        Assert.areEqual(1, grouped[2].messages.size(), 'Third group should have 1 message');
-        Assert.areEqual(true, grouped[2].messages[0].showHeader, 'Only message should show header');
+        Assert.areEqual('group', grouped[2].type, 'Third block should be a group');
+        Assert.areEqual(true, grouped[2].groupIsExternal, 'Third group should be external');
+        Assert.areEqual(1, grouped[2].groupMessages.size(), 'Third group should have 1 message');
+        Assert.areEqual(true, grouped[2].groupMessages[0].showHeader, 'Only message should show header');
     }
 }
