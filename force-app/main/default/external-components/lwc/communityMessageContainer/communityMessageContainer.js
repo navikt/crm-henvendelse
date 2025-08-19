@@ -4,15 +4,34 @@ export default class CommunityMessageContainer extends LightningElement {
     @api messageGroups;
 
     get decoratedBlocks() {
-        return (this.messageGroups || []).map((block) => {
+        const blocks = this.messageGroups || [];
+        return blocks.map((block, idx) => {
+            const nextBlock = blocks[idx + 1];
             if (block.type === 'group') {
-                const decoratedMessages = (block.groupMessages || []).map((msgWrap, idx) => ({
+                const decoratedMessages = (block.groupMessages || []).map((msgWrap, msgIdx) => ({
                     ...msgWrap,
-                    bubbleStyle: msgWrap.showHeader && idx > 0 ? 'margin-top: var(--a-spacing-5);' : ''
+                    bubbleStyle: msgWrap.showHeader && msgIdx > 0 ? 'margin-top: var(--a-spacing-5);' : ''
                 }));
-                return { ...block, groupMessages: decoratedMessages, isGroup: true, isEvent: false };
+                return {
+                    ...block,
+                    isGroup: true,
+                    isEvent: false,
+                    groupMessages: decoratedMessages,
+                    blockClass: 'block-gap'
+                };
             }
-            return { ...block, isGroup: false, isEvent: true };
+            let blockClass = '';
+            if (!nextBlock || nextBlock.type !== 'event') {
+                blockClass = 'block-gap';
+            } else {
+                blockClass = 'tight-gap';
+            }
+            return {
+                ...block,
+                isGroup: false,
+                isEvent: true,
+                blockClass
+            };
         });
     }
 }
