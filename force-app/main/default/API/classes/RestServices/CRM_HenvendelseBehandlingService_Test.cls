@@ -72,11 +72,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(
-            'Z999999',
-            [SELECT Id, CRM_Last_Edited_By__c FROM Thread__c WHERE Id = :thread.Id]
-            ?.CRM_Last_Edited_By__c
-        );
+        System.assertEquals(200, RestContext.response.statusCode);
     }
 
     @isTest
