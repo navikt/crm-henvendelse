@@ -124,59 +124,70 @@ public with sharing class CRM_MessageHelperExperience {
                 DateTime sentDate = m.CRM_Sent_date__c;
 
                 if (isEvent) {
-                    if (!buffer.isEmpty()) {
-                        MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
-                        groupBlock.blockId = 'group_' + buffer[0].message.Id;
-                        groupBlock.groupMessages = buffer;
-                        groupBlock.groupIsExternal = currentIsExternal;
-                        groups.add(groupBlock);
-                        buffer = new List<Message>();
-                    }
-                    MessageGroupWrapper eventBlock = new MessageGroupWrapper('event');
-                    eventBlock.blockId = 'event_' + m.Id;
-                    eventBlock.eventMessage = m;
-                    eventBlock.eventIsExternal = isExternal;
-                    groups.add(eventBlock);
+                    addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
+                    addEventBlock(groups, m, isExternal);
                     lastHeaderTime = null;
                 } else {
-                    Boolean showHeader = false;
-                    if (buffer.isEmpty()) {
-                        showHeader = true;
-                        lastHeaderTime = sentDate;
-                    } else if (lastHeaderTime != null && sentDate != null) {
-                        Long diff = sentDate.getTime() - lastHeaderTime.getTime();
-                        if (diff >= 3600000) {
-                            showHeader = true;
-                            lastHeaderTime = sentDate;
-                        }
-                    }
-                    if (buffer.isEmpty() || currentIsExternal == null || currentIsExternal != isExternal) {
-                        if (!buffer.isEmpty()) {
-                            MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
-                            groupBlock.blockId = 'group_' + buffer[0].message.Id;
-                            groupBlock.groupMessages = buffer;
-                            groupBlock.groupIsExternal = currentIsExternal;
-                            groups.add(groupBlock);
-                            buffer = new List<Message>();
-                        }
+                    Boolean showHeader = shouldShowHeader(buffer, lastHeaderTime, sentDate);
+                    if (shouldStartNewGroup(buffer, currentIsExternal, isExternal)) {
+                        addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
                         currentIsExternal = isExternal;
                         lastHeaderTime = sentDate;
                         showHeader = true;
                     }
                     buffer.add(new Message(m, showHeader));
+                    lastHeaderTime = updateLastHeaderTime(lastHeaderTime, sentDate, showHeader);
                 }
             }
-            if (!buffer.isEmpty()) {
-                MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
-                groupBlock.blockId = 'group_' + buffer[0].message.Id;
-                groupBlock.groupMessages = buffer;
-                groupBlock.groupIsExternal = currentIsExternal;
-                groups.add(groupBlock);
-            }
+            addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
             return groups;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    private static Boolean shouldStartNewGroup(List<Message> buffer, Boolean currentIsExternal, Boolean isExternal) {
+        return buffer.isEmpty() || currentIsExternal == null || currentIsExternal != isExternal;
+    }
+
+    private static Boolean shouldShowHeader(List<Message> buffer, DateTime lastHeaderTime, DateTime sentDate) {
+        if (buffer.isEmpty())
+            return true;
+        if (lastHeaderTime != null && sentDate != null) {
+            Long diff = sentDate.getTime() - lastHeaderTime.getTime();
+            if (diff >= 3600000)
+                return true;
+        }
+        return false;
+    }
+
+    private static DateTime updateLastHeaderTime(DateTime lastHeaderTime, DateTime sentDate, Boolean showHeader) {
+        if (showHeader)
+            return sentDate;
+        return lastHeaderTime;
+    }
+
+    private static void addMessageGroupFromBuffer(
+        List<MessageGroupWrapper> groups,
+        List<Message> buffer,
+        Boolean currentIsExternal
+    ) {
+        if (!buffer.isEmpty()) {
+            MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
+            groupBlock.blockId = 'group_' + buffer[0].message.Id;
+            groupBlock.groupMessages = buffer.clone();
+            groupBlock.groupIsExternal = currentIsExternal;
+            groups.add(groupBlock);
+            buffer.clear();
+        }
+    }
+
+    private static void addEventBlock(List<MessageGroupWrapper> groups, Message__c m, Boolean isExternal) {
+        MessageGroupWrapper eventBlock = new MessageGroupWrapper('event');
+        eventBlock.blockId = 'event_' + m.Id;
+        eventBlock.eventMessage = m;
+        eventBlock.eventIsExternal = isExternal;
+        groups.add(eventBlock);
     }
 
     public class MessageGroupWrapper {
