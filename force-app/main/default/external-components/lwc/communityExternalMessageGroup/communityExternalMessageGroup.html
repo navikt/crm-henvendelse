@@ -24,11 +24,9 @@
         </div>
         <div class="navds-chat__bubble-wrapper navds-body-long navds-body-long--medium">
             <template for:each={messages} for:item="msgWrap">
-                <div key={msgWrap.message.Id} class="navds-chat__bubble">
+                <div key={msgWrap.message.Id} class="navds-chat__bubble" style={msgWrap.bubbleStyle}>
                     <template lwc:if={msgWrap.showHeader}>
                         <h3 class="navds-chat__top-text navds-heading navds-heading--xsmall">
-                            <span class="navds-detail">{msgWrap.message.CRM_From_First_Name__c}</span>
-                            <span aria-hidden="true" class="navds-detail">•</span>
                             <span class="navds-detail">
                                 <c-crm-nav-formatted-date
                                     date={msgWrap.message.CRM_Sent_date__c}
