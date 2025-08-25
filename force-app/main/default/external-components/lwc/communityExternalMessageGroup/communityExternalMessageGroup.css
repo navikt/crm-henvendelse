@@ -1,3 +1,7 @@
 .container {
     align-self: flex-end;
 }
+
+.break-word {
+    word-break: break-word;
+}
