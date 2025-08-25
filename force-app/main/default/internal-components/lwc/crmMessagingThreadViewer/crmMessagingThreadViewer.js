@@ -6,6 +6,7 @@ import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
+import THREAD_TYPE from '@salesforce/schema/Thread__c.CRM_Thread_Type__c';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
 import END_DIALOGUE_LABEL from '@salesforce/label/c.Henvendelse_End_Dialogue';
 import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.Henvendelse_End_Dialogue_Alert_Text';
@@ -57,6 +58,7 @@ export default class MessagingThreadViewer extends LightningElement {
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
     registereddate;
     closedThread;
+    threadType;
     langBtnLock = false;
     _showLanguageChangeModal = false;
 
@@ -182,13 +184,14 @@ export default class MessagingThreadViewer extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$threadId',
-        fields: [ACTIVE_FIELD, REGISTERED_DATE]
+        fields: [ACTIVE_FIELD, REGISTERED_DATE, THREAD_TYPE]
     })
     wiredThread(resp) {
         const { data, error } = resp;
         if (data) {
             try {
                 this.registereddate = getFieldValue(data, REGISTERED_DATE);
+                this.threadType = getFieldValue(data, THREAD_TYPE);
                 const active = getFieldValue(data, ACTIVE_FIELD);
                 this.closedThread = !active;
             } catch (catchError) {
@@ -299,8 +302,12 @@ export default class MessagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
-        this.showspinner = false;
-        this.refreshMessages();
+        if (this.threadType === 'BTO') {
+            this.closeThread();
+        } else {
+            this.showspinner = false;
+            this.refreshMessages();
+        }
     }
 
     scrolltobottom() {
