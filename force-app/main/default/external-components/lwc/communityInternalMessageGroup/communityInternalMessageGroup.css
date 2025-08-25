@@ -5,3 +5,7 @@
 .navds-chat__avatar {
     --ac-chat-avatar-bg: var(--a-surface-action-subtle);
 }
+
+.break-word {
+    word-break: break-word;
+}
