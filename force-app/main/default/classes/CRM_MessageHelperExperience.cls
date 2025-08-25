@@ -106,7 +106,7 @@ public with sharing class CRM_MessageHelperExperience {
                     CRM_From_Label__c,
                     CRM_Sensitive_Information__c
                 FROM Message__c
-                WHERE CRM_Thread__c = :threadId
+                WHERE CRM_Thread__c = :threadId AND CRM_Event_Type__c != 'JOURNAL'
                 ORDER BY CRM_Sent_date__c ASC
             ];
 
