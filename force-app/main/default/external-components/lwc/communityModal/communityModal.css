@@ -1,29 +1,12 @@
-.modal-padding {
-    max-width: calc(992px - 2rem);
-    padding: 2em;
-    color: #3e3832;
-}
-
-.remove-modal-padding {
-    padding: 0;
-}
-
-.overrides {
-    max-width: var(--override-max-width, none);
-}
-
-.modal {
+.navds-modal {
     max-width: 800px;
     max-height: 400px;
 }
 
 @media only screen and (max-width: 1024px) {
-    .modalMobile {
+    .navds-modal {
         max-width: none;
-    }
-
-    .noHorizontalPadding-mobile {
-        padding-left: 0px;
-        padding-right: 0px;
+        margin-left: var(--a-spacing-4);
+        margin-right: var(--a-spacing-4);
     }
 }
