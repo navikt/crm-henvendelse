@@ -1,10 +1,9 @@
 import { LightningElement, api } from 'lwc';
 
 export default class CommunityModal extends LightningElement {
-    @api showFooterLine = false;
-    @api hidePadding = false;
-    @api hidePaddingMobile = false;
     @api showCloseButton = false;
+    @api showFooterLine = false;
+    @api modalHeader;
 
     bufferFocus = false;
     _showModal = false;
@@ -42,7 +41,7 @@ export default class CommunityModal extends LightningElement {
         if (focusable.length) {
             focusable[0].focus();
         } else {
-            this.template.querySelector('.modal').focus();
+            this.modalTemplate.focus();
         }
         this.bufferFocus = false;
     }
@@ -73,16 +72,12 @@ export default class CommunityModal extends LightningElement {
         this._showModal = false;
     }
 
-    get modalClass() {
-        return (
-            'modal modalMobile overrides' +
-            (!this.hidePaddingMobile ? '' : ' noHorizontalPadding-mobile') +
-            (!this.hidePadding ? ' modal-padding' : ' remove-modal-padding')
-        );
+    get modalTemplate() {
+        return this.template.querySelector('.navds-modal');
     }
 
     get modalFocusableElements() {
-        const modal = this.template.querySelector('.modal');
+        const modal = this.modalTemplate;
         if (!modal) return [];
         const selectors = [
             'a[href]:not([tabindex="-1"]):not([disabled])',
