@@ -25,13 +25,13 @@
                 IF(
                     NOT(ISBLANK(NKS_Inbox_Theme__c)),
                     NKS_Inbox_Theme__c,
-                    CRM_Theme_Group__r.Name
+                    TEXT(STO_Category__c)
                 )
                 &amp; &apos; - &apos;
                 &amp; IF(
                     NOT(ISBLANK(NKS_Inbox_Title__c)),
                     NKS_Inbox_Title__c,
-                    IF(CRM_Type__c = &apos;BTO&apos;, &apos;Beskjed til oss&apos;, &apos;Skriv til oss&apos;)
+                    IF(CRM_Type__c = &apos;BTO&apos;, &apos;Meld fra om endring&apos;, &apos;Skriv til oss&apos;)
                 )
                 &amp; IF(ISBLANK(CRM_Closed_Date__c), &apos;&apos;, &apos;: Henvendelsen er avsluttet&apos;)
             ),
