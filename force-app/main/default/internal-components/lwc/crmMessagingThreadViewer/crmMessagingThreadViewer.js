@@ -255,7 +255,9 @@ export default class MessagingThreadViewer extends LightningElement {
 
     closeThread() {
         publishToAmplitude('STO', { type: 'closeThread' });
-        this.closeModal();
+        if (this.threadType !== 'BTO') {
+            this.closeModal();
+        }
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadId;
         fields[ACTIVE_FIELD.fieldApiName] = false;
@@ -421,6 +423,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     get buttonExpanded() {
         return this.hideModal.toString();
+    }
+
+    get showCloseButton() {
+        return this.showClose && this.threadType !== 'BTO';
     }
 
     //##################################//
