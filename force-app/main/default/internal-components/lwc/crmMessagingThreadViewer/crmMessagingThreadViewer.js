@@ -255,7 +255,7 @@ export default class MessagingThreadViewer extends LightningElement {
 
     closeThread() {
         publishToAmplitude('STO', { type: 'closeThread' });
-        if (this.threadType !== 'BTO') {
+        if (!this.hideModal) {
             this.closeModal();
         }
         const fields = {};
