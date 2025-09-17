@@ -195,7 +195,11 @@ export default class MessagingThreadViewer extends LightningElement {
         this.showspinner = true;
         updateRecord({ fields })
             .then(() => {
-                this.dispatchEvent(new CustomEvent('closedevent'));
+                const closedEvent = new CustomEvent('threadclosed', {
+                    bubbles: true,
+                    composed: true
+                });
+                this.dispatchEvent(closedEvent);
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));

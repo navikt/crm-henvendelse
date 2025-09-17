@@ -120,8 +120,4 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
         }
     }
-
-    forwardEvent(event) {
-        this.dispatchEvent(new CustomEvent(event.type));
-    }
 }
