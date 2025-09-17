@@ -12,7 +12,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showQuick;
     @api englishTextTemplate;
     @api textTemplate; //Support for conditional text template
-    @api newDesign = false;
     @api submitButtonLabel = 'Send';
     @api isThread;
     @api showLanguageChangeModal = false;
@@ -69,9 +68,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get cardClass() {
-        return this.newDesign
-            ? 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none'
-            : 'slds-card__header slds-grid paddingAndCustomColor';
+        'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none';
     }
 
     get iconName() {
