@@ -45,7 +45,7 @@ export default class MessagingThreadViewer extends LightningElement {
         LANGUAGE_CHANGE_NO
     };
 
-    wiredMessagesResult;
+    _wiredMessagesResult;
     threadId;
     messages = [];
     registereddate;
@@ -130,7 +130,7 @@ export default class MessagingThreadViewer extends LightningElement {
 
     @wire(getmessages, { threadId: '$threadId' })
     wiremessages(result) {
-        this.wiredMessagesResult = result;
+        this._wiredMessagesResult = result;
         if (result.error) {
             this.error = result.error;
         } else if (result.data) {
@@ -207,7 +207,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     refreshMessages() {
-        return refreshApex(this.wiredMessagesResult);
+        return refreshApex(this._wiredMessagesResult);
     }
 
     scrolltobottom() {

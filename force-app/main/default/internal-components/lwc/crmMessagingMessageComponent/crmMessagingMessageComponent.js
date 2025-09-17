@@ -20,12 +20,9 @@ export default class CrmMessagingMessageComponent extends LightningElement {
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
-    showmodal = false;
-    showtaskmodal = false;
-    activeSectionMessage = '';
     threads;
     singlethread;
-    _threadsforRefresh;
+    _wiredThreadsResult;
     actualCardTitle;
     hasError = false;
     labels = {
@@ -40,7 +37,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
 
     @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
     wiredThreads(result) {
-        this._threadsforRefresh = result;
+        this._wiredThreadsResult = result;
 
         if (result.error) {
             this.error = result.error;
@@ -68,7 +65,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get cardClass() {
-        'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none';
+        return 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none';
     }
 
     get iconName() {
@@ -83,7 +80,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     handlenewpressed() {
         createThread({ recordId: this.recordId })
             .then(() => {
-                return refreshApex(this._threadsforRefresh);
+                return refreshApex(this._wiredThreadsResult);
             })
             .catch((error) => {
                 console.error(error);
@@ -122,10 +119,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             const hasContent = slot.assignedElements().length !== 0;
             this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
         }
-    }
-
-    handleSumbit() {
-        this.dispatchEvent(new CustomEvent('submitfromchild'));
     }
 
     forwardEvent(event) {
