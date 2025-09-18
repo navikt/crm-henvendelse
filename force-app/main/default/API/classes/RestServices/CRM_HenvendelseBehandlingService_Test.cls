@@ -26,8 +26,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             thread.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -62,8 +62,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             thread.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -72,11 +72,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(
-            'Z999999',
-            [SELECT Id, CRM_Last_Edited_By__c FROM Thread__c WHERE Id = :thread.Id]
-            ?.CRM_Last_Edited_By__c
-        );
+        System.assertEquals(200, RestContext.response.statusCode);
     }
 
     @isTest
@@ -95,8 +91,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             thread.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -124,8 +120,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             thread.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -154,8 +150,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             thread.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -183,8 +179,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             'INVALIDID';
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;
@@ -212,8 +208,8 @@ public class CRM_HenvendelseBehandlingService_Test {
             '/services/apexrest/henvendelse/behandling/' +
             convNote.CRM_API_Reference__c;
         req.httpMethod = 'PUT';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.headers.put('x-correlation-id', '123TEST');
+        req.headers.put('x-acting-nav-ident', 'Z999999');
         req.requestBody = blob.valueOf(JSON.serialize(henv));
         RestContext.request = req;
         RestContext.response = resp;

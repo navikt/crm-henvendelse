@@ -11,6 +11,11 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     @HttpPost
     global static void markForRedaction() {
         String navIdent = getActingNavIdent();
+        if (navIdent == null) {
+            errorResponse(400, 'Missing Nav Ident in request header');
+            return;
+        }
+
         correlationId = getXCorrelation();
 
         try {
@@ -41,7 +46,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                     Thread__c threadToUpdate = new Thread__c(Id = msgsToRedact[0].CRM_Thread__c);
                     threadToUpdate.Cause__c = slRequest.aarsak;
                     threadToUpdate.STO_Sensitive_Information__c = true;
-                    threadToUpdate.CRM_Last_Edited_By__c = navIdent;
+                    threadToUpdate.CRM_Redaction_Activated_By__c = navIdent;
                     update msgsToRedact;
                     update threadToUpdate;
                     setResponse(204);
@@ -52,7 +57,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                     for (Conversation_Note__c convNote : convsToRedact) {
                         convNote.STO_Sensitive_Information__c = true;
                         convNote.Cause__c = slRequest.aarsak;
-                        convNote.CRM_Last_Edited_By__c = navIdent;
+                        convNote.CRM_Redaction_Activated_By__c = navIdent;
                     }
 
                     update convsToRedact;
@@ -64,7 +69,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                     SObject objToUpdate = kjedeObjectId.getSobjectType().newSObject(kjedeObjectId);
                     objToUpdate.put('STO_Sensitive_Information__c', true);
                     objToUpdate.put('Cause__c', slRequest.aarsak);
-                    objToUpdate.put('CRM_Last_Edited_By__c', navIdent);
+                    objToUpdate.put('CRM_Redaction_Activated_By__c', navIdent);
 
                     update objToUpdate;
                     setResponse(204);

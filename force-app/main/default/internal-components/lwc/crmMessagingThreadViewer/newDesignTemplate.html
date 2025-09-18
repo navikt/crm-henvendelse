@@ -98,18 +98,18 @@
                         class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end button-container"
                     >
                         <!-- End dialogue section -->
-                        <lightning-layout-item class="slds-var-p-right_small">
-                            <template lwc:if={showClose}>
-                                <c-custom-button
-                                    class="endDialogueBtn"
+                        <lightning-layout-item>
+                            <template lwc:if={showCloseButton}>
+                                <button
+                                    class="endDialogueBtn slds-button slds-button_stretch slds-button_destructive button-spacing button-heights"
                                     type="button"
+                                    title={labels.END_DIALOGUE_LABEL}
                                     disabled={closedThread}
                                     onclick={toggleEndDialogueButton}
-                                    button-styling="danger"
                                     aria-expanded={buttonExpanded}
-                                    button-label={labels.END_DIALOGUE_LABEL}
-                                    full-height
-                                ></c-custom-button>
+                                >
+                                    {labels.END_DIALOGUE_LABEL}
+                                </button>
                                 <div class="slds-is-relative">
                                     <div
                                         role="alertdialog"
@@ -158,13 +158,16 @@
                         <!-- Button Container -->
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
-                            <c-custom-button
-                                type="submit"
-                                name="submit"
-                                disabled={closedThread}
-                                button-label={submitButtonLabel}
-                                full-height
-                            ></c-custom-button>
+                            <div>
+                                <button
+                                    class="slds-button slds-button_stretch slds-button_brand button-spacing button-heights"
+                                    type="submit"
+                                    title={submitButtonLabel}
+                                    disabled={closedThread}
+                                >
+                                    {submitButtonLabel}
+                                </button>
+                            </div>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>

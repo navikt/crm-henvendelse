@@ -1,9 +1,12 @@
-.tekstboks {
+.textBox {
     overflow-y: hidden;
 }
 
 .mirror {
-    font-family: Source Sans Pro, Arial, sans-serif;
+    font-family:
+        Source Sans Pro,
+        Arial,
+        sans-serif;
     -webkit-appearance: none;
     appearance: none;
     padding: 0.5rem;
@@ -20,10 +23,6 @@
     top: 0;
 }
 
-.minRow {
+.min-row {
     min-height: 12rem;
-}
-
-.textarea-container {
-    margin-bottom: 1.5rem;
 }

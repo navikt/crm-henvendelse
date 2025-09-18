@@ -3,7 +3,8 @@
     <baseObject>Thread__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>The report type is used to count number of records on list views for Thread on Sladding.</description>
+    <description>The report type is used to count number of records on list views for Thread on
+        Sladding.</description>
     <label>NKS Thread Report Type</label>
     <sections>
         <columns>
@@ -143,7 +144,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Last_Edited_By__c</field>
+            <field>CRM_Redaction_Activated_By__c</field>
             <table>Thread__c</table>
         </columns>
         <columns>
@@ -179,11 +180,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CRM_Original_Person_NAV_Unit__c</field>
-            <table>Thread__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CRM_Recipient__c</field>
             <table>Thread__c</table>
         </columns>
         <columns>
