@@ -1,7 +1,9 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
-import { refreshApex } from '@salesforce/apex';
+
 import ERROR_LABEL from '@salesforce/label/c.Henvendelse_Error';
 import ERROR_MESSAGE from '@salesforce/label/c.Henvendelse_Error_Message';
 
