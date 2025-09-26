@@ -88,4 +88,139 @@ public with sharing class CRM_MessageHelperExperience {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<MessageGroupWrapper> getGroupedMessagesFromThread(Id threadId) {
+        try {
+            List<Message__c> messages = [
+                SELECT
+                    Id,
+                    CRM_Message_Text__c,
+                    CRM_Type__c,
+                    CRM_Event_Type__c,
+                    CRM_Sent_date__c,
+                    CRM_From_User__c,
+                    CRM_From_Contact__c,
+                    CRM_From_First_Name__c,
+                    CRM_External_Message__c,
+                    CRM_From_Label__c,
+                    CRM_Sensitive_Information__c
+                FROM Message__c
+                WHERE CRM_Thread__c = :threadId AND CRM_Event_Type__c != 'JOURNAL'
+                ORDER BY CRM_Sent_date__c ASC
+            ];
+
+            List<MessageGroupWrapper> groups = new List<MessageGroupWrapper>();
+            List<Message> buffer = new List<Message>();
+            Boolean currentIsExternal = null;
+            DateTime lastHeaderTime = null;
+
+            for (Message__c m : messages) {
+                if (m.CRM_Message_Text__c == null)
+                    continue;
+
+                Boolean isEvent = m.CRM_Type__c == 'Event';
+                Boolean isExternal = m.CRM_External_Message__c;
+                DateTime sentDate = m.CRM_Sent_date__c;
+
+                if (isEvent) {
+                    addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
+                    addEventBlock(groups, m, isExternal);
+                    lastHeaderTime = null;
+                } else {
+                    Boolean showHeader = shouldShowHeader(buffer, lastHeaderTime, sentDate);
+                    if (shouldStartNewGroup(buffer, currentIsExternal, isExternal)) {
+                        addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
+                        currentIsExternal = isExternal;
+                        lastHeaderTime = sentDate;
+                        showHeader = true;
+                    }
+                    buffer.add(new Message(m, showHeader));
+                    lastHeaderTime = updateLastHeaderTime(lastHeaderTime, sentDate, showHeader);
+                }
+            }
+            addMessageGroupFromBuffer(groups, buffer, currentIsExternal);
+            return groups;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    private static Boolean shouldStartNewGroup(List<Message> buffer, Boolean currentIsExternal, Boolean isExternal) {
+        return buffer.isEmpty() || currentIsExternal == null || currentIsExternal != isExternal;
+    }
+
+    private static Boolean shouldShowHeader(List<Message> buffer, DateTime lastHeaderTime, DateTime sentDate) {
+        if (buffer.isEmpty())
+            return true;
+        if (lastHeaderTime != null && sentDate != null) {
+            Long diff = sentDate.getTime() - lastHeaderTime.getTime();
+            if (diff >= 3600000)
+                return true;
+        }
+        return false;
+    }
+
+    private static DateTime updateLastHeaderTime(DateTime lastHeaderTime, DateTime sentDate, Boolean showHeader) {
+        if (showHeader)
+            return sentDate;
+        return lastHeaderTime;
+    }
+
+    private static void addMessageGroupFromBuffer(
+        List<MessageGroupWrapper> groups,
+        List<Message> buffer,
+        Boolean currentIsExternal
+    ) {
+        if (!buffer.isEmpty()) {
+            MessageGroupWrapper groupBlock = new MessageGroupWrapper('group');
+            groupBlock.blockId = 'group_' + buffer[0].message.Id;
+            groupBlock.groupMessages = buffer.clone();
+            groupBlock.groupIsExternal = currentIsExternal;
+            groups.add(groupBlock);
+            buffer.clear();
+        }
+    }
+
+    private static void addEventBlock(List<MessageGroupWrapper> groups, Message__c m, Boolean isExternal) {
+        MessageGroupWrapper eventBlock = new MessageGroupWrapper('event');
+        eventBlock.blockId = 'event_' + m.Id;
+        eventBlock.eventMessage = m;
+        eventBlock.eventIsExternal = isExternal;
+        groups.add(eventBlock);
+    }
+
+    public class MessageGroupWrapper {
+        @AuraEnabled
+        public String type;
+        @AuraEnabled
+        public String blockId;
+        @AuraEnabled
+        public List<Message> groupMessages;
+        @AuraEnabled
+        public Boolean groupIsExternal;
+        @AuraEnabled
+        public Message__c eventMessage;
+        @AuraEnabled
+        public Boolean eventIsExternal;
+
+        public MessageGroupWrapper(String type) {
+            this.type = type;
+        }
+    }
+
+    public class Message {
+        @AuraEnabled
+        public Message__c message { get; set; }
+        @AuraEnabled
+        public Boolean showHeader { get; set; }
+        @AuraEnabled
+        public Boolean isEvent { get; set; }
+
+        public Message(Message__c message, Boolean showHeader) {
+            this.message = message;
+            this.showHeader = showHeader;
+            this.isEvent = message.CRM_Type__c == 'Event';
+        }
+    }
 }
