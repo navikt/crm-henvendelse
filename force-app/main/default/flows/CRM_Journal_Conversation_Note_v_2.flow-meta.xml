@@ -366,6 +366,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Publish_Notification_And_Existing_Journal_To_True</name>
+        <label>Set Publish Notification And Existing Journal To True</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Existing_Journal</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Publish_Notification_To_True</name>
+        <label>Set Publish Notification To True</label>
+        <locationX>446</locationX>
+        <locationY>1946</locationY>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DML_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Updates theme group and theme for conversation note to match the newest journal
             entry.</description>
         <name>Update_Conversation_Note_Categorization</name>
@@ -394,7 +430,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>DML_Check</targetReference>
+            <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -403,10 +439,13 @@
         <label>Check Journal Entries</label>
         <locationX>776</locationX>
         <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Set_Publish_Notification_And_Existing_Journal_To_True</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
         <rules>
             <name>Entry_Exists</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Existing_Journal_Entry</leftValueReference>
                 <operator>IsNull</operator>
@@ -451,7 +490,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
-        <locationY>1946</locationY>
+        <locationY>2054</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -469,7 +508,6 @@
             <label>Do DML</label>
         </rules>
     </decisions>
-    <description>Automatic journal initiation for the conversation note object.</description>
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
@@ -509,8 +547,8 @@
             {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos;
             &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
     </formulas>
-    <interviewLabel>POST_JOURNAL_AUTO_TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Journal Conversation Note</label>
+    <interviewLabel>CRM Journal Conversation Note {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Journal Conversation Note v. 2</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -536,11 +574,12 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
         </faultConnector>
         <inputReference>Journal_Entry_SF</inputReference>
@@ -626,6 +665,7 @@
         <queriedFields>CRM_Account__c</queriedFields>
         <queriedFields>CRM_Registered_Datetime_Formula__c</queriedFields>
         <queriedFields>CRM_Theme_Name__c</queriedFields>
+        <queriedFields>CRM_Subtheme__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_SF_Subtheme_Common_Code</name>
@@ -693,9 +733,8 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2162</locationY>
+        <locationY>2270</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
         </faultConnector>
         <inputReference>JOURNALED_CONV_NOTE</inputReference>
@@ -712,8 +751,8 @@
     <subflows>
         <name>Log_Error</name>
         <label>Log Error</label>
-        <locationX>578</locationX>
-        <locationY>2162</locationY>
+        <locationX>314</locationX>
+        <locationY>2378</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
@@ -772,6 +811,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Existing_Journal</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>Logical record variable to check if a journal entry already exists for this
@@ -841,7 +890,7 @@
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Wrapper object for the &quot;fagsystem sak&quot; the journal relates to</description>
@@ -893,6 +942,16 @@
         <isOutput>false</isOutput>
         <value>
             <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Publish_Notification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
