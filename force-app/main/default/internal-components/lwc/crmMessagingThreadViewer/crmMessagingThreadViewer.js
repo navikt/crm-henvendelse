@@ -290,7 +290,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get modalClass() {
-        return `slds-modal slds-show ${this.showModal ? 'slds-fade-in-open' : ''} modalStyling`;
+        return `slds-modal slds-show ${this.hideModal ? '' : 'slds-fade-in-open'} modalStyling`;
     }
 
     get backdropClass() {
