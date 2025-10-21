@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { subscribe, unsubscribe } from 'lightning/empApi';
-import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { updateRecord, getRecord, getFieldValue, notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import userId from '@salesforce/user/Id';
@@ -50,7 +50,7 @@ export default class MessagingThreadViewer extends LightningElement {
     messages = [];
     registereddate;
     threadType;
-    closedThread = false;
+    isThreadClosed = false;
     showspinner = false;
     hideModal = true;
     langBtnAriaToggle = false;
@@ -117,8 +117,7 @@ export default class MessagingThreadViewer extends LightningElement {
             try {
                 this.registereddate = getFieldValue(data, REGISTERED_DATE);
                 this.threadType = getFieldValue(data, THREAD_TYPE);
-                const active = getFieldValue(data, ACTIVE_FIELD);
-                this.closedThread = !active;
+                this.isThreadClosed = !getFieldValue(data, ACTIVE_FIELD);
             } catch (err) {
                 this.logThreadError(err, resp);
             }
@@ -186,7 +185,9 @@ export default class MessagingThreadViewer extends LightningElement {
 
     closeThread() {
         publishToAmplitude('STO', { type: 'closeThread' });
-        this.closeModal();
+        if (!this.hideModal) {
+            this.closeModal();
+        }
 
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadId;
@@ -195,6 +196,7 @@ export default class MessagingThreadViewer extends LightningElement {
         this.showspinner = true;
         updateRecord({ fields })
             .then(() => {
+                notifyRecordUpdateAvailable(new Set([this.threadId]));
                 const closedEvent = new CustomEvent('threadclosed', {
                     bubbles: true,
                     composed: true
