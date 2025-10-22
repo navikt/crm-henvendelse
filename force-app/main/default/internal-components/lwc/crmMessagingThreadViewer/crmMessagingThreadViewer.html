@@ -33,7 +33,7 @@
     <!-- Reply box -->
     <div slot="footer">
         <lightning-layout multiple-rows="true">
-            <template lwc:if={closedThread}> </template>
+            <template lwc:if={isThreadClosed}> </template>
             <template lwc:else>
                 <lightning-layout-item size="12">
                     <div class="slds-var-p-bottom_x-small slds-rich-text-editor__toolbar slds-shrink-none toolbar">
@@ -105,7 +105,7 @@
                                     class="endDialogueBtn slds-button slds-button_stretch slds-button_destructive button-spacing button-heights"
                                     type="button"
                                     title={labels.END_DIALOGUE_LABEL}
-                                    disabled={closedThread}
+                                    disabled={isThreadClosed}
                                     onclick={toggleEndDialogueButton}
                                     aria-expanded={buttonExpanded}
                                 >
@@ -164,7 +164,7 @@
                                     class="slds-button slds-button_stretch slds-button_brand button-spacing button-heights"
                                     type="submit"
                                     title={submitButtonLabel}
-                                    disabled={closedThread}
+                                    disabled={isThreadClosed}
                                 >
                                     {submitButtonLabel}
                                 </button>
