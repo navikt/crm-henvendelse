@@ -576,8 +576,7 @@
         </value>
     </variables>
     <variables>
-        <description>Variable set if the flow finds an existing journal entry for the matching theme
-            + case reference</description>
+        <description>Variable set if the flow finds an existing journal entry for the matching theme + case reference</description>
         <name>Existing_Journal_Entry</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
