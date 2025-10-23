@@ -128,24 +128,22 @@
     </decisions>
     <description>Creates a journal entry ready for JOARK post related to a Thread_ID.</description>
     <formulas>
-        <description>Defines the journal post type depending on if the dialogue was initiated by NAV
-            or the end user</description>
+        <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
         <name>JOURNAL_POST_TYPE_FORMULA</name>
         <dataType>String</dataType>
         <expression>IF({!Journal_Post_Type} != null,
-    {!Journal_Post_Type},
-    IF({!Get_thread.CRM_isActive__c} == true,
-        &apos;NOTAT&apos;,
-        IF({!Get_thread.CRM_From_External__c} == true,
-        &apos;INNGAAENDE&apos;,
-        &apos;UTGAAENDE&apos;
-        )
-    )
-)</expression>
+            {!Journal_Post_Type},
+            IF({!Get_thread.CRM_isActive__c} == true,
+                &apos;NOTAT&apos;,
+                IF({!Get_thread.CRM_From_External__c} == true,
+                &apos;INNGAAENDE&apos;,
+                &apos;UTGAAENDE&apos;
+                )
+            )
+        )</expression>
     </formulas>
     <formulas>
-        <description>Formula to define if the journal post for the thread is INNGAAENDE or
-            UTGAAENDE.</description>
+        <description>Formula to define if the journal post for the thread is INNGAAENDE or UTGAAENDE.</description>
         <name>JOURNAL_POST_TYPE_INN_UT_FORMULA</name>
         <dataType>String</dataType>
         <expression>IF({!Get_thread.CRM_From_External__c} == true,
