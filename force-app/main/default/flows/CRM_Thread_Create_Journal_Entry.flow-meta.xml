@@ -133,15 +133,15 @@
         <name>JOURNAL_POST_TYPE_FORMULA</name>
         <dataType>String</dataType>
         <expression>IF({!Journal_Post_Type} != null,
-            {!Journal_Post_Type},
-            IF({!Get_thread.CRM_isActive__c} == true,
-            &apos;NOTAT&apos;,
-            IF({!Get_thread.CRM_From_External__c} == true,
-            &apos;INNGAAENDE&apos;,
-            &apos;UTGAAENDE&apos;
-            )
-            )
-            )</expression>
+    {!Journal_Post_Type},
+    IF({!Get_thread.CRM_isActive__c} == true,
+        &apos;NOTAT&apos;,
+        IF({!Get_thread.CRM_From_External__c} == true,
+        &apos;INNGAAENDE&apos;,
+        &apos;UTGAAENDE&apos;
+        )
+    )
+)</expression>
     </formulas>
     <formulas>
         <description>Formula to define if the journal post for the thread is INNGAAENDE or
