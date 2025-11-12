@@ -17,7 +17,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
         journalReq.fagsaksystem = 'K9';
-        journalReq.temakode = 'DAG;';
+        journalReq.temakode = 'DAG';
         journalReq.kjedeId = convNote.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
@@ -46,6 +46,43 @@ public class CRM_HenvendelseJournalRestService_Test {
     }
 
     @isTest
+    static void testConvNoteJournalThemeNotFound() {
+        Conversation_Note__c convNote = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1];
+        ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
+
+        CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
+        journalReq.journalforendeEnhet = '4100';
+        journalReq.fagsakId = '123CASE';
+        journalReq.fagsaksystem = 'K9';
+        journalReq.temakode = 'INVALID_THEME';
+        journalReq.kjedeId = convNote.CRM_API_Reference__c;
+
+        RestRequest restReq = new RestRequest();
+        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
+
+        RestContext.request = restReq;
+        RestContext.response = new RestResponse();
+
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(convNote.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
+        Test.startTest();
+        CRM_HenvendelseJournalRestService.createJournalPost();
+        Test.stopTest();
+
+        System.assertEquals(400, RestContext.response.statusCode);
+        Conversation_Note__c updatedConvNote = [
+            SELECT Id, CRM_Journal_Status__c
+            FROM Conversation_Note__c
+            WHERE Id = :convNote.Id
+        ];
+        System.assert(updatedConvNote.CRM_Journal_Status__c.equalsIgnoreCase('Not Journaled'));
+    }
+
+    @isTest
     static void testThreadJournal() {
         Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
         ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
@@ -54,7 +91,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
         journalReq.fagsaksystem = 'ARENA';
-        journalReq.temakode = 'DAG;';
+        journalReq.temakode = 'DAG';
         journalReq.kjedeId = thread.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
@@ -74,13 +111,47 @@ public class CRM_HenvendelseJournalRestService_Test {
     }
 
     @isTest
+    static void testThreadJournalThemeNotFound() {
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
+        ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
+
+        CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
+        journalReq.journalforendeEnhet = '4100';
+        journalReq.fagsakId = '123CASE';
+        journalReq.fagsaksystem = 'ARENA';
+        journalReq.temakode = 'INVALID_THEME';
+        journalReq.kjedeId = thread.CRM_API_Reference__c;
+
+        RestRequest restReq = new RestRequest();
+        restReq.headers.put('x-correlation-id', '123RANDOM');
+        restReq.headers.put('x-acting-nav-ident', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
+
+        RestContext.request = restReq;
+        RestContext.response = new RestResponse();
+
+        Test.startTest();
+        CRM_HenvendelseJournalRestService.createJournalPost();
+        Test.stopTest();
+
+        Thread__c updatedThread = [
+            SELECT CRM_Journal_Status__c
+            FROM Thread__c
+            WHERE Id = :thread.Id
+        ];
+        System.assert(updatedThread.CRM_Journal_Status__c.equalsIgnoreCase('Not Journaled'));
+        System.assertEquals(400, RestContext.response.statusCode);
+        System.assertEquals(0, [SELECT COUNT() FROM Journal_Entry__c WHERE CRM_Thread__c = :thread.Id]);
+    }
+
+    @isTest
     static void testInvalidObjectIdInput() {
         ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
-        journalReq.temakode = 'DAG;';
+        journalReq.temakode = 'DAG';
         journalReq.kjedeId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
 
         RestRequest restReq = new RestRequest();
@@ -105,7 +176,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
-        journalReq.temakode = 'DAG;';
+        journalReq.temakode = 'DAG';
         journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
@@ -130,7 +201,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
-        journalReq.temakode = 'DAG;';
+        journalReq.temakode = 'DAG';
         journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
