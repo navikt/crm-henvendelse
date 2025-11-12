@@ -405,7 +405,7 @@
         <name>Set_Theme_Not_Found_output_var</name>
         <label>Set Theme Not Found output var</label>
         <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Theme_Not_Found</assignToReference>
             <operator>Assign</operator>
@@ -450,9 +450,9 @@
         <name>Check_if_Theme_CC_is_null</name>
         <label>Check if Theme CC is null</label>
         <locationX>380</locationX>
-        <locationY>674</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Get_SF_Subtheme_Common_Code</targetReference>
+            <targetReference>Get_Necessary_Record_Info</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Null</defaultConnectorLabel>
         <rules>
@@ -492,7 +492,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Necessary_Record_Info</targetReference>
+                <targetReference>Get_SF_Theme_Common_Code</targetReference>
             </connector>
             <label>New Entry</label>
         </rules>
@@ -626,11 +626,11 @@
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>380</locationX>
-        <locationY>458</locationY>
+        <locationX>710</locationX>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Get_SF_Subtheme_Common_Code</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -683,8 +683,8 @@
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
-        <locationX>380</locationX>
-        <locationY>350</locationY>
+        <locationX>710</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
@@ -739,7 +739,7 @@
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>380</locationX>
-        <locationY>566</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Theme_CC_is_null</targetReference>
