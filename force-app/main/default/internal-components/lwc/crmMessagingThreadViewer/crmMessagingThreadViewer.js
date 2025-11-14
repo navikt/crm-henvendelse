@@ -284,6 +284,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get text() {
+        //return this.quickTextCmp?.conversationNote ?? '';
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
     }
 
