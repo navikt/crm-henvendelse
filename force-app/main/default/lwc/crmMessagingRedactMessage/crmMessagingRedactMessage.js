@@ -1,6 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import CRM_From_User__c from '@salesforce/schema/CRM_Message__c.CRM_From_User__c';
+import { LightningElement, api, track } from 'lwc';
 
 export default class CrmMessagingRedactMessage extends LightningElement {
     _message;
