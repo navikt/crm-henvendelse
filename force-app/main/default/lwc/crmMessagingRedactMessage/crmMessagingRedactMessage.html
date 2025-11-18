@@ -88,7 +88,7 @@
                     </div>
                     <template lwc:if={isInfo}>
                         <div class="slds-chat-message__meta">
-                            {message.CRM_From_Ident_Formula__c} &nbsp; {message.CRM_From_First_Name__c} &nbsp;
+                            {redactionInfo} &nbsp;
                             <lightning-formatted-date-time
                                 value={message.CRM_Sent_date__c}
                                 year="numeric"
@@ -102,7 +102,7 @@
                     </template>
                     <template lwc:else>
                         <div class="slds-chat-message__meta slds-m-left_none">
-                            <template lwc:if={isOutbound}>
+                            <template lwc:if={isInbound}>
                                 <lightning-button-stateful
                                     class="slds-chat-message__action slds-float_left slds-m-left_none slds-var-m-right_x-small"
                                     icon-name-when-off="utility:edit"
@@ -112,7 +112,7 @@
                                     label-when-off="Start sladding"
                                     label-when-on="Avbryt sladding"
                                 ></lightning-button-stateful
-                                >{message.CRM_From_First_Name__c}&nbsp;
+                                >{fromFirstName}&nbsp;
                                 <lightning-formatted-date-time
                                     value={message.CRM_Sent_date__c}
                                     year="numeric"
@@ -124,7 +124,7 @@
                                 </lightning-formatted-date-time>
                             </template>
                             <template lwc:else>
-                                {message.CRM_From_First_Name__c}&nbsp;
+                                {fromFirstName}&nbsp;
                                 <lightning-formatted-date-time
                                     value={message.CRM_Sent_date__c}
                                     year="numeric"

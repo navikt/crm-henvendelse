@@ -196,7 +196,7 @@ export default class MessagingThreadViewer extends LightningElement {
         this.showspinner = true;
         updateRecord({ fields })
             .then(() => {
-                notifyRecordUpdateAvailable([{recordId: this.threadId}]);
+                notifyRecordUpdateAvailable([{ recordId: this.threadId }]);
                 const closedEvent = new CustomEvent('threadclosed', {
                     bubbles: true,
                     composed: true

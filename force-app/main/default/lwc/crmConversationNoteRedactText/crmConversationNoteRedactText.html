@@ -1,6 +1,10 @@
 <template>
     <lightning-card title="Samtale" icon-name="custom:custom22">
-        <div class="slds-p-horizontal_small">
+        <div lwc:if={isRedacted} class="slds-p-horizontal_small">
+            <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            <p>{redactionInfo}</p>
+        </div>
+        <div lwc:else class="slds-p-horizontal_small">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12" class="slds-is-relative">
                     <lightning-record-edit-form
@@ -27,7 +31,6 @@
                         </c-crm-redact-text>
                     </lightning-record-edit-form>
                     <lightning-formatted-rich-text lwc:else value={text}></lightning-formatted-rich-text>
-                    <p>{navIdent} &nbsp; (Nav-enhet&nbsp;{navUnit})</p>
                 </lightning-layout-item>
                 <lightning-layout-item>
                     <lightning-button-stateful

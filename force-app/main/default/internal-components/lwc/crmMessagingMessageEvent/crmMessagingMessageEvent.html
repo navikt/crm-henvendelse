@@ -1,7 +1,7 @@
 <template>
     <div class="slds-chat-event slds-var-p-top_small sdls-var-p-bottom_small">
         <div class="slds-chat-event__body">
-            <template if:true={isEndChatEvent}>
+            <template lwc:if={isEndChatEvent}>
                 <lightning-icon
                     icon-name="utility:end_chat"
                     alternative-text="Hendelse"
@@ -15,7 +15,7 @@
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isTransferEvent}>
+            <template lwc:if={isTransferEvent}>
                 <lightning-icon
                     icon-name="utility:change_owner"
                     alternative-text="Hendelse"
@@ -29,7 +29,7 @@
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isJournalEvent}>
+            <template lwc:if={isJournalEvent}>
                 <lightning-icon
                     icon-name="utility:event"
                     alternative-text="Hendelse"
@@ -43,7 +43,7 @@
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isOtherEvent}>
+            <template lwc:if={isOtherEvent}>
                 <lightning-icon
                     icon-name="utility:event"
                     alternative-text="Hendelse"

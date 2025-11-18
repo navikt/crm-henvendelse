@@ -42,7 +42,8 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         this.dispatchEvent(new CustomEvent('redactall', { detail: this.redactAll }));
     }
 
-    @api get message() {
+    @api
+    get message() {
         return this._message;
     }
 
@@ -72,7 +73,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         this._isRedacting = value;
     }
 
-    get isOutbound() {
+    get isInbound() {
         return this.message.CRM_External_Message__c;
     }
 
@@ -97,5 +98,28 @@ export default class CrmMessagingRedactMessage extends LightningElement {
 
     get canSaveDisabled() {
         return this.redactTextComponent ? !this.redactTextComponent.hasChanges : false;
+    }
+
+    get fromIdent() {
+        return this.message.CRM_From_Ident__c;
+    }
+
+    get fromFirstName() {
+        return this.message.CRM_From_First_Name__c;
+    }
+
+    get redactionInfo() {
+        const navIdent = this.fromIdent;
+        const navUnit = this.fromFirstName;
+        if (navIdent && navUnit) {
+            return `${navIdent} (Nav-enhet ${navUnit})`;
+        }
+        if (navIdent) {
+            return navIdent;
+        }
+        if (navUnit) {
+            return `(Nav-enhet ${navUnit})`;
+        }
+        return '';
     }
 }

@@ -2,7 +2,7 @@
     <li class="slds-chat-listitem slds-chat-listitem_outbound">
         <div class="slds-chat-message">
             <div class="slds-chat-message__body">
-                <template if:true={isOwner}>
+                <template lwc:if={isOwner}>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound">
                         <lightning-formatted-text
                             value={message.CRM_Message_Text__c}
@@ -10,7 +10,7 @@
                         ></lightning-formatted-text>
                     </div>
                 </template>
-                <template if:false={isOwner}>
+                <template lwc:else>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound-agent">
                         <lightning-formatted-text
                             value={message.CRM_Message_Text__c}
@@ -18,15 +18,19 @@
                         ></lightning-formatted-text>
                     </div>
                 </template>
-                <template if:false={isInfo}>
-                    <div class="slds-chat-message__meta custom-font-color">
-                        {message.CRM_From_First_Name__c} &nbsp;
+                <template lwc:if={isInfo}>
+                    <div lwc:if={isRedactionMessage} class="slds-chat-message__meta custom-font-color">
+                        {redactionInfo} &nbsp;
+                        <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
+                    </div>
+                    <div lwc:else class="slds-chat-message__meta custom-font-color">
+                        Nav &nbsp;
                         <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
                     </div>
                 </template>
-                <template if:true={isInfo}>
+                <template lwc:else>
                     <div class="slds-chat-message__meta custom-font-color">
-                        Nav &nbsp;
+                        {fromFirstName} &nbsp;
                         <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
                     </div>
                 </template>

@@ -46,13 +46,16 @@ export default class CrmConversationNoteRedactText extends LightningElement {
             .then(() => {
                 this.handleSuccess();
             })
-            .catch((error) => {
+            .catch(() => {
                 this.handleError();
             });
     }
 
     revertRedacting() {
-        this.template.querySelector('c-crm-redact-text').reset();
+        const redactText = this.template.querySelector('c-crm-redact-text');
+        if (redactText) {
+            redactText.reset();
+        }
     }
 
     toggleRedacting() {
@@ -73,16 +76,15 @@ export default class CrmConversationNoteRedactText extends LightningElement {
     }
 
     set isRedacting(value) {
-        if (false === value) {
+        if (value === false) {
             this.revertRedacting();
         }
         this._isRedacting = value;
     }
 
     get canSaveDisabled() {
-        return this.template.querySelector('c-crm-redact-text')
-            ? !this.template.querySelector('c-crm-redact-text').hasChanges
-            : false;
+        const redactText = this.template.querySelector('c-crm-redact-text');
+        return redactText ? !redactText.hasChanges : false;
     }
 
     get userId() {
@@ -95,5 +97,24 @@ export default class CrmConversationNoteRedactText extends LightningElement {
 
     get navUnit() {
         return getFieldValue(this.wiredUser.data, NAV_UNIT_FIELD);
+    }
+
+    get isRedacted() {
+        return getFieldValue(this.wiredConversationNote.data, IS_REDACTED_FIELD);
+    }
+
+    get redactionInfo() {
+        const navIdent = this.navIdent;
+        const navUnit = this.navUnit;
+        if (navIdent && navUnit) {
+            return `${navIdent} (Nav-enhet ${navUnit})`;
+        }
+        if (navIdent) {
+            return navIdent;
+        }
+        if (navUnit) {
+            return `(Nav-enhet ${navUnit})`;
+        }
+        return '';
     }
 }
