@@ -3,15 +3,14 @@
         <div class="slds-p-horizontal_small">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12" class="slds-is-relative">
-                    <lightning-formatted-rich-text if:false={isRedacting} value={text}></lightning-formatted-rich-text>
                     <lightning-record-edit-form
-                        if:true={isRedacting}
+                        lwc:if={isRedacting}
                         object-api-name="Conversation_Note__c"
                         record-id={recordId}
                         onsubmit={handleSubmit}
                     >
                         <lightning-spinner
-                            if:true={showSpinner}
+                            lwc:if={showSpinner}
                             alternative-text="Lagrer"
                             size="small"
                         ></lightning-spinner>
@@ -27,6 +26,8 @@
                             ></lightning-button>
                         </c-crm-redact-text>
                     </lightning-record-edit-form>
+                    <lightning-formatted-rich-text lwc:else value={text}></lightning-formatted-rich-text>
+                    <p>{navIdent} &nbsp; (Nav-enhet&nbsp;{navUnit})</p>
                 </lightning-layout-item>
                 <lightning-layout-item>
                     <lightning-button-stateful

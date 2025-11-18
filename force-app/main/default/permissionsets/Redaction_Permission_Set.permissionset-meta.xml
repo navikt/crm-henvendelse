@@ -38,6 +38,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Conversation_Note__c.CRM_Is_Redacted_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Is_Redacted__c</field>
         <readable>true</readable>
     </fieldPermissions>

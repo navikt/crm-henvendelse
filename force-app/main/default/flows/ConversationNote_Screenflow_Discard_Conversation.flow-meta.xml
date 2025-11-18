@@ -4,7 +4,7 @@
         <name>Close_Tab</name>
         <label>Close Tab</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -35,7 +35,7 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Trigger_sync</targetReference>
@@ -60,7 +60,7 @@
         <name>rollBack</name>
         <label>rollBack</label>
         <locationX>440</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -69,7 +69,7 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <connector>
             <targetReference>Trigger_sync_0</targetReference>
         </connector>
@@ -103,6 +103,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CRM_Is_Redacted_By__c</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Is_Redacted__c</field>
             <value>
                 <booleanValue>true</booleanValue>
@@ -127,7 +133,7 @@
         <name>Failed</name>
         <label>Failed</label>
         <locationX>440</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -144,7 +150,7 @@
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -166,7 +172,7 @@
         <name>Trigger_sync_0</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -196,7 +202,7 @@
         <name>Create_Innboks_User_Notification</name>
         <label>Create Innboks User Notification</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_Tab</targetReference>
         </connector>
