@@ -86,9 +86,32 @@
                             linkify
                         ></lightning-formatted-text>
                     </div>
-                    <template lwc:if={isInfo}>
-                        <div class="slds-chat-message__meta">
-                            {redactionInfo} &nbsp;
+                    <div class="slds-chat-message__meta slds-m-left_none">
+                        <template lwc:if={isInbound}>
+                            <lightning-button-stateful
+                                class="slds-chat-message__action slds-float_left slds-m-left_none"
+                                icon-name-when-off="utility:edit"
+                                icon-name-when-on="utility:edit"
+                                selected={isRedacting}
+                                onclick={toggleRedacting}
+                                label-when-off="Start sladding"
+                                label-when-on="Avbryt sladding"
+                            ></lightning-button-stateful>
+                            <span class="slds-float_right">
+                                {message.CRM_From_First_Name__c}&nbsp;
+                                <lightning-formatted-date-time
+                                    value={message.CRM_Sent_date__c}
+                                    year="numeric"
+                                    month="numeric"
+                                    day="numeric"
+                                    hour="2-digit"
+                                    minute="2-digit"
+                                >
+                                </lightning-formatted-date-time>
+                            </span>
+                        </template>
+                        <template lwc:else>
+                            {message.CRM_From_First_Name__c}&nbsp;
                             <lightning-formatted-date-time
                                 value={message.CRM_Sent_date__c}
                                 year="numeric"
@@ -98,54 +121,17 @@
                                 minute="2-digit"
                             >
                             </lightning-formatted-date-time>
-                        </div>
-                    </template>
-                    <template lwc:else>
-                        <div class="slds-chat-message__meta slds-m-left_none">
-                            <template lwc:if={isInbound}>
-                                <lightning-button-stateful
-                                    class="slds-chat-message__action slds-float_left slds-m-left_none slds-var-m-right_x-small"
-                                    icon-name-when-off="utility:edit"
-                                    icon-name-when-on="utility:edit"
-                                    selected={isRedacting}
-                                    onclick={toggleRedacting}
-                                    label-when-off="Start sladding"
-                                    label-when-on="Avbryt sladding"
-                                ></lightning-button-stateful
-                                >{fromFirstName}&nbsp;
-                                <lightning-formatted-date-time
-                                    value={message.CRM_Sent_date__c}
-                                    year="numeric"
-                                    month="numeric"
-                                    day="numeric"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                >
-                                </lightning-formatted-date-time>
-                            </template>
-                            <template lwc:else>
-                                {fromFirstName}&nbsp;
-                                <lightning-formatted-date-time
-                                    value={message.CRM_Sent_date__c}
-                                    year="numeric"
-                                    month="numeric"
-                                    day="numeric"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                >
-                                </lightning-formatted-date-time>
-                                <lightning-button-stateful
-                                    class="slds-chat-message__action slds-float_right"
-                                    icon-name-when-off="utility:edit"
-                                    icon-name-when-on="utility:edit"
-                                    selected={isRedacting}
-                                    onclick={toggleRedacting}
-                                    label-when-off="Start sladding"
-                                    label-when-on="Avbryt sladding"
-                                ></lightning-button-stateful>
-                            </template>
-                        </div>
-                    </template>
+                            <lightning-button-stateful
+                                class="slds-chat-message__action slds-float_right"
+                                icon-name-when-off="utility:edit"
+                                icon-name-when-on="utility:edit"
+                                selected={isRedacting}
+                                onclick={toggleRedacting}
+                                label-when-off="Start sladding"
+                                label-when-on="Avbryt sladding"
+                            ></lightning-button-stateful>
+                        </template>
+                    </div>
                 </div>
             </div>
         </li>

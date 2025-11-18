@@ -19,18 +19,14 @@
                     </div>
                 </template>
                 <template lwc:if={isInfo}>
-                    <div lwc:if={isRedactionMessage} class="slds-chat-message__meta custom-font-color">
-                        {redactionInfo} &nbsp;
-                        <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
-                    </div>
-                    <div lwc:else class="slds-chat-message__meta custom-font-color">
+                    <div class="slds-chat-message__meta custom-font-color">
                         Nav &nbsp;
                         <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
                     </div>
                 </template>
                 <template lwc:else>
                     <div class="slds-chat-message__meta custom-font-color">
-                        {fromFirstName} &nbsp;
+                        {message.CRM_From_First_Name__c} &nbsp;
                         <c-crm-nav-formatted-date date={message.CRM_Sent_date__c}></c-crm-nav-formatted-date>
                     </div>
                 </template>
