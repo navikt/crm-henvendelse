@@ -2,6 +2,7 @@
     <lightning-card title="Samtale" icon-name="custom:custom22">
         <div lwc:if={isRedacted} class="slds-p-horizontal_small">
             <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            <br /><br />
             <p>{redactionInfo}</p>
         </div>
         <div lwc:else class="slds-p-horizontal_small">

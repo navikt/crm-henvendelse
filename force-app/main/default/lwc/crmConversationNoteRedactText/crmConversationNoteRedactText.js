@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import redactConversationNote from '@salesforce/apex/CRM_HenvendelseRedactHelper.redactConversationNote';
 
 import NAME_FIELD from '@salesforce/schema/Conversation_Note__c.Name';
@@ -16,12 +17,15 @@ export default class CrmConversationNoteRedactText extends LightningElement {
     trueValue;
     _isRedacting = false;
     showSpinner = false;
+    wiredConversationNoteResult;
 
     @wire(getRecord, {
         recordId: '$recordId',
         fields: [NAME_FIELD, TEXT_FIELD, IS_REDACTED_FIELD, IS_REDACTED_BY_FIELD]
     })
-    wiredConversationNote;
+    wiredConversationNote(result) {
+        this.wiredConversationNoteResult = result;
+    }
 
     @wire(getRecord, {
         recordId: '$userId',
@@ -43,6 +47,9 @@ export default class CrmConversationNoteRedactText extends LightningElement {
         event.preventDefault();
         this.showSpinner = true;
         redactConversationNote({ redactedText: this.redactedText, recordId: this.recordId })
+            .then(() => {
+                return refreshApex(this.wiredConversationNoteResult);
+            })
             .then(() => {
                 this.handleSuccess();
             })
@@ -68,7 +75,7 @@ export default class CrmConversationNoteRedactText extends LightningElement {
     }
 
     get text() {
-        return getFieldValue(this.wiredConversationNote.data, TEXT_FIELD);
+        return getFieldValue(this.wiredConversationNoteResult.data, TEXT_FIELD);
     }
 
     get isRedacting() {
@@ -88,7 +95,7 @@ export default class CrmConversationNoteRedactText extends LightningElement {
     }
 
     get userId() {
-        return getFieldValue(this.wiredConversationNote.data, IS_REDACTED_BY_FIELD);
+        return getFieldValue(this.wiredConversationNoteResult.data, IS_REDACTED_BY_FIELD);
     }
 
     get navIdent() {
@@ -100,7 +107,7 @@ export default class CrmConversationNoteRedactText extends LightningElement {
     }
 
     get isRedacted() {
-        return getFieldValue(this.wiredConversationNote.data, IS_REDACTED_FIELD);
+        return getFieldValue(this.wiredConversationNoteResult.data, IS_REDACTED_FIELD);
     }
 
     get redactionInfo() {
