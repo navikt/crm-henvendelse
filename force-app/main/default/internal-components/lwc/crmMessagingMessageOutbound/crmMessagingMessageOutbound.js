@@ -5,13 +5,13 @@ export default class MessagingMessageOutbound extends LightningElement {
     @api userid;
 
     get isOwner() {
-        if (this.userid == this.message.CRM_From_User__c) {
+        if (this.userid === this.message.CRM_From_User__c) {
             return true;
         }
         return false;
     }
 
     get isInfo() {
-        return this.message.CRM_Type__c === 'Info' ? true : false;
+        return this.message.CRM_Type__c === 'Info' && !this.message.CRM_Event_Type__c === 'REDACTED';
     }
 }

@@ -83,72 +83,12 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CRM_Conversation_Note__c</fieldItem>
-                <identifier>RecordCRM_Conversation_Note_cField1</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-63f287a6-1343-4ee5-b018-ecee2aab9670</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-63f287a6-1343-4ee5-b018-ecee2aab9670</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-5a7a88ed-4264-4e9f-b9e4-f1bef3c59715</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-5a7a88ed-4264-4e9f-b9e4-f1bef3c59715</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
             <componentInstance>
                 <componentName>crmConversationNoteRedactText</componentName>
                 <identifier>c_crmConversationNoteRedactText1</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -161,18 +101,30 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.STO_Sensitive_Information_Activated_By__c</fieldItem>
                 <identifier>RecordSTO_Sensitive_Information_Activated_By_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.STO_Sensitive_Information_Date__c</fieldItem>
                 <identifier>RecordSTO_Sensitive_Information_Date_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.STO_Sensitive_Information_Unit__c</fieldItem>
                 <identifier>RecordSTO_Sensitive_Information_Unit_cField1</identifier>
             </fieldInstance>
@@ -183,24 +135,40 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Cause__c</fieldItem>
                 <identifier>RecordCause_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Redaction_Progress__c</fieldItem>
                 <identifier>RecordRedaction_Progress_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Journaled__c</fieldItem>
                 <identifier>RecordJournaled_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Redaction_Person_Ident__c</fieldItem>
                 <identifier>RecordRedaction_Person_Ident_cField1</identifier>
             </fieldInstance>
@@ -238,6 +206,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-9feee5d9-860d-4ea1-b024-d6cbf1289579</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
