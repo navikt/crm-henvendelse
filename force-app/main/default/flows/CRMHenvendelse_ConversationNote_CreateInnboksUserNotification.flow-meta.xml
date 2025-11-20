@@ -5,12 +5,12 @@
         <label>Create Innboks Notification</label>
         <locationX>314</locationX>
         <locationY>566</locationY>
-        <actionName>UN_InnboksProducerLegacy</actionName>
+        <actionName>UN_InnboksAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
             <targetReference>Log_error</targetReference>
         </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -18,21 +18,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>eksternVarsling</name>
+            <name>ident</name>
             <value>
-                <elementReference>SendExternalNotification</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>fodselsnummer</name>
-            <value>
-                <elementReference>ConversationNote.Redaction_Person_Ident__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>grupperingsId</name>
-            <value>
-                <elementReference>ConversationNote.CRM_API_Reference__c</elementReference>
+                <elementReference>ConversationNote.INT_PersonIdent__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -54,32 +42,20 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>sikkerhetsnivaa</name>
+            <name>sensitivitet</name>
             <value>
-                <numberValue>4.0</numberValue>
+                <stringValue>high</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>systembruker</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_SystemUser</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>tekst</name>
+            <name>tekster</name>
             <value>
                 <elementReference>NotificationMessageText</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>tidspunkt</name>
-            <value>
-                <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
-            </value>
-        </inputParameters>
         <outputParameters>
             <assignToReference>newInnboksNotification</assignToReference>
-            <name>output</name>
+            <name>userNotification</name>
         </outputParameters>
     </actionCalls>
     <actionCalls>
