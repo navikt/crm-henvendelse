@@ -362,13 +362,6 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>MessageDateTime</name>
-        <dataType>DateTime</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>namespace</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

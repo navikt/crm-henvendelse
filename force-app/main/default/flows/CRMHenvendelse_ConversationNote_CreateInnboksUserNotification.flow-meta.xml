@@ -296,15 +296,4 @@ Values: &quot;EPOST&quot; &quot;SMS&quot;</description>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
-    <variables>
-        <description>Send SMS/Email notification. Default value is false</description>
-        <name>SendExternalNotification</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
 </Flow>
