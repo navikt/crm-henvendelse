@@ -95,6 +95,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>Journal_Documents.overstyrInnsynsregler</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>VISES_MASKINELT_GODKJENT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>Journal_Documents.brevkode</assignToReference>
             <operator>Assign</operator>
             <value>
