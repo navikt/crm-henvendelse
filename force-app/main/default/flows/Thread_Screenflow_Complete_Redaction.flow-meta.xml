@@ -188,6 +188,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CRM_From_User__c</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
                 <elementReference>Redacted_Message_Notification_Text</elementReference>

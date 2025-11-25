@@ -34,5 +34,6 @@
         "Messaging_Read_and_Write_Messages_and_Threads",
         "Henvendelse_API_Permission",
         "Henvendelse_Scratch_Permissions"
-    ]
+    ],
+    "xml.preferences.showSchemaDocumentationType": "none"
 }
