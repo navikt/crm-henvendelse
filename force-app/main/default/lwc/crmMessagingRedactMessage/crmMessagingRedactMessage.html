@@ -1,16 +1,38 @@
 <template>
-    <template if:false={isEvent}>
+    <template lwc:if={isEvent}>
+        <li class="slds-chat-listitem slds-chat-listitem_event">
+            <div class="slds-chat-event">
+                <div class="slds-chat-event__body">
+                    <lightning-icon
+                        icon-name="utility:events"
+                        alternative-text="Hendelse"
+                        title="Hendelse"
+                        size="small"
+                        class="slds-var-p-right_small"
+                    ></lightning-icon>
+                    <p>
+                        {message.CRM_Message_Text__c} • &nbsp;
+                        <lightning-formatted-date-time
+                            value={message.CRM_Sent_date__c}
+                            year="numeric"
+                            month="numeric"
+                            day="numeric"
+                            hour="2-digit"
+                            minute="2-digit"
+                        >
+                        </lightning-formatted-date-time>
+                    </p>
+                </div>
+            </div>
+        </li>
+    </template>
+    <template lwc:else>
         <li class={liClasses}>
             <div class="slds-chat-message">
                 <div class="slds-chat-message__body">
                     <div class={divClasses}>
-                        <lightning-formatted-text
-                            if:false={isRedacting}
-                            value={message.CRM_Message_Text__c}
-                            linkify
-                        ></lightning-formatted-text>
                         <lightning-record-edit-form
-                            if:true={isRedacting}
+                            lwc:if={isRedacting}
                             object-api-name="Message__c"
                             record-id={messageId}
                             onsuccess={handleSuccess}
@@ -20,7 +42,7 @@
                             class="slds-text-color_default slds-is-relative"
                         >
                             <lightning-spinner
-                                if:true={showSpinner}
+                                lwc:if={showSpinner}
                                 alternative-text="Lagrer"
                                 size="small"
                             ></lightning-spinner>
@@ -58,10 +80,24 @@
                                 field-name="CRM_Is_Redacted__c"
                             ></lightning-input-field>
                         </lightning-record-edit-form>
+                        <lightning-formatted-text
+                            lwc:else
+                            value={message.CRM_Message_Text__c}
+                            linkify
+                        ></lightning-formatted-text>
                     </div>
-                    <template if:false={isInfo}>
-                        <div class="slds-chat-message__meta slds-m-left_none">
-                            <template if:false={isInbound}>
+                    <div class="slds-chat-message__meta slds-m-left_none">
+                        <template lwc:if={isInbound}>
+                            <lightning-button-stateful
+                                class="slds-chat-message__action slds-float_left slds-m-left_none"
+                                icon-name-when-off="utility:edit"
+                                icon-name-when-on="utility:edit"
+                                selected={isRedacting}
+                                onclick={toggleRedacting}
+                                label-when-off="Start sladding"
+                                label-when-on="Avbryt sladding"
+                            ></lightning-button-stateful>
+                            <span class="slds-float_right">
                                 {message.CRM_From_First_Name__c}&nbsp;
                                 <lightning-formatted-date-time
                                     value={message.CRM_Sent_date__c}
@@ -72,42 +108,10 @@
                                     minute="2-digit"
                                 >
                                 </lightning-formatted-date-time>
-                                <lightning-button-stateful
-                                    class="slds-chat-message__action slds-float_right"
-                                    icon-name-when-off="utility:edit"
-                                    icon-name-when-on="utility:edit"
-                                    selected={isRedacting}
-                                    onclick={toggleRedacting}
-                                    label-when-off="Start sladding"
-                                    label-when-on="Avbryt sladding"
-                                ></lightning-button-stateful>
-                            </template>
-                            <template if:true={isInbound}>
-                                <lightning-button-stateful
-                                    class="slds-chat-message__action slds-float_left slds-m-left_none slds-var-m-right_x-small"
-                                    icon-name-when-off="utility:edit"
-                                    icon-name-when-on="utility:edit"
-                                    selected={isRedacting}
-                                    onclick={toggleRedacting}
-                                    label-when-off="Start sladding"
-                                    label-when-on="Avbryt sladding"
-                                ></lightning-button-stateful
-                                >{message.CRM_From_First_Name__c}&nbsp;
-                                <lightning-formatted-date-time
-                                    value={message.CRM_Sent_date__c}
-                                    year="numeric"
-                                    month="numeric"
-                                    day="numeric"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                >
-                                </lightning-formatted-date-time>
-                            </template>
-                        </div>
-                    </template>
-                    <template if:true={isInfo}>
-                        <div class="slds-chat-message__meta">
-                            Nav &nbsp;
+                            </span>
+                        </template>
+                        <template lwc:else>
+                            {message.CRM_From_First_Name__c}&nbsp;
                             <lightning-formatted-date-time
                                 value={message.CRM_Sent_date__c}
                                 year="numeric"
@@ -117,35 +121,17 @@
                                 minute="2-digit"
                             >
                             </lightning-formatted-date-time>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </li>
-    </template>
-    <template if:true={isEvent}>
-        <li class="slds-chat-listitem slds-chat-listitem_event">
-            <div class="slds-chat-event">
-                <div class="slds-chat-event__body">
-                    <lightning-icon
-                        icon-name="utility:events"
-                        alternative-text="Hendelse"
-                        title="Hendelse"
-                        size="small"
-                        class="slds-var-p-right_small"
-                    ></lightning-icon>
-                    <p>
-                        {message.CRM_Message_Text__c} • &nbsp;
-                        <lightning-formatted-date-time
-                            value={message.CRM_Sent_date__c}
-                            year="numeric"
-                            month="numeric"
-                            day="numeric"
-                            hour="2-digit"
-                            minute="2-digit"
-                        >
-                        </lightning-formatted-date-time>
-                    </p>
+                            <lightning-button-stateful
+                                class="slds-chat-message__action slds-float_right"
+                                icon-name-when-off="utility:edit"
+                                icon-name-when-on="utility:edit"
+                                selected={isRedacting}
+                                onclick={toggleRedacting}
+                                label-when-off="Start sladding"
+                                label-when-on="Avbryt sladding"
+                            ></lightning-button-stateful>
+                        </template>
+                    </div>
                 </div>
             </div>
         </li>
