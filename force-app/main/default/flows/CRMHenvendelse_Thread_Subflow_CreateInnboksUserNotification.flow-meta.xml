@@ -42,9 +42,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>prefererteKanaler</name>
+            <name>preferertKanal</name>
             <value>
-                <elementReference>PreferredChannels</elementReference>
+                <elementReference>PreferredChannel</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -387,8 +387,8 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Valid values are &quot;SMS&quot; and &quot;EPOST&quot; can be &quot;SMS,EPOST&quot;</description>
-        <name>PreferredChannels</name>
+        <description>Valid values are &quot;SMS&quot; OR &quot;EPOST&quot;. If both values are needed set the value as BETINGET_SMS</description>
+        <name>PreferredChannel</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

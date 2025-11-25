@@ -93,9 +93,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>PreferredChannels</name>
+            <name>PreferredChannel</name>
             <value>
-                <stringValue>SMS,EPOST</stringValue>
+                <stringValue>BETINGET_SMS</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

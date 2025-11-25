@@ -30,12 +30,6 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>prefererteKanaler</name>
-            <value>
-                <elementReference>PreferredChannel</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>relatedRecordSfId</name>
             <value>
                 <elementReference>ConversationNote.Id</elementReference>
