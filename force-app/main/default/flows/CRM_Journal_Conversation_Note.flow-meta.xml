@@ -88,10 +88,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Documents.dokumentkategori</assignToReference>
+            <assignToReference>Journal_Documents.overstyrInnsynsregler</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>FORVALTNINGSNOTAT</stringValue>
+                <stringValue>VISES_MASKINELT_GODKJENT</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
