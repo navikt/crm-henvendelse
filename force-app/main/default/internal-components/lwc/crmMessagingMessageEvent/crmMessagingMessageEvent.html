@@ -1,7 +1,7 @@
 <template>
     <div class="slds-chat-event slds-var-p-top_small sdls-var-p-bottom_small">
         <div class="slds-chat-event__body">
-            <template if:true={isEndChatEvent}>
+            <template lwc:if={isEndChatEvent}>
                 <lightning-icon
                     icon-name="utility:end_chat"
                     alternative-text="Hendelse"
@@ -9,13 +9,13 @@
                     size="x-small"
                     class="slds-var-p-right_small"
                 ></lightning-icon>
-                <p>
+                <p class="custom-font-color">
                     <b>{closerName}</b>&nbsp;{endOfChatMessage}&nbsp;<c-crm-nav-formatted-date
                         date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isTransferEvent}>
+            <template lwc:if={isTransferEvent}>
                 <lightning-icon
                     icon-name="utility:change_owner"
                     alternative-text="Hendelse"
@@ -23,13 +23,13 @@
                     size="x-small"
                     class="slds-var-p-right_small"
                 ></lightning-icon>
-                <p>
+                <p class="custom-font-color">
                     {transferMessage}&nbsp;<c-crm-nav-formatted-date
                         date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isJournalEvent}>
+            <template lwc:if={isJournalEvent}>
                 <lightning-icon
                     icon-name="utility:event"
                     alternative-text="Hendelse"
@@ -37,13 +37,13 @@
                     size="x-small"
                     class="slds-var-p-right_small"
                 ></lightning-icon>
-                <p>
+                <p class="custom-font-color">
                     {journalMessage}&nbsp;<c-crm-nav-formatted-date
                         date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
-            <template if:true={isOtherEvent}>
+            <template lwc:if={isOtherEvent}>
                 <lightning-icon
                     icon-name="utility:event"
                     alternative-text="Hendelse"
@@ -51,7 +51,7 @@
                     size="x-small"
                     class="slds-var-p-right_small"
                 ></lightning-icon>
-                <p>
+                <p class="custom-font-color">
                     {message.CRM_Message_Text__c}&nbsp;<c-crm-nav-formatted-date
                         date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>

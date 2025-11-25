@@ -12,7 +12,7 @@
                 </div>
             </header>
         </div>
-        <div class="slds-card__body">
+        <div class="slds-card__body" style="margin-block-start: 0; padding-left: 0">
             <div class="slds-is-relative" style="min-height: 2em">
                 <!-- Singlethread true - WIll only ever be one thread in the iteration-->
                 <lightning-spinner
@@ -53,11 +53,8 @@
                         thread={thread}
                         show-close={showClose}
                         show-quick={showQuick}
-                        new-design={newDesign}
                         submit-button-label={submitButtonLabel}
-                        onsubmitfromgrandchild={handleSumbit}
                         is-thread={isThread}
-                        onclosedevent={forwardEvent}
                         show-language-change-modal={showLanguageChangeModal}
                         hide-change-lng-btn={hideChangeLngBtn}
                         is-case-reserved={isCaseReserved}

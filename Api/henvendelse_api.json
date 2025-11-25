@@ -467,8 +467,8 @@
                 "properties": {
                     "markeringstype": {
                         "type": "string",
-                        "enum": ["FEILSENDT", "KONTORSPERRE"],
-                        "example": "KONTORSPERRE"
+                        "enum": ["FEILSENDT"],
+                        "example": "FEILSENDT"
                     },
                     "markertDato": {
                         "type": "string",
@@ -479,16 +479,6 @@
                         "type": "string",
                         "description": "NAV ident til veileder/saksbehandler som har markert henvendelsen",
                         "example": "Z999999"
-                    },
-                    "kontorsperreEnhet": {
-                        "type": "string",
-                        "description": "Enheten henvendelsen er kontorsperret til. Kun definert hvis markeringstype = KONTORSPERRE",
-                        "example": "3410"
-                    },
-                    "kontorsperreGT": {
-                        "type": "string",
-                        "description": "GT henvendelsen er kontorsperret til. Kun definert hvis markeringstype = KONTORSPERRE",
-                        "example": "3410"
                     }
                 },
                 "required": ["markeringstype"]
@@ -771,10 +761,6 @@
                         "type": "string",
                         "example": "2786793959304"
                     },
-                    "opprinneligGT": {
-                        "type": "string",
-                        "example": "2786793959304"
-                    },
                     "opprettetDato": {
                         "type": "string",
                         "description": "Datetime string",
@@ -793,14 +779,14 @@
                         "format": "date-time",
                         "example": "2021-06-27T12:00:00.000Z"
                     },
-                    "kontorsperre": {
-                        "type": "boolean",
-                        "description": "Definerer om henvendelsen er markert som kontorsperret. Markeringsinformasjon finnes i listen av markeringer",
-                        "example": false
-                    },
-                    "sistEndretAv": {
+                    "avsluttetAv": {
                         "type": "string",
-                        "description": "Identen til den siste som gjorde endring på tråden.",
+                        "description": "Identen/fnr til den som avsluttet tråden.",
+                        "example": "Z994035"
+                    },
+                    "sattTilSladdingAv": {
+                        "type": "string",
+                        "description": "Identen til den som aktiverte sladding på tråden.",
                         "example": "Z994035"
                     },
                     "sladding": {
@@ -844,15 +830,7 @@
                         }
                     }
                 },
-                "required": [
-                    "henvendelseType",
-                    "aktorId",
-                    "fnr",
-                    "opprettetDato",
-                    "kontorsperre",
-                    "feilsendt",
-                    "kjedeId"
-                ]
+                "required": ["henvendelseType", "aktorId", "fnr", "opprettetDato", "feilsendt", "kjedeId"]
             },
             "Temagruppe": {
                 "type": "object",

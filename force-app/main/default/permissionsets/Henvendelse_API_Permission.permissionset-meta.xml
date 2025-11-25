@@ -52,7 +52,8 @@
         <apexClass>UN_InnboksProducerLegacy</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>Permission set that grants access to the henvendelse API in addition to read and write access to necessary fields.</description>
+    <description>Permission set that grants access to the henvendelse API in addition to read and
+        write access to necessary fields.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_Person__c</field>
@@ -150,37 +151,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Last_Edited_By__c</field>
+        <field>Conversation_Note__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.CRM_Message_Content__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Office_Restriction_Activated_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Office_Restriction_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Original_Person_GT__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Original_Person_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -365,6 +341,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Thread__c.CRM_Closed_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Thread__c.CRM_Closed_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -425,37 +406,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Thread__c.CRM_Last_Edited_By__c</field>
+        <field>Thread__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Latest_Message_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Office_Restriction_Activated_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Office_Restriction_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Office_Restriction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Original_Person_GT__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Original_Person_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,7 +1,6 @@
 global virtual class CRM_Markering {
     global enum MARKING_TYPES {
-        FEILSENDT,
-        KONTORSPERRE
+        FEILSENDT
     }
 
     global String markeringstype;
