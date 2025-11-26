@@ -87,6 +87,12 @@
         <locationY>276</locationY>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
+            <name>kanBatches</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>NotificationMessageText</name>
             <value>
                 <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
