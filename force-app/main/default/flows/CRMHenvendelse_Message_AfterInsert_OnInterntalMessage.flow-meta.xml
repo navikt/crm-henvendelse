@@ -84,18 +84,12 @@
         <name>Create_Innboks_Event</name>
         <label>Create Innboks Event</label>
         <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
-            <name>ExternalNotification</name>
+            <name>kanBatches</name>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>$Record.CRM_Sent_date__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -105,9 +99,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>PreferredChannels</name>
+            <name>PreferredChannel</name>
             <value>
-                <stringValue>SMS,EPOST</stringValue>
+                <stringValue>BETINGET_SMS</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -116,5 +110,6 @@
                 <elementReference>$Record.CRM_Thread__c</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>

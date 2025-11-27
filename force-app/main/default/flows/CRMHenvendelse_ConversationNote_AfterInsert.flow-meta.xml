@@ -63,12 +63,6 @@
                 <elementReference>$Label.CRMHenvendelse_NewConversationNoteNotification</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>SendExternalNotification</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>
