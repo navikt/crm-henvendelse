@@ -29,13 +29,21 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
 
             switch on objectName {
                 when 'Conversation_Note__c' {
-                    doConversationNoteJournal(apiReference, request);
+                    Boolean success = doConversationNoteJournal(apiReference, request);
+                    if (!success) {
+                        errorResponse(400, 'Tema finnes ikke for temakode: ' + request.temakode);
+                        return;
+                    }
                     List<Conversation_Note__c> notesFromDatabase = new CRM_ConversationNoteSelector()
-                        .selectByBehandlingskjedeId(apiReference);
+                    .selectByBehandlingskjedeId(apiReference);
                     setResponse(200, JSON.serializePretty(new CRM_Henvendelse(notesFromDatabase)));
                 }
                 when 'Thread__c' {
-                    doThreadJournal(objectId, request);
+                    Boolean success = doThreadJournal(objectId, request);
+                    if (!success) {
+                        errorResponse(400, 'Tema finnes ikke for temakode: ' + request.temakode);
+                        return;
+                    }
                     Thread__c updatedThread = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     setResponse(
                         200,
@@ -100,13 +108,14 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
      * @param apiReference
      * @param request
      **/
-    private static void doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
+    private static Boolean doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
         List<Conversation_Note__c> notesToUpdate = new List<Conversation_Note__c>();
-        List<Journal_Entry__c> jEntriesToCreate = new List<Journal_Entry__c>();
-        List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
-            .selectByBehandlingskjedeId(apiReference);
+        List<Journal_Entry__c> journalEntriesToCreate = new List<Journal_Entry__c>();
 
-        for (Conversation_Note__c convNote : noteList) {
+        List<Conversation_Note__c> conversationNotes =
+            new CRM_ConversationNoteSelector().selectByBehandlingskjedeId(apiReference);
+
+        for (Conversation_Note__c convNote : conversationNotes) {
             Map<String, Object> flowInputs = new Map<String, Object>{
                 'recordId' => convNote.Id,
                 'Journal_Case_ID' => request.fagsakId,
@@ -116,23 +125,39 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                 'Journal_Entry_NAV_Ident' => getActingNavIdent(),
                 'PERFORM_DML' => false
             };
-            Flow.Interview convNoteJournalFlow = initiateJournalFlow(
+
+            Flow.Interview journalFlow = initiateJournalFlow(
                 'CRM_Journal_Conversation_Note',
                 JSON.serialize(flowInputs)
             );
 
-            Conversation_Note__c journaledNote = (Conversation_Note__c) convNoteJournalFlow.getVariableValue(
-                'JOURNALED_CONV_NOTE'
-            );
-            Journal_Entry__c newEntry = (Journal_Entry__c) convNoteJournalFlow.getVariableValue('Journal_Entry_SF');
-            if (journaledNote != null)
+            Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
+            if (themeNotFound) {
+                // Theme code invalid for this entire request - return early
+                return false;
+            }
+
+            Conversation_Note__c journaledNote =
+                (Conversation_Note__c) journalFlow.getVariableValue('JOURNALED_CONV_NOTE');
+            Journal_Entry__c journalEntry =
+                (Journal_Entry__c) journalFlow.getVariableValue('Journal_Entry_SF');
+
+            if (journaledNote != null) {
                 notesToUpdate.add(journaledNote);
-            if (newEntry != null)
-                jEntriesToCreate.add(newEntry);
+            }
+            if (journalEntry != null) {
+                journalEntriesToCreate.add(journalEntry);
+            }
         }
 
-        update notesToUpdate;
-        insert jEntriesToCreate;
+        if (!notesToUpdate.isEmpty()) {
+            update notesToUpdate;
+        }
+        if (!journalEntriesToCreate.isEmpty()) {
+            insert journalEntriesToCreate;
+        }
+
+        return true;
     }
 
     /**
@@ -141,7 +166,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
      * @param threadId
      * @param request
      **/
-    private static void doThreadJournal(String threadId, HenvendelseJournalRequest request) {
+    private static Boolean doThreadJournal(String threadId, HenvendelseJournalRequest request) {
         Map<String, Object> flowInputs = new Map<String, Object>{
             'recordId' => threadId,
             'Journal_Case_ID' => request.fagsakId,
@@ -151,7 +176,12 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             'Journal_Entry_NAV_Ident' => getActingNavIdent()
         };
 
-        initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
+        Flow.Interview journalFlow = initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
+        Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
+        if (themeNotFound) {
+            return false;
+        }
+        return true;
     }
 
     private static Flow.Interview initiateJournalFlow(String flowName, String inputParams) {
