@@ -24,21 +24,15 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>eksternVarsling</name>
-            <value>
-                <elementReference>ExternalNotification</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>fodselsnummer</name>
+            <name>ident</name>
             <value>
                 <elementReference>Get_Person.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>grupperingsId</name>
+            <name>kanBatches</name>
             <value>
-                <elementReference>Thread.CRM_API_Reference__c</elementReference>
+                <elementReference>kanBatches</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -54,9 +48,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>prefererteKanaler</name>
+            <name>preferertKanal</name>
             <value>
-                <elementReference>PreferredChannels</elementReference>
+                <elementReference>PreferredChannel</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -66,21 +60,15 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>sikkerhetsnivaa</name>
+            <name>sensitivitet</name>
             <value>
-                <numberValue>4.0</numberValue>
+                <stringValue>high</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>tekst</name>
+            <name>tekster</name>
             <value>
                 <elementReference>NotificationMessageText</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>tidspunkt</name>
-            <value>
-                <elementReference>MessageDateTime</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -373,16 +361,6 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>ExternalNotification</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <name>isSuccess</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -390,8 +368,8 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>MessageDateTime</name>
-        <dataType>DateTime</dataType>
+        <name>kanBatches</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
@@ -422,8 +400,8 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Valid values are &quot;SMS&quot; and &quot;EPOST&quot; can be &quot;SMS,EPOST&quot;</description>
-        <name>PreferredChannels</name>
+        <description>Valid values are &quot;SMS&quot; OR &quot;EPOST&quot;. If both values are needed set the value as BETINGET_SMS</description>
+        <name>PreferredChannel</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
