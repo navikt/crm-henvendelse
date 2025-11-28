@@ -20,7 +20,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         CRM_HenvendelseNyRestService.NewConversationNoteRequest convNoteReq = new CRM_HenvendelseNyRestService.NewConversationNoteRequest();
         convNoteReq.aktorId = '123456789101112';
         convNoteReq.enhet = '4100';
-        convNoteReq.kanal = 'TELEFON';
+
         convNoteReq.temagruppe = 'ARBD';
         convNoteReq.fritekst = 'REFERAT';
 
@@ -56,7 +56,6 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         CRM_HenvendelseNyRestService.NewConversationNoteRequest convNoteReq = new CRM_HenvendelseNyRestService.NewConversationNoteRequest();
         convNoteReq.aktorId = '123456789101112';
         convNoteReq.enhet = '4100';
-        convNoteReq.kanal = 'TELEFON';
         convNoteReq.temagruppe = 'ARBD';
         convNoteReq.fritekst = 'REFERAT NUMBER 2';
 
@@ -111,7 +110,6 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         CRM_HenvendelseNyRestService.NewConversationNoteRequest convNoteReq = new CRM_HenvendelseNyRestService.NewConversationNoteRequest();
         convNoteReq.aktorId = '1234567890000';
         convNoteReq.enhet = '4100';
-        convNoteReq.kanal = 'TELEFON';
         convNoteReq.temagruppe = 'ARBD';
         convNoteReq.fritekst = 'REFERAT';
 
@@ -140,7 +138,6 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         CRM_HenvendelseNyRestService.NewConversationNoteRequest convNoteReq = new CRM_HenvendelseNyRestService.NewConversationNoteRequest();
         convNoteReq.aktorId = '123456789101112';
         convNoteReq.enhet = '4100';
-        convNoteReq.kanal = 'TELEFON';
         convNoteReq.temagruppe = 'ARBD';
         convNoteReq.fritekst = 'REFERAT';
 
