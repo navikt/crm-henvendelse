@@ -35,12 +35,7 @@
                 <apex:outputText value=" {!conversation_note__c.CRM_Date_Time_Registered__c}"></apex:outputText>
                 <br />
             </span>
-            <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Meeting'}">
-                <span> <b>Type: </b>Samtalereferat (oppmøte) <br /> </span>
-            </apex:outputPanel>
-            <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Phone'}">
-                <span> <b>Type: </b>Samtalereferat (telefon) <br /> </span>
-            </apex:outputPanel>
+            <span> <b>Type: </b>Referat <br /> </span>
             <br />
 
             <span style="font-weight: 400; font-size: 16pt">Innhold:</span> <br />
