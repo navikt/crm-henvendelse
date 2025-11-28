@@ -538,15 +538,9 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
-                    },
-                    "kanal": {
-                        "type": "string",
-                        "enum": ["TELEFON", "OPPMOTE"],
-                        "description": "Definerer om referatet er skrevet etter en telefonsamtale eller et fysisk oppmote hos NAV",
-                        "example": "TELEFON"
                     }
                 },
-                "required": ["aktorId", "temagruppe", "enhet", "fritekst", "kanal"]
+                "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
             },
             "JournalRequest": {
                 "type": "object",
