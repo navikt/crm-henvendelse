@@ -19,6 +19,10 @@
                     "versionNumber": "0.35.0.LATEST"
                 },
                 {
+                    "package": "crm-thread-view",
+                    "versionNumber": "0.7.0.LATEST"
+                },
+                {
                     "package": "crm-journal-utilities",
                     "versionNumber": "0.54.0.LATEST"
                 },
@@ -63,6 +67,7 @@
         "crm-shared-flowComponents": "0Ho2o000000fxYJCAY",
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
         "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
-        "crm-platform-reporting": "0Ho2o0000008OSfCAM"
+        "crm-platform-reporting": "0Ho2o0000008OSfCAM",
+        "crm-thread-view": "0Ho7U000000000zSAA"
     }
 }
