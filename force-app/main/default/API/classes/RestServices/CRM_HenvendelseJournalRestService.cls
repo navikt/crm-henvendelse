@@ -29,9 +29,9 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
 
             switch on objectName {
                 when 'Conversation_Note__c' {
-                    Boolean success = doConversationNoteJournal(apiReference, request);
-                    if (!success) {
-                        errorResponse(400, 'Tema finnes ikke for temakode: ' + request.temakode);
+                    JournalResult result = doConversationNoteJournal(apiReference, request);
+                    if (!result.success) {
+                        errorResponse(result.errorCode, result.errorMessage);
                         return;
                     }
                     List<Conversation_Note__c> notesFromDatabase = new CRM_ConversationNoteSelector()
@@ -39,9 +39,9 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                     setResponse(200, JSON.serializePretty(new CRM_Henvendelse(notesFromDatabase)));
                 }
                 when 'Thread__c' {
-                    Boolean success = doThreadJournal(objectId, request);
-                    if (!success) {
-                        errorResponse(400, 'Tema finnes ikke for temakode: ' + request.temakode);
+                    JournalResult result = doThreadJournal(objectId, request);
+                    if (!result.success) {
+                        errorResponse(result.errorCode, result.errorMessage);
                         return;
                     }
                     Thread__c updatedThread = new CRM_ThreadSelector().selectByApiReference(apiReference);
@@ -107,8 +107,9 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
      * @author Stian Ruud Schikora | 10-21-2021
      * @param apiReference
      * @param request
+     * @return JournalResult
      **/
-    private static Boolean doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
+    private static JournalResult doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
         List<Conversation_Note__c> notesToUpdate = new List<Conversation_Note__c>();
         List<Journal_Entry__c> journalEntriesToCreate = new List<Journal_Entry__c>();
 
@@ -134,7 +135,13 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
             if (themeNotFound) {
                 // Theme code invalid for this entire request - return early
-                return false;
+                return JournalResult.themeNotFound(request.temakode);
+            }
+
+            // Check if generate document action failed
+            Boolean generateDocumentFailed = (Boolean) journalFlow.getVariableValue('Generate_Document_Error');
+            if (generateDocumentFailed) {
+                return JournalResult.pdfGenerationFailed();
             }
 
             Conversation_Note__c journaledNote =
@@ -157,7 +164,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             insert journalEntriesToCreate;
         }
 
-        return true;
+        return JournalResult.success();
     }
 
     /**
@@ -165,8 +172,9 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
      * @author Stian Ruud Schikora | 10-21-2021
      * @param threadId
      * @param request
+     * @return JournalResult
      **/
-    private static Boolean doThreadJournal(String threadId, HenvendelseJournalRequest request) {
+    private static JournalResult doThreadJournal(String threadId, HenvendelseJournalRequest request) {
         Map<String, Object> flowInputs = new Map<String, Object>{
             'recordId' => threadId,
             'Journal_Case_ID' => request.fagsakId,
@@ -179,9 +187,10 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         Flow.Interview journalFlow = initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
         Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
         if (themeNotFound) {
-            return false;
+            return JournalResult.themeNotFound(request.temakode);
         }
-        return true;
+
+        return JournalResult.success();
     }
 
     private static Flow.Interview initiateJournalFlow(String flowName, String inputParams) {
@@ -198,5 +207,29 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         global String kjedeId;
         global String temakode;
         global String fagsaksystem;
+    }
+
+    private class JournalResult {
+        Boolean success;
+        Integer errorCode;
+        String errorMessage;
+
+        JournalResult(Boolean success, Integer errorCode, String errorMessage) {
+            this.success = success;
+            this.errorCode = errorCode;
+            this.errorMessage = errorMessage;
+        }
+
+        static JournalResult success() {
+            return new JournalResult(true, null, null);
+        }
+
+        static JournalResult themeNotFound(String themeCode) {
+            return new JournalResult(false, 400, 'Tema finnes ikke for temakode: ' + themeCode);
+        }
+
+        static JournalResult pdfGenerationFailed() {
+            return new JournalResult(false, 500, 'Journalføring feilet.');
+        }
     }
 }

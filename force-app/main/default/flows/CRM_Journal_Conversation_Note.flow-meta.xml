@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Document_Variant_Assignment</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Copy_1_of_Log_Error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>requestType</name>
@@ -313,6 +316,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Generate_Document_Error_to_True</name>
+        <label>Set Generate_Document_Error to True</label>
+        <locationX>1370</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>Generate_Document_Error</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_Journal_Status_to_Completed</name>
         <label>Set Journal Status to Completed</label>
         <locationX>578</locationX>
@@ -368,7 +384,7 @@
     <assignments>
         <name>Set_Publish_Notification_And_Existing_Journal_To_True</name>
         <label>Set Publish Notification And Existing Journal To True</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
@@ -475,7 +491,7 @@
         <description>Verify if a journal entry already exists for the inputs</description>
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
-        <locationX>875</locationX>
+        <locationX>1007</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_Publish_Notification_And_Existing_Journal_To_True</targetReference>
@@ -647,7 +663,7 @@
     <recordLookups>
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
-        <locationX>875</locationX>
+        <locationX>1007</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -779,13 +795,71 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>749</locationX>
+        <locationX>881</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Existing_Journal_Entries</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Copy_1_of_Log_Error</name>
+        <label>Log Error</label>
+        <locationX>1370</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Set_Generate_Document_Error_to_True</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Application_Domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>Flow - Journal Conversation Note</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Category</name>
+            <value>
+                <stringValue>Journal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Level</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Generate Document failed in Journal Conversation Note Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Conversation_Note__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>JOURNALED_CONV_NOTE.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Log_Error</name>
         <label>Log Error</label>
@@ -869,6 +943,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Journal_Entry__c</objectType>
+    </variables>
+    <variables>
+        <name>Generate_Document_Error</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>Unique reference to the case in NAVs fagsystem that the journal post should
