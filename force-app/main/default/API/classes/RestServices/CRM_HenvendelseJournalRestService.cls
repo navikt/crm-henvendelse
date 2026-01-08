@@ -135,13 +135,13 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
             if (themeNotFound) {
                 // Theme code invalid for this entire request - return early
-                return JournalResult.themeNotFound(request.temakode);
+                return flowThemeNotFound(request.temakode);
             }
 
             // Check if generate document action failed
             Boolean generateDocumentFailed = (Boolean) journalFlow.getVariableValue('Generate_Document_Error');
             if (generateDocumentFailed) {
-                return JournalResult.pdfGenerationFailed();
+                return flowPdfGenerationFailed();
             }
 
             Conversation_Note__c journaledNote =
@@ -164,7 +164,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             insert journalEntriesToCreate;
         }
 
-        return JournalResult.success();
+        return flowSuccess();
     }
 
     /**
@@ -187,10 +187,10 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         Flow.Interview journalFlow = initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
         Boolean themeNotFound = (Boolean) journalFlow.getVariableValue('Theme_Not_Found');
         if (themeNotFound) {
-            return JournalResult.themeNotFound(request.temakode);
+            return flowThemeNotFound(request.temakode);
         }
 
-        return JournalResult.success();
+        return flowSuccess();
     }
 
     private static Flow.Interview initiateJournalFlow(String flowName, String inputParams) {
@@ -219,17 +219,18 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             this.errorCode = errorCode;
             this.errorMessage = errorMessage;
         }
+    }
 
-        static JournalResult success() {
-            return new JournalResult(true, null, null);
-        }
+    // Factory methods for JournalResult
+    private static JournalResult flowSuccess() {
+        return new JournalResult(true, null, null);
+    }
 
-        static JournalResult themeNotFound(String themeCode) {
-            return new JournalResult(false, 400, 'Tema finnes ikke for temakode: ' + themeCode);
-        }
+    private static JournalResult flowThemeNotFound(String themeCode) {
+        return new JournalResult(false, 400, 'Tema finnes ikke for temakode: ' + themeCode);
+    }
 
-        static JournalResult pdfGenerationFailed() {
-            return new JournalResult(false, 500, 'Journalføring feilet.');
-        }
+    private static JournalResult flowPdfGenerationFailed() {
+        return new JournalResult(false, 500, 'Journalføring feilet.');
     }
 }
