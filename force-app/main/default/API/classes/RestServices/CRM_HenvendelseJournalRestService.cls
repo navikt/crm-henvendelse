@@ -231,6 +231,6 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
     }
 
     private static JournalResult flowPdfGenerationFailed() {
-        return new JournalResult(false, 500, 'Journalføring feilet.');
+        return new JournalResult(false, 500, 'Journalføring feilet under opprettelse av PDF.');
     }
 }
