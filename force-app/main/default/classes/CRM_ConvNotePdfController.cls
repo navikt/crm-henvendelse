@@ -2,16 +2,24 @@ public without sharing class CRM_ConvNotePdfController {
     private static final Integer MAX_LINE_LENGTH = 80;
     private transient string convNoteId;
     public String messageText { get; private set; }
+    public Conversation_Note__c convNote { get; set; }
     private static LongWordSplitter splitter = new LongWordSplitter(MAX_LINE_LENGTH);
 
-    public CRM_ConvNotePdfController(ApexPages.StandardController stdController) {
-        convNoteId = stdController.getId();
-        Conversation_Note__c convNote = [
-            SELECT CRM_Conversation_Note__c
+    public CRM_ConvNotePdfController() {
+        convNoteId = ApexPages.currentPage().getParameters().get('id');
+        convNote = [
+            SELECT 
+                CRM_Conversation_Note__c,
+                CRM_Theme__r.Name,
+                CRM_Subtheme__r.Name,
+                CRM_Account__r.Name,
+                CRM_Account__r.INT_PersonIdent__c,
+                CRM_Date_Time_Registered__c
             FROM Conversation_Note__c
             WHERE Id = :convNoteId
             LIMIT 1
         ];
+        
         messageText = splitter.splitWordsInMessage(convNote.CRM_Conversation_Note__c);
     }
 

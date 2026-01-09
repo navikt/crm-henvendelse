@@ -2,10 +2,24 @@ public without sharing class CRM_ThreadPdfController {
     private static final Integer MAX_LINE_LENGTH = 80;
     private transient string threadId;
     public List<ThreadMessage> threadMessages { get; set; }
+    public Thread__c thread { get; set; }
     private static LongWordSplitter splitter = new LongWordSplitter(MAX_LINE_LENGTH);
 
-    public CRM_ThreadPdfController(ApexPages.StandardController stdController) {
-        threadId = stdController.getId();
+    public CRM_ThreadPdfController() {
+        threadId = ApexPages.currentPage().getParameters().get('id');
+        
+        thread = [
+            SELECT
+                CRM_Theme__r.Name,
+                CRM_Subtheme__r.Name,
+                CRM_Account__r.Name,
+                CRM_Account__r.INT_PersonIdent__c,
+                CRM_Date_Time_Registered__c
+            FROM Thread__c
+            WHERE Id = :threadId
+            LIMIT 1
+        ];
+        
         List<Message__c> messages = [
             SELECT
                 CRM_Type__c,
@@ -18,7 +32,8 @@ public without sharing class CRM_ThreadPdfController {
             WHERE CRM_Thread__c = :threadId
             ORDER BY CRM_Sent_date__c ASC
         ];
-        if (messages != null) {
+        
+        if (messages != null && !messages.isEmpty()) {
             threadMessages = new List<ThreadMessage>();
             for (Message__c message : messages) {
                 threadMessages.add(new ThreadMessage(message));
