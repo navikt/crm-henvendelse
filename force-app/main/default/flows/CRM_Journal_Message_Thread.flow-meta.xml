@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Validate_Subtheme</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>visualForceReference</name>
@@ -112,6 +115,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Journal_Sak_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_Set_Post_Failed</name>
+        <label>Set Post Failed</label>
+        <locationX>1194</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Failed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>JOURNALED_THREAD.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_Update_Journal_Entry</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -747,6 +773,23 @@
         <queriedFields>CRM_Theme_Name__c</queriedFields>
     </recordLookups>
     <recordUpdates>
+        <name>Copy_1_of_Update_Journal_Entry</name>
+        <label>Update Journal Entry</label>
+        <locationX>1194</locationX>
+        <locationY>674</locationY>
+        <connector>
+            <targetReference>Copy_1_of_Update_Thread</targetReference>
+        </connector>
+        <inputReference>Journal_Entry_SF</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Copy_1_of_Update_Thread</name>
+        <label>Update Thread</label>
+        <locationX>1194</locationX>
+        <locationY>782</locationY>
+        <inputReference>JOURNALED_THREAD</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
         <locationX>380</locationX>
@@ -772,6 +815,64 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Log_Error</name>
+        <label>Log Error</label>
+        <locationX>1194</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Copy_2_of_Set_Post_Failed</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Application_Domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>Flow - Journal Message Thread</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Category</name>
+            <value>
+                <stringValue>Journal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Level</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Generate Document failed in Journal Message Thread Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Journal_Entry__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>Journal_Entry_SF.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <description>Document variant wrapper for journal request</description>
         <name>Document_Variant_PDF</name>
