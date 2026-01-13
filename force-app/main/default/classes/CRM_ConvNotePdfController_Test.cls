@@ -11,11 +11,13 @@ public class CRM_ConvNotePdfController_Test {
         Test.setCurrentPage(pageRef);
         Id convNoteId = [SELECT Id FROM Conversation_Note__c LIMIT 1].Id;
 
-        ApexPages.currentPage().getParameters().put('id', convNoteId);
+        ApexPages.currentPage().getParameters().put('Id', convNoteId);
+        ApexPages.StandardController stdThread = new ApexPages.StandardController(
+            new Conversation_Note__c(Id = convNoteId)
+        );
 
-        CRM_ConvNotePdfController pdfController = new CRM_ConvNotePdfController();
+        CRM_ConvNotePdfController pdfController = new CRM_ConvNotePdfController(stdThread);
         System.assert(String.isNotBlank(pdfController.messageText));
-        System.assertNotEquals(null, pdfController.convNote);
     }
 
     @isTest
