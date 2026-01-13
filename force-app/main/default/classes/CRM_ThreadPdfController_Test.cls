@@ -15,11 +15,11 @@ public class CRM_ThreadPdfController_Test {
         Test.setCurrentPage(pageRef);
         Id threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
 
-        ApexPages.currentPage().getParameters().put('id', threadId);
+        ApexPages.currentPage().getParameters().put('Id', threadId);
+        ApexPages.StandardController stdThread = new ApexPages.StandardController(new Thread__c(Id = threadId));
 
-        CRM_ThreadPdfController pdfController = new CRM_ThreadPdfController();
+        CRM_ThreadPdfController pdfController = new CRM_ThreadPdfController(stdThread);
         System.assert(pdfController.threadMessages.size() > 0);
-        System.assertNotEquals(null, pdfController.thread);
     }
 
     @isTest

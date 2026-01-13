@@ -1,9 +1,10 @@
 <apex:page
-    controller="CRM_ThreadPdfController"
+    standardController="Thread__c"
+    extensions="CRM_ThreadPdfController"
     applyBodyTag="false"
     standardStylesheets="false"
     renderAs="PDF"
-    readOnly="true"
+    readonly="true"
 >
     <apex:stylesheet value="{!$Resource.Journal_PDF_Style}" />
 
@@ -19,15 +20,15 @@
         <div class="content">
             <h2>
                 Journalført henvendelse 
-                <apex:outputText value=" {!thread.CRM_Theme__r.Name} " />
-                <apex:outputText value="{!thread.CRM_Subtheme__r.Name}"  />
+                <apex:outputText value=" {!thread__c.CRM_Theme__r.Name} " />
+                <apex:outputText value="{!thread__c.CRM_Subtheme__r.Name}"  />
             </h2>
 
-            <span> <strong>Navn: </strong>{!thread.CRM_Account__r.Name} <br /> </span>
-            <span> <strong>Fødselsnummer: </strong>{!thread.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
+            <span> <strong>Navn: </strong>{!thread__c.CRM_Account__r.Name} <br /> </span>
+            <span> <strong>Fødselsnummer: </strong>{!thread__c.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
             <span>
                 <b>Mottatt/Sendt: </b>
-                <apex:outputText value=" {!thread.CRM_Date_Time_Registered__c}"> </apex:outputText>
+                <apex:outputText value=" {!thread__c.CRM_Date_Time_Registered__c}"> </apex:outputText>
                 <br />
             </span>
             <span> <b>Type: </b>Skriv til oss <br /> </span>
