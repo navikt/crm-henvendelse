@@ -123,7 +123,7 @@ export default class MessagingThreadViewer extends LightningElement {
             }
         } else if (error) {
             console.error(error);
-            this.logThreadError(null, resp, 'Could not fetch active field from thread internal view');
+            this.logThreadError(error, resp, 'Could not fetch active field from thread internal view');
         }
     }
 
