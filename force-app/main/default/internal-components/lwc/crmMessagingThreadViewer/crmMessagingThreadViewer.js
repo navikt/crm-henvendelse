@@ -119,11 +119,11 @@ export default class MessagingThreadViewer extends LightningElement {
                 this.threadType = getFieldValue(data, THREAD_TYPE);
                 this.isThreadClosed = !getFieldValue(data, ACTIVE_FIELD);
             } catch (err) {
-                this.logThreadError(err, resp);
+                this.logThreadError(err, resp, 'Could not fetch active field from thread internal view');
             }
         } else if (error) {
             console.error(error);
-            this.logThreadError(null, resp);
+            this.logThreadError(error, resp, 'Could not fetch active field from thread internal view');
         }
     }
 
@@ -204,7 +204,7 @@ export default class MessagingThreadViewer extends LightningElement {
                 this.dispatchEvent(closedEvent);
             })
             .catch((error) => {
-                console.log(JSON.stringify(error, null, 2));
+                this.logThreadError(error, null, 'Failed to close thread');
             })
             .finally(() => {
                 this.refreshMessages();
@@ -402,13 +402,13 @@ export default class MessagingThreadViewer extends LightningElement {
     }
     mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
 
-    logThreadError(error, response) {
+    logThreadError(error, response, message) {
         const report = `Error: ${error}, response: ${JSON.stringify(response)}`;
         LoggerUtility.logError(
             'NKS',
             'STO',
             report,
-            'Could not fetch active field from thread internal view',
+            message,
             this.threadId
         );
     }
