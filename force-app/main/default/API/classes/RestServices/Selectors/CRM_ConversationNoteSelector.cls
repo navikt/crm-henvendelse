@@ -49,6 +49,10 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
     }
 
     public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {
+        return selectByActorId(actorIds, null);
+    }
+
+    public List<Conversation_Note__c> selectByActorId(Set<String> actorIds, Integer queryLimit) {
         fflib_QueryFactory query = newQueryFactory();
         query
             .selectFields(QUERY_FIELDS)
@@ -56,6 +60,9 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
                 'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingskjedeId__c != null AND CRM_Created_By_Ident__c != null'
             )
             .setOrdering('CRM_Date_Time_Registered__c', fflib_QueryFactory.SortOrder.DESCENDING);
+        if (queryLimit != null && queryLimit > 0) {
+            query.setLimit(queryLimit);
+        }
         //Adds the Journal entry selector query as a relationship query to the Conversation Note query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         return (List<Conversation_Note__c>) Database.query(query.toSOQL());
