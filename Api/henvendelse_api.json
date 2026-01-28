@@ -420,7 +420,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PaginatedHenvendelseResponse"
+                                    "$ref": "#/components/schemas/PaginertHenvendelseListe"
                                 }
                             }
                         }
@@ -760,7 +760,7 @@
                 },
                 "required": ["sendtDato", "fra"]
             },
-            "PaginatedHenvendelseResponse": {
+            "PaginertHenvendelseListe": {
                 "type": "object",
                 "properties": {
                     "data": {
