@@ -376,7 +376,7 @@
         "/henvendelseinfo/henvendelseliste": {
             "get": {
                 "tags": ["Henvendelse Info"],
-                "description": "Returnerer en paginert liste med henvendelser for en gitt aktør. Hvis ingen paginering er spesifisert returneres alle henvendelser (kan medføre heap limit feil ved store datamengder).",
+                "description": "Returnerer en paginert liste med henvendelser for en gitt aktør.",
                 "parameters": [
                     {
                         "name": "aktorid",
