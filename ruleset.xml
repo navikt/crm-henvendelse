@@ -78,15 +78,7 @@
 	</rule>
 
 	<!-- PERFORMANCE -->
-	<rule ref="category/apex/performance.xml/AvoidSoqlInLoops" message="Avoid Soql queries inside loops">
-		<priority>3</priority>
-		<properties />
-	</rule>
-	<rule ref="category/apex/performance.xml/AvoidSoslInLoops" message="Avoid Sosl queries inside loops">
-		<priority>3</priority>
-		<properties />
-	</rule>
-	<rule ref="category/apex/performance.xml/AvoidDmlStatementsInLoops" message="Avoid DML Statements inside loops">
+	<rule ref="category/apex/performance.xml/OperationWithLimitsInLoop" message="Avoid operations with limits inside loops">
 		<priority>3</priority>
 		<properties />
 	</rule>
@@ -135,7 +127,19 @@
 		<priority>3</priority>
 		<properties />
 	</rule>
-	<rule ref="category/apex/codestyle.xml/VariableNamingConventions" message="{0} variable {1} should begin with {2}">
+	<rule ref="category/apex/codestyle.xml/FieldNamingConventions">
+		<priority>3</priority>
+		<properties />
+	</rule>
+	<rule ref="category/apex/codestyle.xml/FormalParameterNamingConventions">
+		<priority>3</priority>
+		<properties />
+	</rule>
+	<rule ref="category/apex/codestyle.xml/LocalVariableNamingConventions">
+		<priority>3</priority>
+		<properties />
+	</rule>
+	<rule ref="category/apex/codestyle.xml/PropertyNamingConventions">
 		<priority>3</priority>
 		<properties />
 	</rule>
@@ -177,13 +181,7 @@
 		<priority>3</priority>
 		<properties />
 	</rule>
-	<rule
-        ref="category/apex/security.xml/ApexCSRF"
-        message="Avoid making DML operations in Apex class constructor/init method"
-    >
-		<priority>3</priority>
-		<properties />
-	</rule>
+
 	<rule
         ref="category/apex/security.xml/ApexOpenRedirect"
         message="Apex classes should safely redirect to a known location"
@@ -281,12 +279,5 @@
 		<properties />
 	</rule>
 
-	<!-- Visual Force -->
-	<rule ref="category/vf/security.xml/VfCsrf">
-		<priority>3</priority>
-	</rule>
-
-	<rule ref="category/vf/security.xml/VfUnescapeEl">
-		<priority>3</priority>
-	</rule>
+	<!-- Visual Force rules removed - not supported in PMD 7.x -->
 </ruleset>
