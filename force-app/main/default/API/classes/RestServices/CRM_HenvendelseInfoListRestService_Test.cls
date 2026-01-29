@@ -12,13 +12,13 @@ public class CRM_HenvendelseInfoListRestService_Test {
         Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(
                 CRM_Account__c = personCon.AccountId,
-                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '123TEST'
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '123TEST1'
             )
         );
         CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(
                 CRM_Account__c = personCon.AccountId,
-                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '123TEST'
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '123TEST2'
             )
         );
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
