@@ -24,6 +24,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
             new Thread__c(
                 CRM_Thread_Type__c = 'STO',
+                CRM_Type__c = 'STO',
                 CRM_Contact__c = personCon.Id,
                 CRM_Account__c = personCon.AccountId
             )
@@ -68,7 +69,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
     }
 
     @isTest
-    static void testGetHenvedelseListQueryException() {
+    static void testGetHenvendelseListQueryException() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
@@ -90,7 +91,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
     }
 
     @isTest
-    static void testGetHenvedelseListException() {
+    static void testGetHenvendelseListException() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
