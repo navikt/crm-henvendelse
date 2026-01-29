@@ -159,7 +159,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         ) {
             retVal = -1;
         } else if (
-            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
+            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) <
             Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
         ) {
             retVal = 1;
