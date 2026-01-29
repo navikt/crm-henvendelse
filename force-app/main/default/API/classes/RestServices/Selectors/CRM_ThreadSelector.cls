@@ -60,10 +60,6 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 
-    public List<Thread__c> selectByActorId(Set<String> actorIds) {
-        return selectByActorId(actorIds, null);
-    }
-
     public List<Thread__c> selectByActorId(Set<String> actorIds, Integer queryLimit) {
         List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT', 'BTO' };
         fflib_QueryFactory query = newQueryFactory();

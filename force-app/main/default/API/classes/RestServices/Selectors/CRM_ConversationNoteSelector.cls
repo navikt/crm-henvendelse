@@ -48,10 +48,6 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         return (List<Conversation_Note__c>) Database.query(query.toSOQL());
     }
 
-    public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {
-        return selectByActorId(actorIds, null);
-    }
-
     public List<Conversation_Note__c> selectByActorId(Set<String> actorIds, Integer queryLimit) {
         fflib_QueryFactory query = newQueryFactory();
         query
