@@ -68,14 +68,17 @@ export default class CrmQuickText extends LightningElement {
     }
 
     @api
-    showModal() {
+    async showModal() {
         this._isOpen = true;
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
-        this.template.querySelector('lightning-input').focus();
 
+        await Promise.resolve();
+
+        this.template.querySelector('lightning-input')?.focus();
+
+        /*
         if (this.useForConversationNote) {
             publishToAmplitude('Quicktext', { type: 'Quicktext opened' });
-        }
+        }*/
     }
 
     hideModal() {
