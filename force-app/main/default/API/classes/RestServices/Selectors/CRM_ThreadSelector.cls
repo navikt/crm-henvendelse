@@ -77,6 +77,15 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 
+    public Integer countByActorId(Set<String> actorIds) {
+        List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT', 'BTO' };
+        return [
+            SELECT COUNT()
+            FROM Thread__c
+            WHERE CRM_Account__r.CRM_Person__r.INT_ActorId__c IN :actorIds AND CRM_Type__c IN :threadTypes
+        ];
+    }
+
     /**
      * @description: Adds a filtered subselect for messages related to the thread
      * @author Stian Ruud Schikora | 01-31-2022

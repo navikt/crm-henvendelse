@@ -66,6 +66,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         System.assertNotEquals(null, paginatedResp, 'Response should be paginated');
         System.assertEquals(1, paginatedResp.currentPage, 'Default page should be 1');
         System.assertEquals(50, paginatedResp.pageSize, 'Default page size should be 50');
+        System.assertEquals(1, paginatedResp.totalPages, 'Total pages should be 1');
     }
 
     @isTest
@@ -161,6 +162,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         System.assertEquals(1, paginatedResp.currentPage, 'Current page should be 1');
         System.assertEquals(2, paginatedResp.pageSize, 'Page size should be 2');
         System.assertEquals(2, paginatedResp.data.size(), 'Should return 2 records');
+        System.assertEquals(2, paginatedResp.totalPages, 'Total pages should be 2');
         System.assertEquals(true, paginatedResp.hasNextPage, 'Should have next page');
     }
 
@@ -192,6 +194,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         
         System.assertEquals(2, paginatedResp.currentPage, 'Current page should be 2');
         System.assertEquals(2, paginatedResp.pageSize, 'Page size should be 2');
+        System.assertEquals(2, paginatedResp.totalPages, 'Total pages should be 2');
         System.assertEquals(false, paginatedResp.hasNextPage, 'Should not have next page');
     }
 
@@ -222,6 +225,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         
         System.assertEquals(1, paginatedResp.currentPage, 'Default page should be 1');
         System.assertEquals(10, paginatedResp.pageSize, 'Page size should be 10');
+        System.assertEquals(1, paginatedResp.totalPages, 'Total pages should be 1');
     }
 
     @isTest
@@ -251,6 +255,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         
         System.assertEquals(1, paginatedResp.currentPage, 'Page should be 1');
         System.assertEquals(50, paginatedResp.pageSize, 'Default page size should be 50');
+        System.assertEquals(1, paginatedResp.totalPages, 'Total pages should be 1');
     }
 
     @isTest
@@ -349,6 +354,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         );
         
         System.assertEquals(0, paginatedResp.data.size(), 'Should return empty list');
+        System.assertEquals(1, paginatedResp.totalPages, 'Total pages should still reflect available data');
         System.assertEquals(false, paginatedResp.hasNextPage, 'Should not have next page');
     }
 }

@@ -780,13 +780,18 @@
                         "example": 50,
                         "description": "Antall henvendelser per side"
                     },
+                    "totalPages": {
+                        "type": "integer",
+                        "example": 2,
+                        "description": "Totalt antall sider"
+                    },
                     "hasNextPage": {
                         "type": "boolean",
                         "example": true,
                         "description": "Indikerer om det finnes flere sider med data"
                     }
                 },
-                "required": ["data", "currentPage", "pageSize", "hasNextPage"]
+                "required": ["data", "currentPage", "pageSize", "totalPages", "hasNextPage"]
             },
             "Henvendelse": {
                 "type": "object",

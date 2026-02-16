@@ -28,7 +28,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         try {
             String pageParam = getRequestParam('page');
             String pageSizeParam = getRequestParam('pageSize');
-            
+
             Integer pageNumber = pageParam != null ? Integer.valueOf(pageParam) : 1;
             Integer pageSize = pageSizeParam != null ? Integer.valueOf(pageSizeParam) : 50;
 
@@ -45,6 +45,11 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             // Calculate how many records we need to query from each SObject type
             // We query (pageNumber * pageSize) + 1 to detect if more records exist
             Integer queryLimit = (pageNumber * pageSize) + 1;
+
+            Integer convCount = new CRM_ConversationNoteSelector().countDistinctByActorId(new Set<String>{ actorId });
+            Integer threadCount = new CRM_ThreadSelector().countByActorId(new Set<String>{ actorId });
+            Integer totalRecords = convCount + threadCount;
+            Integer totalPages = totalRecords == 0 ? 0 : Integer.valueOf(Math.ceil((Decimal) totalRecords / pageSize));
 
             List<CRM_Henvendelse> fullList = new List<CRM_Henvendelse>();
             List<Conversation_Note__c> convList = new CRM_ConversationNoteSelector()
@@ -69,11 +74,12 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
 
             // If we have more records in fullList than we're returning, more pages exist
             Boolean hasNextPage = endIndex < fullList.size();
-            
+
             CRM_PaginatedHenvendelseResponse paginatedResponse = new CRM_PaginatedHenvendelseResponse();
             paginatedResponse.data = returnList;
             paginatedResponse.currentPage = pageNumber;
             paginatedResponse.pageSize = pageSize;
+            paginatedResponse.totalPages = totalPages;
             paginatedResponse.hasNextPage = hasNextPage;
 
             setResponse(200, JSON.serialize(paginatedResponse));
