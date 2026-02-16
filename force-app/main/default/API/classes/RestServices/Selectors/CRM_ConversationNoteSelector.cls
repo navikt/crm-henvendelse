@@ -65,14 +65,15 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
     }
 
     public Integer countDistinctByActorId(Set<String> actorIds) {
-        return [
-            SELECT COUNT_DISTINCT(CRM_Henvendelse_BehandlingskjedeId__c)
+        List<AggregateResult> results = [
+            SELECT COUNT_DISTINCT(CRM_Henvendelse_BehandlingskjedeId__c) totalRecords
             FROM Conversation_Note__c
             WHERE
                 CRM_Account__r.CRM_Person__r.INT_ActorId__c IN :actorIds
                 AND CRM_Henvendelse_BehandlingskjedeId__c != NULL
                 AND CRM_Created_By_Ident__c != NULL
         ];
+        return (Integer) results[0].get('totalRecords');
     }
 
     public List<Conversation_Note__c> selectByBehandlingskjedeId(String behandlingskjedeId) {
