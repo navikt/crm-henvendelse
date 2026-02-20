@@ -60,7 +60,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Henvendelse - Innboks Base URL dev</shortDescription>
-        <value>https://navdialog--sit2.sandbox.my.site.com/Innboks/s</value>
+        <value>https://innboks.dev.nav.no/s</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_NewConversationNoteNotification</fullName>
