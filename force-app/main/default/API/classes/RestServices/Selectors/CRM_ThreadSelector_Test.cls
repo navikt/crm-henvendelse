@@ -24,7 +24,7 @@ public class CRM_ThreadSelector_Test {
     @isTest
     static void testSelector() {
         Test.startTest();
-        List<Thread__c> threads = new CRM_ThreadSelector().selectByActorId(new Set<String>{ '123456789101213' });
+        List<Thread__c> threads = new CRM_ThreadSelector().selectByActorId(new Set<String>{ '123456789101213' }, null);
         Test.stopTest();
 
         System.assert(!threads.isEmpty());

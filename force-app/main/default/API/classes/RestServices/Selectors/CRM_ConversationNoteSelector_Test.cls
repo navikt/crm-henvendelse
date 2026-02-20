@@ -15,7 +15,7 @@ public class CRM_ConversationNoteSelector_Test {
     static void testSelector() {
         Test.startTest();
         List<Conversation_Note__c> convList = new CRM_ConversationNoteSelector()
-            .selectByActorId(new Set<String>{ '123456789121314' });
+            .selectByActorId(new Set<String>{ '123456789121314' }, null);
         Test.stopTest();
 
         System.assert(!convList.isEmpty());
