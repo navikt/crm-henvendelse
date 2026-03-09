@@ -63,8 +63,6 @@
                                             class="slds-float_left slds-var-m-left_small englishBtn"
                                             onclick={handleLangClick}
                                             title="Endre Språk"
-                                            disabled={langBtnLock}
-                                            aria-disabled={langBtnLock}
                                             aria-label={langAria}
                                         >
                                         </lightning-button>
@@ -86,6 +84,39 @@
                         is-case-reserved={isCaseReserved}
                     >
                     </c-crm-messaging-quick-text>
+                    <template lwc:if={showLanguageChangeModal}>
+                        <lightning-layout-item size="8">
+                            <div class="slds-var-p-bottom_medium">
+                                <div
+                                    class="slds-box slds-border_right slds-border_top slds-border_bottom slds-border_left"
+                                >
+                                    <div class="panel-content scrollable">
+                                        <div class="slds-var-p-bottom_medium wrapped-content">
+                                            <p>{labels.LANGUAGE_CHANGE_ALERT_TEXT}</p>
+                                        </div>
+                                        <div class="slds-grid slds-grid_align-end">
+                                            <div class="slds-float_right">
+                                                <lightning-button
+                                                    label={labels.LANGUAGE_CHANGE_NO}
+                                                    variant="brand-outline"
+                                                    class="slds-var-p-right_small cancelButton"
+                                                    onclick={closeLanguageChangeModal}
+                                                >
+                                                </lightning-button>
+                                                <lightning-button
+                                                    label={labels.LANGUAGE_CHANGE_YES}
+                                                    variant="brand"
+                                                    class="closeButton"
+                                                    onclick={changeTemplate}
+                                                >
+                                                </lightning-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
                 </lightning-layout-item>
             </template>
             <lightning-record-edit-form
