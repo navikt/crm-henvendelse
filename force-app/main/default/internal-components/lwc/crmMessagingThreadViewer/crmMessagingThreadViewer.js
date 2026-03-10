@@ -34,6 +34,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api isThread;
     @api hideChangeLngBtn = false;
     @api isCaseReserved;
+    @api showLanguageChangeModal = false;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -156,6 +157,7 @@ export default class MessagingThreadViewer extends LightningElement {
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
         textInput.CRM_From_User__c = userId;
+        textInput.CRM_Message_Text__c = this.text;
 
         if (!textInput.CRM_Message_Text__c) {
             const toastEvent = new ShowToastEvent({
@@ -404,12 +406,6 @@ export default class MessagingThreadViewer extends LightningElement {
 
     logThreadError(error, response, message) {
         const report = `Error: ${error}, response: ${JSON.stringify(response)}`;
-        LoggerUtility.logError(
-            'NKS',
-            'STO',
-            report,
-            message,
-            this.threadId
-        );
+        LoggerUtility.logError('NKS', 'STO', report, message, this.threadId);
     }
 }
