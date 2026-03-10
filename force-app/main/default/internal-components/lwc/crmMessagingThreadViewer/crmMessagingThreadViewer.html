@@ -82,6 +82,7 @@
                         onenglishstoclearevent={handleEnglishStoClearEvent}
                         onlocklang={lockLangBtn}
                         is-case-reserved={isCaseReserved}
+                        onsetcasetoinprogress={handleSetCaseToInProgress}
                     >
                     </c-crm-messaging-quick-text>
                     <template lwc:if={showLanguageChangeModal}>
@@ -136,7 +137,7 @@
                                     class="endDialogueBtn slds-button slds-button_stretch slds-button_destructive button-spacing button-heights"
                                     type="button"
                                     title={labels.END_DIALOGUE_LABEL}
-                                    disabled={isThreadClosed}
+                                    disabled={isButtonDisabled}
                                     onclick={toggleEndDialogueButton}
                                     aria-expanded={buttonExpanded}
                                 >
@@ -195,7 +196,7 @@
                                     class="slds-button slds-button_stretch slds-button_brand button-spacing button-heights"
                                     type="submit"
                                     title={submitButtonLabel}
-                                    disabled={isThreadClosed}
+                                    disabled={isButtonDisabled}
                                 >
                                     {submitButtonLabel}
                                 </button>
