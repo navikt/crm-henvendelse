@@ -329,7 +329,6 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get isButtonDisabled() {
-        console.log('this.isThreadClosed || this.isCaseReserved: ', this.isThreadClosed, this.isCaseReserved);
         return this.isThreadClosed || this.isCaseReserved;
     }
 
