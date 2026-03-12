@@ -47,6 +47,7 @@ export default class MessagingThreadViewer extends LightningElement {
     };
 
     _wiredMessagesResult;
+    _wiredThreadResult;
     threadId;
     messages = [];
     registereddate;
@@ -113,6 +114,7 @@ export default class MessagingThreadViewer extends LightningElement {
         fields: [ACTIVE_FIELD, REGISTERED_DATE, THREAD_TYPE]
     })
     wiredThread(resp) {
+        this._wiredThreadResult = resp;
         const { data, error } = resp;
         if (data) {
             try {
@@ -212,6 +214,11 @@ export default class MessagingThreadViewer extends LightningElement {
                 this.refreshMessages();
                 this.showspinner = false;
             });
+    }
+
+    handleSetCaseToInProgress() {
+        refreshApex(this._wiredThreadResult); // Refreshes Thread IsActive field for button disabling
+        this.refreshMessages(); // Also refresh messages to get end of dialogue message if Thread was closed
     }
 
     refreshMessages() {
@@ -319,6 +326,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     get showCloseButton() {
         return this.showClose && this.threadType !== 'BTO';
+    }
+
+    get isButtonDisabled() {
+        return this.isThreadClosed || this.isCaseReserved;
     }
 
     // Modal
