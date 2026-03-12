@@ -60,6 +60,7 @@ export default class MessagingThreadViewer extends LightningElement {
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
     langBtnLock = false;
+    _showLanguageChangeModal = false;
 
     connectedCallback() {
         if (this.thread) {
@@ -245,13 +246,15 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     handleLangClick() {
+        console.log('change to english clicked');
         publishToAmplitude('STO', { type: 'handleLangClick' });
-        const langObj = {
+            const langObj = {
             englishTextTemplate: this.resetTemplate ? this.englishTextTemplate : !this.englishTextTemplate,
             userInput: this.text,
             resetTemplate: this.resetTemplate,
-            closeLanguageModal: this.closeLanguageModal
+            _showLanguageChangeModal: this._showLanguageChangeModal
         };
+        
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
@@ -288,6 +291,19 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     // Getters
+
+    @api
+    get showLanguageChangeModal() {
+        //return this._showLanguageChangeModal;
+        return true;
+    }
+
+    set showLanguageChangeModal(value) {
+        console.log('showLanguangeChangeModal: ?? value under');
+        console.log(value);
+        this._showLanguageChangeModal = value;
+    }
+
     get quickTextCmp() {
         return this.template.querySelector('c-crm-messaging-quick-text');
     }
