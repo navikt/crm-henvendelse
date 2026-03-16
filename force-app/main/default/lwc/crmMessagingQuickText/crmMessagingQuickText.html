@@ -21,7 +21,6 @@
                         title="Lukk"
                         alternative-text="Lukk"
                         icon-name="utility:close"
-                        icon-class="slds-button_icon-inverse"
                         onclick={hideModal}
                         variant="bare"
                     ></lightning-button-icon>
@@ -114,7 +113,7 @@
 
                 <textarea
                     onkeyup={insertquicktext}
-                    onchange={handleChange}
+                    oninput={handleChange}
                     onpaste={handlePaste}
                     disabled={isCaseReserved}
                     class="slds-rich-text-editor__textarea slds-grid slds-textarea conversationNoteTextArea"

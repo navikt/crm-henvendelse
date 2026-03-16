@@ -3,12 +3,12 @@
     cursor: pointer;
 }
 
-.modalHide {
-    display: none;
-}
-
 .conversationNoteTextArea {
     border: 0;
+}
+
+.slds-modal__close {
+    align-content: center;
 }
 
 /* attributes suggested at https://webaim.org/techniques/css/invisiblecontent */
