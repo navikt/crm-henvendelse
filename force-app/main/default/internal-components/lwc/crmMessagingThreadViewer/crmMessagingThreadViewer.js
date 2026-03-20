@@ -34,6 +34,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api isThread;
     @api hideChangeLngBtn = false;
     @api isCaseReserved;
+    @api showLanguageChangeModal = false;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -46,6 +47,7 @@ export default class MessagingThreadViewer extends LightningElement {
     };
 
     _wiredMessagesResult;
+    _wiredThreadResult;
     threadId;
     messages = [];
     registereddate;
@@ -112,6 +114,7 @@ export default class MessagingThreadViewer extends LightningElement {
         fields: [ACTIVE_FIELD, REGISTERED_DATE, THREAD_TYPE]
     })
     wiredThread(resp) {
+        this._wiredThreadResult = resp;
         const { data, error } = resp;
         if (data) {
             try {
@@ -156,6 +159,7 @@ export default class MessagingThreadViewer extends LightningElement {
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
         textInput.CRM_From_User__c = userId;
+        textInput.CRM_Message_Text__c = this.text;
 
         if (!textInput.CRM_Message_Text__c) {
             const toastEvent = new ShowToastEvent({
@@ -210,6 +214,11 @@ export default class MessagingThreadViewer extends LightningElement {
                 this.refreshMessages();
                 this.showspinner = false;
             });
+    }
+
+    handleSetCaseToInProgress() {
+        refreshApex(this._wiredThreadResult); // Refreshes Thread IsActive field for button disabling
+        this.refreshMessages(); // Also refresh messages to get end of dialogue message if Thread was closed
     }
 
     refreshMessages() {
@@ -319,6 +328,10 @@ export default class MessagingThreadViewer extends LightningElement {
         return this.showClose && this.threadType !== 'BTO';
     }
 
+    get isButtonDisabled() {
+        return this.isThreadClosed || this.isCaseReserved;
+    }
+
     // Modal
     openModal() {
         publishToAmplitude('STO', { type: 'openModal close thread' });
@@ -404,12 +417,6 @@ export default class MessagingThreadViewer extends LightningElement {
 
     logThreadError(error, response, message) {
         const report = `Error: ${error}, response: ${JSON.stringify(response)}`;
-        LoggerUtility.logError(
-            'NKS',
-            'STO',
-            report,
-            message,
-            this.threadId
-        );
+        LoggerUtility.logError('NKS', 'STO', report, message, this.threadId);
     }
 }
