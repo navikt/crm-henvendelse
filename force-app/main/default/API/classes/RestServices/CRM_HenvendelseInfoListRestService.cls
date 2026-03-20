@@ -10,7 +10,6 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpGet
     global static void getHenvendelseList() {
-        Datetime startTime = system.now();
         String actorId = getRequestParam('aktorid');
 
         if (!validate()) {
