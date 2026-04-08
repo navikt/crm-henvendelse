@@ -60,17 +60,30 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 
-    public List<Thread__c> selectByActorId(Set<String> actorIds) {
+    public List<Thread__c> selectByActorId(Set<String> actorIds, Integer queryLimit) {
         List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT', 'BTO' };
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition(
             '(CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Type__c in :threadTypes)'
         );
+        query.setOrdering('CRM_Date_Time_Registered__c', fflib_QueryFactory.SortOrder.DESCENDING);
+        if (queryLimit != null && queryLimit > 0) {
+            query.setLimit(queryLimit);
+        }
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
         addMessageSubquery(query);
         return (List<Thread__c>) Database.query(query.toSOQL());
+    }
+
+    public Integer countByActorId(Set<String> actorIds) {
+        List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT', 'BTO' };
+        return [
+            SELECT COUNT()
+            FROM Thread__c
+            WHERE CRM_Account__r.CRM_Person__r.INT_ActorId__c IN :actorIds AND CRM_Type__c IN :threadTypes
+        ];
     }
 
     /**
