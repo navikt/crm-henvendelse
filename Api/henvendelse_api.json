@@ -606,7 +606,11 @@
                             "ARBEIDSOPPFOLGING",
                             "TILTAKSPENGER",
                             "TILTAKSADMINISTRASJON",
-                            "FIA"
+                            "FIA",
+                            "HELT",
+                            "UNG_SAK",
+                            "REMEDY",
+                            "EKSPERTBISTAND"
                         ],
                         "description": "Fagsystemet som saken behandles i, required hvis saksId er definert",
                         "example": "AO01"
@@ -684,7 +688,11 @@
                             "ARBEIDSOPPFOLGING",
                             "TILTAKSPENGER",
                             "TILTAKSADMINISTRASJON",
-                            "FIA"
+                            "FIA",
+                            "HELT",
+                            "UNG_SAK",
+                            "REMEDY",
+                            "EKSPERTBISTAND"
                         ],
                         "description": "Fagsystemet som saken behandles i.",
                         "example": "AO01"
