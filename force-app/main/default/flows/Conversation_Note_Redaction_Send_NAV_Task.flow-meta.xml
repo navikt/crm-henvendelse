@@ -1,114 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>54.0</apiVersion>
-    <assignments>
-        <description>Assigns the appropriate values from the input screen to the NAV task.</description>
-        <name>NAV_Task_Assignment</name>
-        <label>NAV Task Assignment</label>
+    <actionCalls>
+        <name>Post_Nav_Task</name>
+        <label>Post Nav Task</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Comments__c</assignToReference>
-            <operator>Assign</operator>
+        <locationY>782</locationY>
+        <actionName>OppgaveManager</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Verify_Task_Post</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>aktoerId</name>
+            <value>
+                <elementReference>Get_Conversation_Note.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>behandlingstema</name>
+            <value>
+                <elementReference>Get_Gjelder.CRM_Subtheme_Code__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>behandlingstype</name>
+            <value>
+                <elementReference>Get_Gjelder.CRM_Subtype_Code__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>beskrivelse</name>
             <value>
                 <elementReference>Task_Description</elementReference>
             </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_ThemeGroup.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Theme.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_Priority__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>NORM</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_NoPersonInformation__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_NAV_Unit.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_TaskType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Task_Type.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_Account__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Conversation_Note.CRM_Account__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Gjelder.CRM_Subtheme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
-            <operator>Assign</operator>
+        </inputParameters>
+        <inputParameters>
+            <name>eksternHenvendelseId</name>
             <value>
                 <elementReference>Get_Conversation_Note.CRM_API_Reference__c</elementReference>
             </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_Subtype__c</assignToReference>
-            <operator>Assign</operator>
+        </inputParameters>
+        <inputParameters>
+            <name>methodType</name>
             <value>
-                <elementReference>Get_Gjelder.CRM_Subtype__c</elementReference>
+                <stringValue>POST</stringValue>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Send_NAV_Task</targetReference>
-        </connector>
-    </assignments>
+        </inputParameters>
+        <inputParameters>
+            <name>oppgavetype</name>
+            <value>
+                <stringValue>VURD_HENV</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>opprettetAvEnhetsnr</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>prioritet</name>
+            <value>
+                <stringValue>NORM</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tema</name>
+            <value>
+                <elementReference>Get_Theme.CRM_Code__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tildeltEnhetsnr</name>
+            <value>
+                <stringValue>2950</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
     <decisions>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>182</locationX>
-        <locationY>1358</locationY>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Post_Error_Screen</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Post Failed</defaultConnectorLabel>
+        <defaultConnectorLabel>Post Error</defaultConnectorLabel>
         <rules>
-            <name>Post_Success</name>
+            <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Send_NAV_Task.SUCCESSFUL_POST</leftValueReference>
+                <leftValueReference>Post_Nav_Task.isSuccess</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -117,7 +102,7 @@
             <connector>
                 <targetReference>Finish_Screen</targetReference>
             </connector>
-            <label>Post Success</label>
+            <label>Success</label>
         </rules>
     </decisions>
     <description>Flow to send NAV Task for a Conversation Note on Sladding-app.</description>
@@ -162,10 +147,10 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_ThemeGroup</targetReference>
+            <targetReference>Get_Theme</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -183,10 +168,10 @@
         <name>Get_Gjelder</name>
         <label>Get Gjelder</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>NAV_Task_Assignment</targetReference>
+            <targetReference>Send_NAV_Task</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -203,21 +188,25 @@
                 <stringValue>Gjelder</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>CRM_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CRM_Subtype__c</queriedFields>
-        <queriedFields>CRM_Subtheme__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_Gjelder_List</name>
         <label>Get Gjelder List</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Task_Type</targetReference>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -246,66 +235,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_NAV_Unit</name>
-        <label>Get NAV Unit</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>NAV_Task_Input_Screen</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>INT_UnitNumber__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>2950</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>NavUnit__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Task_Type</name>
-        <label>Get Task Type</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_NAV_Unit</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Code_Set__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Oppgavetyper</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Vurder henvendelse</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>VURD_HENV</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Common_Code__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Theme</name>
         <label>Get Theme</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Gjelder_List</targetReference>
@@ -325,41 +258,6 @@
                 <stringValue>Tema</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>CRM_Parent_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_ThemeGroup.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Common_Code__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_ThemeGroup</name>
-        <label>Get ThemeGroup</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Theme</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>OVRG</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Code_Set__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Temagrupper</stringValue>
-            </value>
-        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -369,7 +267,7 @@
         <name>Finish_Screen</name>
         <label>Finish Screen</label>
         <locationX>50</locationX>
-        <locationY>1478</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -418,7 +316,7 @@
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -448,16 +346,55 @@
         <name>Post_Error_Screen</name>
         <label>Post Error Screen</label>
         <locationX>314</locationX>
-        <locationY>1478</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Post_Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Det oppsto en feil ved oppdatering av NAV oppgaven. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Post_Nav_Task.isSuccess</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Post_Nav_Task.isRetry</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
-        <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
+        <fields>
+            <name>Post_Error_Text_Not4xx</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Post_Nav_Task.isSuccess</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Post_Nav_Task.isRetry</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -473,9 +410,9 @@
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>182</locationX>
-        <locationY>1238</locationY>
+        <locationY>674</locationY>
         <connector>
-            <targetReference>Verify_Task_Post</targetReference>
+            <targetReference>Post_Nav_Task</targetReference>
         </connector>
         <flowName>CRM_Send_NAV_Task_Auto</flowName>
         <inputAssignments>
