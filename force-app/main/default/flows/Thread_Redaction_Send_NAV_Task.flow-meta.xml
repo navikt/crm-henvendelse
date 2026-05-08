@@ -103,7 +103,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Finish_Screen</targetReference>
+                <targetReference>Publish_Oppgave_created_LMS_event</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -271,7 +271,7 @@
         <name>Finish_Screen</name>
         <label>Finish Screen</label>
         <locationX>50</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -412,6 +412,34 @@
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Publish_Oppgave_created_LMS_event</name>
+        <label>Publish Oppgave created LMS event</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Finish_Screen</targetReference>
+        </connector>
+        <fields>
+            <name>nksOppgaveCreatedPublisher</name>
+            <extensionName>c:nksOppgaveCreatedPublisher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Thread.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
