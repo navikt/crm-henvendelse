@@ -40,7 +40,7 @@ export default class CrmQuickText extends LightningElement {
         this.textArea.value = this._conversationNote;
         if (this.initialRender) {
             let inputField = this.textArea;
-            inputField.focus();
+            inputField.focus({ preventScroll: true });
             inputField.blur();
 
             if (this.standardSignature === true) {
