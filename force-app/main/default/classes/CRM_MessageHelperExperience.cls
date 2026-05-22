@@ -58,17 +58,34 @@ public with sharing class CRM_MessageHelperExperience {
         }
     }
 
-    /**
-     * Creates a message
-     * Used in the community components
-     * @Author Lars Petter Johnsen
-     */
     @AuraEnabled
     public static Boolean createMessage(Id threadId, String messageText) {
         Message__c m = new Message__c();
         m.CRM_Message_Text__c = messageText;
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()]?.ContactId;
+        m.CRM_Read__c = true;
+        m.CRM_Read_Datetime__c = DateTime.now();
+
+        Thread__c t = [SELECT Id, CRM_isActive__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
+        if (!t.CRM_isActive__c) {
+            return false;
+        }
+        try {
+            insert m;
+            return true;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    // TODO: Delete
+    @AuraEnabled
+    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId) {
+        Message__c m = new Message__c();
+        m.CRM_Message_Text__c = messageText;
+        m.CRM_Thread__c = threadId;
+        m.CRM_From_Contact__c = fromContactId;
         m.CRM_Read__c = true;
         m.CRM_Read_Datetime__c = DateTime.now();
 
