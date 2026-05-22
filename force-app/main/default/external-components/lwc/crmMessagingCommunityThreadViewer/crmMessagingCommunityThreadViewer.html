@@ -11,7 +11,6 @@
                 <c-crm-messaging-Community-Message-Container
                     tabindex="0"
                     message={message}
-                    user-contact-id={userContactId}
                     key={message.Id}
                 ></c-crm-messaging-Community-Message-Container>
             </template>
@@ -25,11 +24,6 @@
                             size="12"
                             class="slds-var-p-top_medium slds-var-p-horizontal_medium largePadding"
                         >
-                            <lightning-messages></lightning-messages>
-                            <lightning-input-field
-                                class="msgText slds-hidden"
-                                field-name="CRM_Message_Text__c"
-                            ></lightning-input-field>
                             <div class="body-wrapper" style="">
                                 <div class="example__inner">
                                     <div class="">
@@ -60,14 +54,6 @@
                                     ></c-crm-community-alert-stripe>
                                 </template>
                             </div>
-
-                            <lightning-input-field
-                                field-name="CRM_From_Contact__c"
-                                value={userContactId}
-                                class="slds-hidden"
-                            ></lightning-input-field>
-                            <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">
-                            </lightning-input-field>
                         </lightning-layout-item>
                     </lightning-layout>
                 </template>
