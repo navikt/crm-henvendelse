@@ -79,28 +79,6 @@ public with sharing class CRM_MessageHelperExperience {
         }
     }
 
-    // TODO: Delete
-    @AuraEnabled
-    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId) {
-        Message__c m = new Message__c();
-        m.CRM_Message_Text__c = messageText;
-        m.CRM_Thread__c = threadId;
-        m.CRM_From_Contact__c = fromContactId;
-        m.CRM_Read__c = true;
-        m.CRM_Read_Datetime__c = DateTime.now();
-
-        Thread__c t = [SELECT Id, CRM_isActive__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
-        if (!t.CRM_isActive__c) {
-            return false;
-        }
-        try {
-            insert m;
-            return true;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
     @AuraEnabled(cacheable=true)
     public static List<MessageGroupWrapper> getGroupedMessagesFromThread(Id threadId) {
         try {
