@@ -3,7 +3,7 @@ import getmessages from '@salesforce/apex/CRM_MessageHelperExperience.getMessage
 import markAsRead from '@salesforce/apex/CRM_MessageHelperExperience.markAsRead';
 import { refreshApex } from '@salesforce/apex';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import createmsg from '@salesforce/apex/CRM_MessageHelperExperience.createMessage';
+import createmsg from '@salesforce/apex/CRM_MessageHelperExperience.createThreadMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';

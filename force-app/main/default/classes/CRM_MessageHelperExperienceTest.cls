@@ -108,7 +108,7 @@ public with sharing class CRM_MessageHelperExperienceTest {
     static void createMessageTest() {
         List<Thread__c> tList = [SELECT Id FROM Thread__c ORDER BY CreatedDate DESC];
         Test.startTest();
-        Boolean result = CRM_MessageHelperExperience.createMessage(tList.get(0).Id, 'Some text value');
+        Boolean result = CRM_MessageHelperExperience.createThreadMessage(tList.get(0).Id, 'Some text value');
         Test.stopTest();
         Assert.isTrue(result, 'Should return true for active thread');
         List<Message__c> msgList = [
