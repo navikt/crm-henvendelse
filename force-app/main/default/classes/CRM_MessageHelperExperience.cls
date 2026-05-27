@@ -58,11 +58,6 @@ public with sharing class CRM_MessageHelperExperience {
         }
     }
 
-    /**
-     * Creates a message
-     * Used in the community components
-     * @Author Lars Petter Johnsen
-     */
     @AuraEnabled
     public static Boolean createMessage(Id threadId, String messageText) {
         Message__c m = new Message__c();
