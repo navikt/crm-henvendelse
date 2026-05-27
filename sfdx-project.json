@@ -4,7 +4,7 @@
             "path": "force-app",
             "default": true,
             "package": "crm-henvendelse",
-            "versionNumber": "0.205.0.NEXT",
+            "versionNumber": "0.206.0.NEXT",
             "dependencies": [
                 {
                     "package": "platform-data-model",
