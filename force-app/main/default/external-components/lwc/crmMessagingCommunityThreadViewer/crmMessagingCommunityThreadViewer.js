@@ -2,7 +2,6 @@ import { LightningElement, wire, api } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelperExperience.getMessagesFromThread';
 import markAsRead from '@salesforce/apex/CRM_MessageHelperExperience.markAsRead';
 import { refreshApex } from '@salesforce/apex';
-import getContactId from '@salesforce/apex/CRM_MessageHelperExperience.getUserContactId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelperExperience.createMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
@@ -29,18 +28,10 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
     messages = [];
     buttonisdisabled = false;
     msgVal;
-    userContactId;
     thread;
 
     connectedCallback() {
         markAsRead({ threadId: this.recordId });
-        getContactId({})
-            .then((contactId) => {
-                this.userContactId = contactId;
-            })
-            .catch((error) => {
-                console.error('Problem on getting contact id: ', error);
-            });
     }
 
     renderedCallback() {
@@ -92,12 +83,6 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
      * @Author lars Petter Johnsen
      */
     handlesuccess() {
-        const inputFields = this.template.querySelectorAll('.msgText');
-        if (inputFields) {
-            inputFields.forEach((field) => {
-                field.reset();
-            });
-        }
         const textBoks = this.template.querySelector('c-community-textarea');
         textBoks.clearText();
         this.buttonisdisabled = false;
@@ -131,7 +116,7 @@ export default class CrmMessagingCommunityThreadViewer extends LightningElement 
             this.buttonisdisabled = false;
             return;
         }
-        createmsg({ threadId: this.recordId, messageText: this.msgVal, fromContactId: this.userContactId })
+        createmsg({ threadId: this.recordId, messageText: this.msgVal })
             .then((result) => {
                 if (result === true) {
                     this.handlesuccess();
