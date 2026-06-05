@@ -48,7 +48,7 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         return (List<Conversation_Note__c>) Database.query(query.toSOQL());
     }
 
-    public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {
+    public List<Conversation_Note__c> selectByActorId(Set<String> actorIds, Integer queryLimit) {
         fflib_QueryFactory query = newQueryFactory();
         query
             .selectFields(QUERY_FIELDS)
@@ -56,9 +56,24 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
                 'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingskjedeId__c != null AND CRM_Created_By_Ident__c != null'
             )
             .setOrdering('CRM_Date_Time_Registered__c', fflib_QueryFactory.SortOrder.DESCENDING);
+        if (queryLimit != null && queryLimit > 0) {
+            query.setLimit(queryLimit);
+        }
         //Adds the Journal entry selector query as a relationship query to the Conversation Note query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         return (List<Conversation_Note__c>) Database.query(query.toSOQL());
+    }
+
+    public Integer countDistinctByActorId(Set<String> actorIds) {
+        List<AggregateResult> results = [
+            SELECT COUNT_DISTINCT(CRM_Henvendelse_BehandlingskjedeId__c) totalRecords
+            FROM Conversation_Note__c
+            WHERE
+                CRM_Account__r.CRM_Person__r.INT_ActorId__c IN :actorIds
+                AND CRM_Henvendelse_BehandlingskjedeId__c != NULL
+                AND CRM_Created_By_Ident__c != NULL
+        ];
+        return (Integer) results[0].get('totalRecords');
     }
 
     public List<Conversation_Note__c> selectByBehandlingskjedeId(String behandlingskjedeId) {

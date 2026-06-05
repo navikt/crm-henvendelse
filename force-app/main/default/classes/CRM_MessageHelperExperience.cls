@@ -4,11 +4,6 @@
  * @Date 30.05.2024
  */
 public with sharing class CRM_MessageHelperExperience {
-    @AuraEnabled
-    public static string getUserContactId() {
-        return [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()]?.ContactId;
-    }
-
     @AuraEnabled(cacheable=true)
     public static List<Message__c> getMessagesFromThread(Id threadId) {
         try {
@@ -63,17 +58,12 @@ public with sharing class CRM_MessageHelperExperience {
         }
     }
 
-    /**
-     * Creates a message
-     * Used in the community components
-     * @Author Lars Petter Johnsen
-     */
     @AuraEnabled
-    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId) {
+    public static Boolean createThreadMessage(Id threadId, String messageText) {
         Message__c m = new Message__c();
         m.CRM_Message_Text__c = messageText;
         m.CRM_Thread__c = threadId;
-        m.CRM_From_Contact__c = fromContactId;
+        m.CRM_From_Contact__c = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()]?.ContactId;
         m.CRM_Read__c = true;
         m.CRM_Read_Datetime__c = DateTime.now();
 

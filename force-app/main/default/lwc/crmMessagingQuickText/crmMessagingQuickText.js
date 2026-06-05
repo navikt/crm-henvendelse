@@ -39,10 +39,6 @@ export default class CrmQuickText extends LightningElement {
     renderedCallback() {
         this.textArea.value = this._conversationNote;
         if (this.initialRender) {
-            let inputField = this.textArea;
-            inputField.focus();
-            inputField.blur();
-
             if (this.standardSignature === true) {
                 let signature = this.template.querySelector('.standardSignature');
                 let noteArea = this.template.querySelector('.conversationNoteTextArea');

@@ -3,7 +3,6 @@ import uId from '@salesforce/user/Id';
 
 export default class CommunityMessageContainer extends LightningElement {
     @api message;
-    @api userContactId;
 
     userId = uId;
 
