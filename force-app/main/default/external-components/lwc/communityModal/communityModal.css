@@ -1,12 +1,4 @@
 .navds-modal {
-    max-width: 800px;
-    max-height: 400px;
-}
-
-@media only screen and (max-width: 1024px) {
-    .navds-modal {
-        max-width: none;
-        margin-left: var(--a-spacing-4);
-        margin-right: var(--a-spacing-4);
-    }
+    width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
 }
