@@ -141,7 +141,7 @@ export default class MessagingThreadViewer extends LightningElement {
         }
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
 
         const submitEvent = new CustomEvent('messagesentonsubmit', {
@@ -155,6 +155,19 @@ export default class MessagingThreadViewer extends LightningElement {
         if (this.quickTextCmp?.isOpen) return;
 
         this.showspinner = true;
+
+        await refreshApex(this._wiredThreadResult);
+        if (this.isThreadClosed) {
+            const toastEvent = new ShowToastEvent({
+                title: 'Thread is closed',
+                message: 'This thread was closed by another user.',
+                variant: 'error'
+            });
+            this.dispatchEvent(toastEvent);
+            this.showspinner = false;
+            return;
+        }
+
         const textInput = event.detail.fields;
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
