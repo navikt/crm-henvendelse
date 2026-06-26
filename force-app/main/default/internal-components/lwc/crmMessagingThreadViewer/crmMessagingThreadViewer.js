@@ -159,8 +159,8 @@ export default class MessagingThreadViewer extends LightningElement {
         await refreshApex(this._wiredThreadResult);
         if (this.isThreadClosed) {
             const toastEvent = new ShowToastEvent({
-                title: 'Thread is closed',
-                message: 'This thread was closed by another user.',
+                title: 'Samtalen er avsluttet',
+                message: 'Denne samtalen ble avsluttet av en annen bruker.',
                 variant: 'error'
             });
             this.dispatchEvent(toastEvent);
@@ -176,8 +176,8 @@ export default class MessagingThreadViewer extends LightningElement {
 
         if (!textInput.CRM_Message_Text__c) {
             const toastEvent = new ShowToastEvent({
-                title: 'Message Body missing',
-                message: 'Make sure that you fill in the message text',
+                title: 'Meldingstekst mangler',
+                message: 'Skriv inn en meldingstekst før du sender.',
                 variant: 'error'
             });
             this.dispatchEvent(toastEvent);
