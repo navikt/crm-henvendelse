@@ -141,7 +141,7 @@ export default class MessagingThreadViewer extends LightningElement {
         }
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
 
         const submitEvent = new CustomEvent('messagesentonsubmit', {
@@ -155,6 +155,19 @@ export default class MessagingThreadViewer extends LightningElement {
         if (this.quickTextCmp?.isOpen) return;
 
         this.showspinner = true;
+
+        await refreshApex(this._wiredThreadResult);
+        if (this.isThreadClosed) {
+            const toastEvent = new ShowToastEvent({
+                title: 'Samtalen er avsluttet',
+                message: 'Denne samtalen ble avsluttet av en annen bruker.',
+                variant: 'error'
+            });
+            this.dispatchEvent(toastEvent);
+            this.showspinner = false;
+            return;
+        }
+
         const textInput = event.detail.fields;
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
@@ -163,8 +176,8 @@ export default class MessagingThreadViewer extends LightningElement {
 
         if (!textInput.CRM_Message_Text__c) {
             const toastEvent = new ShowToastEvent({
-                title: 'Message Body missing',
-                message: 'Make sure that you fill in the message text',
+                title: 'Meldingstekst mangler',
+                message: 'Skriv inn en meldingstekst før du sender.',
                 variant: 'error'
             });
             this.dispatchEvent(toastEvent);
