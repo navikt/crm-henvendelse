@@ -506,6 +506,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>CRM_Journal_Case_Reference__c</field>
+            <value>
+                <elementReference>Journal_Case_ID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Subtheme__c</field>
             <value>
                 <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>

@@ -458,6 +458,13 @@
                 <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Case_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Entry_SF.NAV_Case_Reference__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
