@@ -23,7 +23,7 @@
         "npm": ">= 8.4.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.21.4",
+        "@babel/core": "^7.29.6",
         "@babel/eslint-parser": "^7.21.3",
         "@locker/eslint-config-locker": "^0.20.6",
         "@prettier/plugin-xml": "^2.2.0",
