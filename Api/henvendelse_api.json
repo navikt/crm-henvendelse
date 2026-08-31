@@ -610,7 +610,8 @@
                             "HELT",
                             "UNG_SAK",
                             "REMEDY",
-                            "EKSPERTBISTAND"
+                            "EKSPERTBISTAND",
+                            "SPEIL"
                         ],
                         "description": "Fagsystemet som saken behandles i, required hvis saksId er definert",
                         "example": "AO01"
@@ -692,7 +693,8 @@
                             "HELT",
                             "UNG_SAK",
                             "REMEDY",
-                            "EKSPERTBISTAND"
+                            "EKSPERTBISTAND",
+                            "SPEIL"
                         ],
                         "description": "Fagsystemet som saken behandles i.",
                         "example": "AO01"
