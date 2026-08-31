@@ -373,6 +373,70 @@
                 }
             }
         },
+        "/henvendelseinfo/henvendelseliste/v2": {
+            "get": {
+                "tags": ["Henvendelse Info"],
+                "description": "Returnerer en paginert liste med henvendelser for en gitt aktør. I motsetning til v1 grupperes ikke samtalereferater på behandlingskjedeId - hvert samtalereferat returneres som en egen henvendelse.",
+                "parameters": [
+                    {
+                        "name": "aktorid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Aktørid til person for uthentelse av henvendelseliste"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "default": 1
+                        },
+                        "description": "Sidenummer for paginering (starter på 1)"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 200,
+                            "default": 50
+                        },
+                        "description": "Antall henvendelser per side"
+                    },
+                    {
+                        "$ref": "#/components/parameters/x-correlation-id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginertHenvendelseListe"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/henvendelseinfo/henvendelseliste": {
             "get": {
                 "tags": ["Henvendelse Info"],
