@@ -1,9 +1,9 @@
 /**
  * @description       : Version 2 of the henvendelseliste endpoint. Returns each Conversation_Note__c
  *                       as its own henvendelse instead of grouping them by CRM_Henvendelse_BehandlingskjedeId__c.
- * @author            : eirikfladby
- * @last modified on  : 28-01-2026
- * @last modified by  : eirikfladby
+ * @author            : Joakim Gabrielsen
+ * @last modified on  : 31-08-2026
+ * @last modified by  : Joakim Gabrielsen
  **/
 @RestResource(urlmapping='/henvendelseinfo/henvendelseliste/v2/*')
 global without sharing class CRM_HenvendelseInfoListV2RestService extends ApexRestService {
