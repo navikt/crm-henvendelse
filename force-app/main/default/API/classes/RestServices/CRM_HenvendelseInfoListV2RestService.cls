@@ -1,6 +1,6 @@
 /**
- * @description       : Version 2 of the henvendelseliste endpoint. Returns each Conversation_Note__c
- *                       as its own henvendelse instead of grouping them by CRM_Henvendelse_BehandlingskjedeId__c.
+ * @description       : Versjon 2 av henvendelseliste endpunkt. Returnerer hvert Conversation_Note__c
+ *                       som sin egen henvendelse istedenfor å gruppere dem etter CRM_Henvendelse_BehandlingskjedeId__c.
  * @author            : Joakim Gabrielsen
  * @last modified on  : 31-08-2026
  * @last modified by  : Joakim Gabrielsen
