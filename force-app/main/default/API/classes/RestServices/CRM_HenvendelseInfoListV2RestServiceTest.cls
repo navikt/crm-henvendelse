@@ -1,5 +1,5 @@
 @isTest
-public class CRM_HenvendelseInfoListV2RestService_Test {
+public class CRM_HenvendelseInfoListV2RestServiceTest {
     private static final String CONV_NOTE_PREFIX = Conversation_Note__c.getSObjectType().getDescribe().getKeyPrefix();
     private static final String SHARED_CHAIN_ID = CONV_NOTE_PREFIX + '123TESTV2';
 
@@ -50,7 +50,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.headers.put('x-correlation-id', '123TEST');
@@ -101,7 +101,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.headers.put('x-correlation-id', '123TEST');
@@ -123,7 +123,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.headers.put('x-correlation-id', '123TEST');
@@ -140,12 +140,34 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
     }
 
     @isTest
+    static void testGetHenvendelseListFlsException() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+        req.httpMethod = 'GET';
+        req.params.put('aktorid', '123456789101213');
+        req.headers.put('x-correlation-id', '123TEST');
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        //Simulating exception from selector call
+        CRM_ApiSelector.simulateException(new fflib_SecurityUtils.FlsException('DUMMY ERROR'));
+        CRM_HenvendelseInfoListV2RestService.getHenvendelseList();
+        Test.stopTest();
+
+        System.assertEquals(403, RestContext.response.statusCode);
+    }
+
+    @isTest
     static void testMissingActorIdInput() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.headers.put('x-correlation-id', '123TEST');
         RestContext.request = req;
@@ -164,7 +186,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '1');
@@ -197,7 +219,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '2');
@@ -230,7 +252,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('pageSize', '10');
@@ -260,7 +282,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '1');
@@ -290,7 +312,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '0');
@@ -313,7 +335,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '1');
@@ -336,7 +358,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '1');
@@ -359,7 +381,7 @@ public class CRM_HenvendelseInfoListV2RestService_Test {
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+            Url.getOrgDomainUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
         req.httpMethod = 'GET';
         req.params.put('aktorid', '123456789101213');
         req.params.put('page', '10');
