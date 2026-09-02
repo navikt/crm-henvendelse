@@ -23,25 +23,3 @@ portalUser.TimeZoneSidKey = 'Europe/Paris';
 portalUser.LocaleSidKey = 'no_NO';
 portalUser.LanguageLocaleKey = 'no';
 insert portalUser;
-
-
-//Create a dummy thread
-Thread__c thread = new Thread__c();
-thread.CRM_From__c = portalUser.Id;
-thread.CRM_isActive__c = true;
-insert thread;
-
-Message__c message = new Message__c(CRM_Thread__c = thread.Id,
-                    CRM_Message_Text__c = 'Dette er en testmelding :)',
-                    CRM_Read_Datetime__c = Datetime.now(),
-                    CRM_Sent_Date__c = Datetime.now().addDays(-1));
-
-insert message;
-
-Journal_Entry__c jEntry = new Journal_Entry__c(
-          CRM_Thread__c = thread.Id,
-          Journal_Entry_Status__c = 'Completed',
-          CRM_Journal_Date__c = Datetime.now(),
-          CRM_Created_By_Ident__c = 'Z999999'  
-);
-insert jEntry;

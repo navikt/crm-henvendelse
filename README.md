@@ -127,12 +127,13 @@ sfdx force:org:open
 
 ## Scratch org Setup
 
-There are two apex scripts in dummy data that can be run in order to generate and cleanup dummy data:`GenerateData` and `MergeAccounts`. MergeAccounts will try to clean up any duplicate account that were created when importing dummy data. This should be run before `GenerateData`
+There are three apex scripts in dummy data that can be run in order to generate and cleanup dummy data: `MergeAccounts`, `GenerateData` and `GenerateDataThread`. MergeAccounts will try to clean up any duplicate account that were created when importing dummy data. This should be run before `GenerateData`. `GenerateDataThread` must run as its own execution after `GenerateData` - it can't be combined with `GenerateData` into a single anonymous Apex run because that mixes DML on a setup object (`User`) with non-setup objects (`Thread__c`), which Salesforce doesn't allow in the same transaction.
 
 The apex scripts can de run with these commands:
 
 -   `sfdx force:apex:execute -f ./dummy-data/MergeAccounts.apex`
 -   `sfdx force:apex:execute -f ./dummy-data/GenerateData.apex`
+-   `sfdx force:apex:execute -f ./dummy-data/GenerateDataThread.apex`
 
 `package.json` contains some jobs in scripts that can be run in the scratch org:
 
