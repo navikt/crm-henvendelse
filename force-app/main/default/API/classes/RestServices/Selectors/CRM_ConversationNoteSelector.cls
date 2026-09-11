@@ -76,6 +76,17 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         return (Integer) results[0].get('totalRecords');
     }
 
+    public Integer countByActorId(Set<String> actorIds) {
+        return [
+            SELECT COUNT()
+            FROM Conversation_Note__c
+            WHERE
+                CRM_Account__r.CRM_Person__r.INT_ActorId__c IN :actorIds
+                AND CRM_Henvendelse_BehandlingskjedeId__c != NULL
+                AND CRM_Created_By_Ident__c != NULL
+        ];
+    }
+
     public List<Conversation_Note__c> selectByBehandlingskjedeId(String behandlingskjedeId) {
         fflib_QueryFactory query = newQueryFactory();
         query
