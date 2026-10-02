@@ -20,28 +20,6 @@ public without sharing class CRM_ConvNoteJournalRetryBatch implements Database.B
             super(false, false, false);
         }
 
-        public List<Schema.SObjectField> getSObjectFieldList() {
-            return new List<Schema.SObjectField>{
-                Journal_Entry__c.Id,
-                Journal_Entry__c.CRM_Conversation_Note__c,
-                Journal_Entry__c.CRM_Created_By_Ident__c,
-                Journal_Entry__c.CRM_Created_By_NAV_Unit__c,
-                Journal_Entry__c.NAV_Case_Reference__c,
-                Journal_Entry__c.CRM_Theme_Code__c,
-                Journal_Entry__c.CRM_Subtheme_Code__c,
-                Journal_Entry__c.Subtheme__c,
-                Journal_Entry__c.Theme__c,
-                Journal_Entry__c.CRM_NAV_Case_Legacy_System__c,
-                Journal_Entry__c.CRM_Journal_Post_Type__c,
-                Journal_Entry__c.Journal_Entry_Status__c,
-                Journal_Entry__c.Journal_Entry_ID__c
-            };
-        }
-
-        public Schema.SObjectType getSObjectType() {
-            return Journal_Entry__c.sObjectType;
-        }
-
         private String getJournalConditions() {
             return 'CRM_Conversation_Note__c != null AND Journal_Entry_Status__c = \'Failed\'';
         }

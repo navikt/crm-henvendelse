@@ -30,10 +30,6 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         };
     }
 
-    public Schema.SObjectType getSObjectType() {
-        return Thread__c.sObjectType;
-    }
-
     public Thread__c selectById(Id id) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id =: id').setLimit(1);

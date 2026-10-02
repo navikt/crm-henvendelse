@@ -30,10 +30,6 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
         };
     }
 
-    public Schema.SObjectType getSObjectType() {
-        return Message__c.sObjectType;
-    }
-
     public List<Message__c> selectById(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id in :idSet AND ' + getApiConditions());

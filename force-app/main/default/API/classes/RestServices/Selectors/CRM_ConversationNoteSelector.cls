@@ -22,23 +22,9 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_API_Reference__c'
     };
 
-    public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField>{ Conversation_Note__c.Id };
-    }
-
-    public Schema.SObjectType getSObjectType() {
-        return Conversation_Note__c.sObjectType;
-    }
-
     public Conversation_Note__c selectById(Id convId) {
         fflib_QueryFactory query = newQueryFactory();
         query.selectFields(QUERY_FIELDS).setCondition('Id=: convId');
-        return (Conversation_Note__c) Database.query(query.toSOQL());
-    }
-
-    public Conversation_Note__c selectByApiReference(String apiReference) {
-        fflib_QueryFactory query = newQueryFactory();
-        query.selectFields(QUERY_FIELDS).setCondition('CRM_API_Reference__c=: apiReference');
         return (Conversation_Note__c) Database.query(query.toSOQL());
     }
 
