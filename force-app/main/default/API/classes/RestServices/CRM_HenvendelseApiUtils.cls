@@ -101,16 +101,6 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @param timestamp
      * @return String
      **/
-    public String gmtFormatDateTime(DateTime timestamp) {
-        return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') : null;
-    }
-
-    /**
-     * @description: Formats a datetime to a valid ISO string
-     * @author Stian Ruud Schikora | 07-20-2021
-     * @param timestamp
-     * @return String
-     **/
     public String formatDateTime(DateTime timestamp) {
         return timestamp != null ? timestamp.format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') : null;
     }
