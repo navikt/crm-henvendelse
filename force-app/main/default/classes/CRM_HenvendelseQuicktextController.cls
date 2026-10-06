@@ -2,6 +2,11 @@ public with sharing class CRM_HenvendelseQuicktextController {
     @AuraEnabled
     public static List<CRM_HenvendelseQuicktextController.QuickTextMessage> searchRecords(String search) {
         List<CRM_HenvendelseQuicktextController.QuickTextMessage> quickTexts = new List<CRM_HenvendelseQuicktextController.QuickTextMessage>();
+
+        // Intentionally querying all visible QuickText records:
+        // this search matches user input against both Name and Message.
+        // Message text is evaluated in Apex and can contain the match even when Name does not,
+        // so adding a restrictive WHERE/LIMIT would change behavior and miss valid results.
         for (QuickText qt : [SELECT Id, Name, Message FROM QuickText]) {
             if (
                 qt.Message.toLowerCase().contains(search.toLowerCase()) ||
