@@ -1,17 +1,22 @@
 <template>
     <div lwc:if={showModal} class="modal__overlay" onkeydown={handleKeyDown}>
         <div tabindex="0" class="firstFocusable" onfocus={handleFocus}></div>
-        <dialog class="navds-modal navds-modal--autowidth" aria-labelledby="modalHeader" autofocus="" open="">
-            <div class="navds-modal__header">
+        <dialog
+            class="aksel-modal aksel-modal--medium aksel-modal--autowidth"
+            aria-labelledby="modalHeader"
+            autofocus=""
+            open=""
+        >
+            <div class="aksel-modal__header">
                 <template lwc:if={showCloseButton}>
                     <button
                         data-color="neutral"
                         data-variant="tertiary"
                         type="button"
-                        class="navds-modal__button navds-button navds-button--tertiary-neutral navds-button--small navds-button--icon-only"
+                        class="aksel-modal__button aksel-button aksel-button--small aksel-button--icon-only"
                         onclick={closeModal}
                     >
-                        <span class="navds-button__icon"
+                        <span class="aksel-button__icon"
                             ><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -20,9 +25,9 @@
                                 viewBox="0 0 24 24"
                                 focusable="false"
                                 role="img"
-                                aria-labelledby="title-R5et6"
+                                aria-labelledby="title-_r_4_"
                             >
-                                <title id="title-R5et6">Lukk</title>
+                                <title id="title-_r_4_">Lukk</title>
                                 <path
                                     fill="currentColor"
                                     d="M6.53 5.47a.75.75 0 0 0-1.06 1.06L10.94 12l-5.47 5.47a.75.75 0 1 0 1.06 1.06L12 13.06l5.47 5.47a.75.75 0 1 0 1.06-1.06L13.06 12l5.47-5.47a.75.75 0 0 0-1.06-1.06L12 10.94z"
@@ -30,9 +35,9 @@
                         ></span>
                     </button>
                 </template>
-                <h1 id="modalHeader" class="navds-heading navds-heading--medium">{modalHeader}</h1>
+                <h1 id="modalHeader" class="aksel-heading aksel-heading--medium">{modalHeader}</h1>
             </div>
-            <div class="navds-modal__body">
+            <div class="aksel-modal__body">
                 <slot name="modalContent"></slot>
             </div>
             <template lwc:if={showFooterLine}> <hr class="blokk-m" /></template>

@@ -1,10 +1,10 @@
 <template>
     <div
-        class="navds-chat navds-chat--right navds-chat--top-text-right navds-chat--medium navds-chat--neutral break-word"
-        data-color="neutral"
+        class="aksel-chat aksel-chat--right aksel-chat--top-text-right aksel-chat--medium aksel-chat--neutral break-word"
+        data-color="brand-beige"
         data-variant="neutral"
     >
-        <div class="navds-chat__avatar" aria-hidden="true">
+        <div class="aksel-chat__avatar" aria-hidden="true">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -22,12 +22,12 @@
                 ></path>
             </svg>
         </div>
-        <div class="navds-chat__bubble-wrapper navds-body-long navds-body-long--medium">
+        <div class="aksel-chat__bubble-wrapper aksel-body-long aksel-body-long--medium">
             <template for:each={messages} for:item="msgWrap">
-                <div key={msgWrap.message.Id} class="navds-chat__bubble" style={msgWrap.bubbleStyle}>
+                <div key={msgWrap.message.Id} class="aksel-chat__bubble" style={msgWrap.bubbleStyle}>
                     <template lwc:if={msgWrap.showHeader}>
-                        <h3 class="navds-chat__top-text navds-heading navds-heading--xsmall">
-                            <span class="navds-detail">
+                        <h3 class="aksel-chat__top-text aksel-heading aksel-heading--xsmall">
+                            <span class="aksel-detail">
                                 <c-crm-nav-formatted-date
                                     date={msgWrap.message.CRM_Sent_date__c}
                                 ></c-crm-nav-formatted-date>
