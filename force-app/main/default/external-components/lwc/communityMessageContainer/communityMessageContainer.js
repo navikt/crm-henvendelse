@@ -10,7 +10,7 @@ export default class CommunityMessageContainer extends LightningElement {
             if (block.type === 'group') {
                 const decoratedMessages = (block.groupMessages || []).map((msgWrap, msgIdx) => ({
                     ...msgWrap,
-                    bubbleStyle: msgWrap.showHeader && msgIdx > 0 ? 'margin-top: var(--a-spacing-5);' : ''
+                    bubbleStyle: msgWrap.showHeader && msgIdx > 0 ? 'margin-top: var(--ax-space-20);' : ''
                 }));
                 return {
                     ...block,

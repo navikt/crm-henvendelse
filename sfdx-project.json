@@ -60,11 +60,11 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.163.0.LATEST"
+                    "versionNumber": "0.170.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
-                    "versionNumber": "0.92.0.LATEST"
+                    "versionNumber": "0.147.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -75,7 +75,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "54.0",
+    "sourceApiVersion": "67.0",
     "packageAliases": {
         "platform-data-model": "0HoKB00000000010AA",
         "custom-metadata-dao": "0HoKB000000000B0AQ",

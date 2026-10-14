@@ -1,6 +1,6 @@
-.navds-stack {
-    --__ac-stack-gap-xs: var(--a-spacing-10);
-    --__ac-stack-direction-xs: column;
+.aksel-stack {
+    --__axc-stack-gap-xs: var(--ax-space-40);
+    --__axc-stack-direction-xs: column;
 }
 
 .external-message-group {
@@ -8,9 +8,9 @@
 }
 
 .block-gap {
-    margin-bottom: var(--a-spacing-10);
+    margin-bottom: var(--ax-space-40);
 }
 
 .tight-gap {
-    margin-bottom: var(--a-spacing-1);
+    margin-bottom: var(--ax-space-4);
 }
