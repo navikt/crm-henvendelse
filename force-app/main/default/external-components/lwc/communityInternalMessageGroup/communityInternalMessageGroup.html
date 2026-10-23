@@ -27,6 +27,8 @@
                 <div key={msgWrap.message.Id} class="aksel-chat__bubble" style={msgWrap.bubbleStyle}>
                     <template lwc:if={msgWrap.showHeader}>
                         <h3 class="aksel-chat__top-text aksel-heading aksel-heading--xsmall">
+                            <span class="aksel-detail">Nav</span>
+                            <span aria-hidden="true" class="aksel-detail">•</span>
                             <span class="aksel-detail">
                                 <c-crm-nav-formatted-date
                                     date={msgWrap.message.CRM_Sent_date__c}

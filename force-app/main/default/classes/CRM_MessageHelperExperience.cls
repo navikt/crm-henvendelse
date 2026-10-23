@@ -85,6 +85,7 @@ public with sharing class CRM_MessageHelperExperience {
             List<Message__c> messages = [
                 SELECT
                     Id,
+                    CreatedDate,
                     CRM_Message_Text__c,
                     CRM_Type__c,
                     CRM_Event_Type__c,
