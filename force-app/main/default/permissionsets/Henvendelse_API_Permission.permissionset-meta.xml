@@ -200,6 +200,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Conversation_Note__c.CRM_Is_Redacted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Journal_Entry__c.CRM_Conversation_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -326,6 +331,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Message__c.CRM_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Message__c.CRM_Is_Redacted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
