@@ -66,6 +66,17 @@ Below are some of the most essential fields defined on Conversation_Note\_\_c
 
 Baseline access to functionality in regards to the core is covered in the Messaging_Read_and_Write_Messages_and_Threads permission set. Additionally the Messaging_Quicktext and Redaction_Permission_Set grants access for internal users to user i.e. quick texts in the standard components.
 
+### 2.1 Redaction status in API v2
+
+`GET /henvendelseinfo/henvendelseliste/v2` returns `meldinger[].sladdet`, mapped
+from `CRM_Is_Redacted__c` on both `Message__c` and `Conversation_Note__c`.
+`sladdet` indicates completed redaction; the existing `sladding` flag indicates
+that a message is marked for redaction. Completing redaction clears `sladding`
+but leaves `sladdet` true.
+
+API consumers need read access to `CRM_Is_Redacted__c` on both objects.
+The field is part of the shared `CRM_Melding` response model.
+
 ## 3. Core components
 
 The frontend functionality is delivered by a set og LWC that can be exposed [externally](force-app/main/default/external-components/.doc/) and [internally](force-app/main/default/internal-components/.doc/)

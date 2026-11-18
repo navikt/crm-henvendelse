@@ -26,7 +26,8 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
             Message__c.CRM_From_Ident_Formula__c,
             Message__c.CRM_From_NAV_Unit__c,
             Message__c.CRM_API_Reference__c,
-            Message__c.CRM_Sensitive_Information__c
+            Message__c.CRM_Sensitive_Information__c,
+            Message__c.CRM_Is_Redacted__c
         };
     }
 
