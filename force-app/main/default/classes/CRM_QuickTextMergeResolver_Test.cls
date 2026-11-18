@@ -11,7 +11,8 @@ private class CRM_QuickTextMergeResolver_Test {
             new QuickText(Message = '${Account.Name')
         };
         Test.startTest();
-        List<QuickText> result = CRM_QuickTextMergeResolver.resolve(templates, new List<Id>{ account.Id });
+        CRM_QuickTextMergeResolver resolver = new CRM_QuickTextMergeResolver(new List<Id>{ account.Id });
+        List<QuickText> result = resolver.resolve(templates);
         Integer queries = Limits.getQueries();
         Test.stopTest();
         System.assertEquals(3, result.size());
@@ -29,7 +30,7 @@ private class CRM_QuickTextMergeResolver_Test {
             new QuickText(Message = '${User.Name}'),
             new QuickText(Message = 'Ordinary text')
         };
-        List<QuickText> result = CRM_QuickTextMergeResolver.resolve(templates, null);
+        List<QuickText> result = new CRM_QuickTextMergeResolver(null).resolve(templates);
         System.assertEquals(1, result.size());
         System.assertEquals('Ordinary text', result[0].Message);
     }
@@ -78,5 +79,64 @@ private class CRM_QuickTextMergeResolver_Test {
         } catch (AuraHandledException expected) {
             System.assertNotEquals(null, expected);
         }
+    }
+
+    @IsTest
+    static void resolvesStringsAndMessagesWithOneContextLoad() {
+        Account account = new Account(Name = 'Ada');
+        insert account;
+        Id templateId = '0F9000000000001';
+        CRM_HenvendelseQuicktextController.QuickTextMessage message = new CRM_HenvendelseQuicktextController.QuickTextMessage(
+            templateId,
+            'Greeting',
+            'Hello ${Account.Name}'
+        );
+        CRM_HenvendelseQuicktextController.QuickTextMessage unavailable = new CRM_HenvendelseQuicktextController.QuickTextMessage(
+            null,
+            'Unavailable',
+            '${Account.Phone}'
+        );
+        Test.startTest();
+        CRM_QuickTextMergeResolver resolver = new CRM_QuickTextMergeResolver(new List<Id>{ account.Id });
+        Integer contextQueries = Limits.getQueries();
+        String single = resolver.resolve('Hello ${Account.Name}');
+        List<String> strings = resolver.resolve(
+            new List<String>{ '${Account.Phone}', '${Account.Name}', 'Ordinary', '${Account.Name}' }
+        );
+        CRM_HenvendelseQuicktextController.QuickTextMessage resolved = resolver.resolve(message);
+        List<CRM_HenvendelseQuicktextController.QuickTextMessage> messages = resolver.resolve(
+            new List<CRM_HenvendelseQuicktextController.QuickTextMessage>{ unavailable, message, message }
+        );
+        Integer totalQueries = Limits.getQueries();
+        Test.stopTest();
+        System.assertEquals(1, contextQueries);
+        System.assertEquals(contextQueries, totalQueries);
+        System.assertEquals('Hello Ada', single);
+        System.assertEquals(new List<String>{ 'Ada', 'Ordinary', 'Ada' }, strings);
+        System.assertEquals(2, messages.size());
+        System.assertEquals(templateId, resolved.RecordId);
+        System.assertEquals('Greeting', resolved.Name);
+        System.assertEquals('Hello Ada', resolved.Message);
+        System.assertEquals('Hello Ada', resolved.Summary);
+        System.assertEquals(resolved.Message, messages[0].Message);
+        System.assertEquals('Hello ${Account.Name}', message.Message);
+        System.assertEquals('Hello ${Account.Name}', message.Summary);
+    }
+
+    @IsTest
+    static void singleResolvePropagatesMissingValue() {
+        CRM_QuickTextMergeResolver resolver = new CRM_QuickTextMergeResolver(null);
+        try {
+            resolver.resolve('${Account.Name}');
+            System.assert(false, 'Expected missing value exception.');
+        } catch (StringException expected) {
+            System.assert(expected.getMessage().contains('Account.Name'));
+        }
+        System.assertEquals(0, resolver.resolve(new List<String>()).size());
+        System.assertEquals(0, resolver.resolve(new List<QuickText>()).size());
+        System.assertEquals(
+            0,
+            resolver.resolve(new List<CRM_HenvendelseQuicktextController.QuickTextMessage>()).size()
+        );
     }
 }

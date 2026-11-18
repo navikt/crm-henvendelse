@@ -1,22 +1,68 @@
 public with sharing class CRM_QuickTextMergeResolver {
     private static final Integer MAX_CONTEXT_IDS = 3;
 
-    public static List<QuickText> resolve(List<QuickText> templates, List<Id> contextRecordIds) {
-        Map<String, Object> values = loadValues(buildContext(contextRecordIds));
-        List<QuickText> resolved = new List<QuickText>();
-        for (QuickText text : templates) {
-            String message;
+    private final Map<String, Object> values;
+
+    public CRM_QuickTextMergeResolver(List<Id> contextRecordIds) {
+        values = loadValues(buildContext(contextRecordIds));
+    }
+
+    public String resolve(String text) {
+        return text.template(values);
+    }
+
+    public QuickText resolve(QuickText text) {
+        QuickText result = text.clone(true, false, false, false);
+        result.Message = resolve(text.Message);
+        return result;
+    }
+
+    public CRM_HenvendelseQuicktextController.QuickTextMessage resolve(
+        CRM_HenvendelseQuicktextController.QuickTextMessage text
+    ) {
+        return new CRM_HenvendelseQuicktextController.QuickTextMessage(text.RecordId, text.Name, resolve(text.Message));
+    }
+
+    public List<String> resolve(List<String> templates) {
+        List<String> resolved = new List<String>();
+        for (Integer index = 0; index < templates.size(); index++) {
             try {
-                message = text.Message.template(values);
+                resolved.add(resolve(templates[index]));
             } catch (StringException error) {
-                System.debug(LoggingLevel.WARN, 'Quick Text excluded: missing merge value. Template: ' + text.Id);
-                continue;
+                logExclusion('string index ' + index);
             }
-            QuickText result = text.clone(true, false, false, false);
-            result.Message = message;
-            resolved.add(result);
         }
         return resolved;
+    }
+
+    public List<QuickText> resolve(List<QuickText> templates) {
+        List<QuickText> resolved = new List<QuickText>();
+        for (QuickText text : templates) {
+            try {
+                resolved.add(resolve(text));
+            } catch (StringException error) {
+                logExclusion('QuickText ID ' + text.Id);
+            }
+        }
+        return resolved;
+    }
+
+    public List<CRM_HenvendelseQuicktextController.QuickTextMessage> resolve(
+        List<CRM_HenvendelseQuicktextController.QuickTextMessage> templates
+    ) {
+        List<CRM_HenvendelseQuicktextController.QuickTextMessage> resolved = new List<CRM_HenvendelseQuicktextController.QuickTextMessage>();
+        for (CRM_HenvendelseQuicktextController.QuickTextMessage text : templates) {
+            try {
+                resolved.add(resolve(text));
+            } catch (StringException error) {
+                logExclusion('QuickTextMessage ID ' + text.RecordId);
+            }
+        }
+        return resolved;
+    }
+
+    private static void logExclusion(String reference) {
+        System.debug(LoggingLevel.WARN, 'Quick Text excluded: missing merge value. Template: ' + reference);
     }
 
     @TestVisible
