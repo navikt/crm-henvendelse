@@ -828,6 +828,11 @@
                         "description": "Viser om meldingen er markert for sladding",
                         "example": true
                     },
+                    "sladdet": {
+                        "type": "boolean",
+                        "description": "Viser om meldingen eller samtalereferatet er sladdet (CRM_Is_Redacted__c). Uavhengig av sladding, som angir om meldingen er markert for sladding.",
+                        "example": true
+                    },
                     "fra": {
                         "$ref": "#/components/schemas/MeldingFra"
                     }
