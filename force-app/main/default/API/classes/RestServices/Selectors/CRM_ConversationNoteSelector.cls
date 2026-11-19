@@ -19,6 +19,7 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Communication_Channel__c',
         'CRM_Created_By_NAV_Unit__c',
         'STO_Sensitive_Information__c',
+        'CRM_Is_Redacted__c',
         'CRM_API_Reference__c'
     };
 
