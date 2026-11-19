@@ -14,7 +14,7 @@
         <inputParameters>
             <name>accountId</name>
             <value>
-                <elementReference>Thread.CRM_Account__c</elementReference>
+                <elementReference>Thread.CRM_Contact__r.AccountId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -99,7 +99,7 @@
         <inputParameters>
             <name>accountId</name>
             <value>
-                <elementReference>Thread.CRM_Account__c</elementReference>
+                <elementReference>Thread.CRM_Contact__r.AccountId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -369,7 +369,7 @@ IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;),
             <field>CRM_Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Thread.CRM_Account__c</elementReference>
+                <elementReference>Thread.CRM_Contact__r.AccountId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
