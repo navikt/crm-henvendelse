@@ -2,6 +2,9 @@ import { LightningElement, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchRecords';
 import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
+import CONVERSATION_NOTE_TEMPLATE from '@salesforce/label/c.CRMHenvendelse_ConversationNote_Template';
+import TEMPLATE_ERROR from '@salesforce/label/c.CRMHenvendelse_ConversationNote_TemplateError';
+import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import { publishToAmplitude } from 'c/amplitude';
 
 const ESC_KEY_CODE = 27;
@@ -22,6 +25,7 @@ export default class CrmQuickText extends LightningElement {
     @api required = false;
     @api resetTextTemplate = '';
     @api useForConversationNote = false;
+    @api enableConversationNoteTemplate = false;
     @api standardSignature = false;
     @api isCaseReserved = false;
 
@@ -29,6 +33,9 @@ export default class CrmQuickText extends LightningElement {
     recentlyInserted = '';
     labels = { BLANK_ERROR };
     _conversationNote = '';
+    _draftInitialized = true;
+    _externalErrorMessage = '';
+    validationError = '';
     qmap;
     initialRender = true;
     loadingData = false;
@@ -37,6 +44,13 @@ export default class CrmQuickText extends LightningElement {
     _standardSignatureText = '';
 
     renderedCallback() {
+        const initializeDraft = this.initialRender && this.conversationNoteTemplateEnabled && !this.draftInitialized;
+        if (initializeDraft) {
+            if (!this.normalizeNote(this._conversationNote)) {
+                this._conversationNote = this.textTemplate;
+            }
+            this._draftInitialized = true;
+        }
         this.textArea.value = this._conversationNote;
         if (this.initialRender) {
             if (this.standardSignature === true) {
@@ -46,6 +60,9 @@ export default class CrmQuickText extends LightningElement {
             }
 
             this.initialRender = false;
+            if (initializeDraft) {
+                this.notifyFlow();
+            }
         }
     }
 
@@ -203,6 +220,7 @@ export default class CrmQuickText extends LightningElement {
             detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
+        this.notifyFlow();
 
         if (!this.useForConversationNote) {
             this.dispatchEvent(new CustomEvent('locklang'));
@@ -218,6 +236,7 @@ export default class CrmQuickText extends LightningElement {
             detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
+        this.notifyFlow();
     }
 
     handlePaste(evt) {
@@ -237,6 +256,7 @@ export default class CrmQuickText extends LightningElement {
                 detail: this.conversationNote
             });
             this.dispatchEvent(attributeChangeEvent);
+            this.notifyFlow();
         }
     }
 
@@ -301,6 +321,7 @@ export default class CrmQuickText extends LightningElement {
         editor.setRangeText(replacement, start, end, 'end');
         this._conversationNote = editor.value;
         this.recentlyInserted = replacement;
+        this.notifyFlow();
     }
 
     insertquicktext(event) {
@@ -382,6 +403,15 @@ export default class CrmQuickText extends LightningElement {
 
     @api
     validate() {
+        if (this.conversationNoteTemplateEnabled && this.required) {
+            const note = this.normalizeNote(this.conversationNote);
+            if (!note) {
+                return { isValid: false, errorMessage: this.labels.BLANK_ERROR };
+            }
+            if (note === this.normalizeNote(this.textTemplate)) {
+                return { isValid: false, errorMessage: TEMPLATE_ERROR };
+            }
+        }
         if (this.required) {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
@@ -391,10 +421,61 @@ export default class CrmQuickText extends LightningElement {
     }
 
     @api
+    setCustomValidity(message) {
+        this._externalErrorMessage = message;
+    }
+
+    @api
+    reportValidity() {
+        this.validationError = this.conversationNoteTemplateEnabled
+            ? this._externalErrorMessage || this.validate().errorMessage || ''
+            : '';
+    }
+
+    normalizeNote(value) {
+        return this.toPlainText(value)
+            .replace(/[\u200B-\u200D\uFEFF]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    get textTemplate() {
+        return this.resetTextTemplate || (this.conversationNoteTemplateEnabled ? CONVERSATION_NOTE_TEMPLATE : '');
+    }
+
+    get conversationNoteTemplateEnabled() {
+        return this.useForConversationNote && this.enableConversationNoteTemplate;
+    }
+
+    get validationErrorId() {
+        return this.conversationNoteTemplateEnabled ? 'conversation-note-error' : null;
+    }
+
+    notifyFlow() {
+        if (this.conversationNoteTemplateEnabled) {
+            this.dispatchEvent(new FlowAttributeChangeEvent('conversationNote', this.conversationNote));
+            this.dispatchEvent(new FlowAttributeChangeEvent('draftInitialized', this.draftInitialized));
+            if (this.validationError) {
+                this.reportValidity();
+            }
+        }
+    }
+
+    @api
+    get draftInitialized() {
+        return this._draftInitialized;
+    }
+
+    set draftInitialized(value) {
+        this._draftInitialized = value !== false;
+    }
+
+    @api
     clear() {
         //sets text content to the current
-        this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
+        this._conversationNote = this.textTemplate;
         this.textArea.value = this._conversationNote;
+        this.notifyFlow();
         const englishstoclearevent = new CustomEvent('englishstoclearevent');
         this.dispatchEvent(englishstoclearevent);
     }

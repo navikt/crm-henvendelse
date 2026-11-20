@@ -20,6 +20,32 @@
         <value>Conversation Note Blank Error</value>
     </labels>
     <labels>
+        <fullName>CRMHenvendelse_ConversationNote_Template</fullName>
+        <categories>Henvendelse</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New conversation note template</shortDescription>
+        <value>Sammendrag: skrive et kort sammendrag av samtalen
+
+Du forteller at
+
+Du har fått informasjon om
+
+Dette skjer videre
+
+- Jeg gjør
+
+- Du gjør</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_ConversationNote_TemplateError</fullName>
+        <categories>Henvendelse</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unchanged conversation note template error</shortDescription>
+        <value>Complete the conversation note before saving or journaling it.</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_BTOURL</fullName>
         <categories>Henvendelse, User Notification</categories>
         <language>en_US</language>
