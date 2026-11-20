@@ -10,6 +10,9 @@
             <property name="conversationNote" type="String" label="Conversation Note Output"
                 role="outputOnly" />
             <property name="conversationNoteRich" type="String" label="Conversation Note Input" />
+            <property name="enableConversationNoteTemplate" type="Boolean"
+                label="Enable conversation note template" default="false" role="inputOnly"
+                description="Opt in to the new-note template, content validation and Flow draft events. Requires conversation-note mode. Existing consumers remain unchanged by default." />
             <property name="draftInitialized" type="Boolean"
                 label="Draft initialized (set false for a new conversation note)" default="true"
                 description="Set false only for a new conversation note. Retain the output on screen navigation, including when the draft is cleared." />

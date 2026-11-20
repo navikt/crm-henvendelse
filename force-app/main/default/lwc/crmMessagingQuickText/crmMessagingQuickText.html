@@ -120,7 +120,7 @@
                     rows="15"
                     placeholder={placeHolderText}
                     title={placeHolderText}
-                    aria-describedby="conversation-note-error"
+                    aria-describedby={validationErrorId}
                 >
                 {conversationNote}
             </textarea
@@ -147,6 +147,8 @@
                 </div>
             </template>
         </div>
-        <div id="conversation-note-error" class="slds-form-element__help" aria-live="polite">{validationError}</div>
+        <template lwc:if={conversationNoteTemplateEnabled}>
+            <div id="conversation-note-error" class="slds-form-element__help" aria-live="polite">{validationError}</div>
+        </template>
     </div>
 </template>

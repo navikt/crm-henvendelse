@@ -25,6 +25,7 @@ export default class CrmQuickText extends LightningElement {
     @api required = false;
     @api resetTextTemplate = '';
     @api useForConversationNote = false;
+    @api enableConversationNoteTemplate = false;
     @api standardSignature = false;
     @api isCaseReserved = false;
 
@@ -43,7 +44,7 @@ export default class CrmQuickText extends LightningElement {
     _standardSignatureText = '';
 
     renderedCallback() {
-        const initializeDraft = this.initialRender && this.useForConversationNote && !this.draftInitialized;
+        const initializeDraft = this.initialRender && this.conversationNoteTemplateEnabled && !this.draftInitialized;
         if (initializeDraft) {
             if (!this.normalizeNote(this._conversationNote)) {
                 this._conversationNote = this.textTemplate;
@@ -402,7 +403,7 @@ export default class CrmQuickText extends LightningElement {
 
     @api
     validate() {
-        if (this.useForConversationNote && this.required) {
+        if (this.conversationNoteTemplateEnabled && this.required) {
             const note = this.normalizeNote(this.conversationNote);
             if (!note) {
                 return { isValid: false, errorMessage: this.labels.BLANK_ERROR };
@@ -426,7 +427,9 @@ export default class CrmQuickText extends LightningElement {
 
     @api
     reportValidity() {
-        this.validationError = this._externalErrorMessage || this.validate().errorMessage || '';
+        this.validationError = this.conversationNoteTemplateEnabled
+            ? this._externalErrorMessage || this.validate().errorMessage || ''
+            : '';
     }
 
     normalizeNote(value) {
@@ -437,11 +440,19 @@ export default class CrmQuickText extends LightningElement {
     }
 
     get textTemplate() {
-        return this.resetTextTemplate || (this.useForConversationNote ? CONVERSATION_NOTE_TEMPLATE : '');
+        return this.resetTextTemplate || (this.conversationNoteTemplateEnabled ? CONVERSATION_NOTE_TEMPLATE : '');
+    }
+
+    get conversationNoteTemplateEnabled() {
+        return this.useForConversationNote && this.enableConversationNoteTemplate;
+    }
+
+    get validationErrorId() {
+        return this.conversationNoteTemplateEnabled ? 'conversation-note-error' : null;
     }
 
     notifyFlow() {
-        if (this.useForConversationNote) {
+        if (this.conversationNoteTemplateEnabled) {
             this.dispatchEvent(new FlowAttributeChangeEvent('conversationNote', this.conversationNote));
             this.dispatchEvent(new FlowAttributeChangeEvent('draftInitialized', this.draftInitialized));
             if (this.validationError) {
