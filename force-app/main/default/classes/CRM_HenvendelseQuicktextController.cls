@@ -1,5 +1,23 @@
 public with sharing class CRM_HenvendelseQuicktextController {
     @AuraEnabled
+    public static List<QuickTextMessage> searchContextRecords(String search, List<Id> contextRecordIds) {
+        CRM_QuickTextMergeResolver resolver = new CRM_QuickTextMergeResolver(contextRecordIds);
+        return resolver.resolve(searchRecords(search));
+    }
+
+    @AuraEnabled
+    public static List<QuickText> getContextQuicktexts(List<Id> contextRecordIds) {
+        CRM_QuickTextMergeResolver resolver = new CRM_QuickTextMergeResolver(contextRecordIds);
+        return resolver.resolve(
+            [
+                SELECT Id, Message, nksAbbreviationKey__c, Case_sensitive__c
+                FROM QuickText
+                WHERE nksType__c = 'Abbreviation'
+            ]
+        );
+    }
+
+    @AuraEnabled
     public static List<CRM_HenvendelseQuicktextController.QuickTextMessage> searchRecords(String search) {
         List<CRM_HenvendelseQuicktextController.QuickTextMessage> quickTexts = new List<CRM_HenvendelseQuicktextController.QuickTextMessage>();
 
