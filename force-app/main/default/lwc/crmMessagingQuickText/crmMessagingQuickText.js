@@ -1,8 +1,7 @@
-import { LightningElement, api, wire } from 'lwc';
-import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchRecords';
-import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
+import { LightningElement, api } from 'lwc';
+import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchContextRecords';
+import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getContextQuicktexts';
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
-import { publishToAmplitude } from 'c/amplitude';
 
 const ESC_KEY_CODE = 27;
 const ESC_KEY_STRING = 'Escape';
@@ -29,12 +28,41 @@ export default class CrmQuickText extends LightningElement {
     recentlyInserted = '';
     labels = { BLANK_ERROR };
     _conversationNote = '';
-    qmap;
+    qmap = [];
+    _contextRecordIds = [];
+    contextVersion = 0;
+    searchVersion = 0;
     initialRender = true;
     loadingData = false;
     data = [];
     _isOpen = false;
     _standardSignatureText = '';
+
+    @api
+    get contextRecordIds() {
+        return [...this._contextRecordIds];
+    }
+
+    set contextRecordIds(value) {
+        const ids = value ? [...value] : [];
+        if (JSON.stringify(ids) === JSON.stringify(this._contextRecordIds)) {
+            return;
+        }
+        this._contextRecordIds = ids;
+        this.contextVersion += 1;
+        this.searchVersion += 1;
+        this.qmap = [];
+        this.data = [];
+        this.numberOfRows = 0;
+        this.loadingData = false;
+        if (this.isConnected) {
+            this.loadQuicktexts();
+        }
+    }
+
+    connectedCallback() {
+        this.loadQuicktexts();
+    }
 
     renderedCallback() {
         this.textArea.value = this._conversationNote;
@@ -53,6 +81,8 @@ export default class CrmQuickText extends LightningElement {
      * Functions for handling modal focus
      */
     disconnectedCallback() {
+        this.contextVersion += 1;
+        this.searchVersion += 1;
         document.removeEventListener('click', this.outsideClickListener);
     }
 
@@ -173,17 +203,21 @@ export default class CrmQuickText extends LightningElement {
     /**
      * Functions for conversation note/quick text
      */
-    @wire(getQuicktexts, {})
-    wiredQuicktexts({ error, data }) {
-        if (error) {
-            console.error('Problem getting quick texts: ', error);
-        } else if (data) {
-            this.qmap = data.map((key) => {
-                return {
+    async loadQuicktexts() {
+        const version = this.contextVersion;
+        try {
+            const data = await getQuicktexts({ contextRecordIds: this._contextRecordIds });
+            if (version === this.contextVersion && this.isConnected) {
+                this.qmap = data.filter((key) => key.nksAbbreviationKey__c).map((key) => ({
                     abbreviation: key.nksAbbreviationKey__c,
                     content: { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
-                };
-            });
+                }));
+            }
+        } catch (error) {
+            if (version === this.contextVersion && this.isConnected) {
+                this.qmap = [];
+                console.error('Problem getting quick texts:', error);
+            }
         }
     }
 
@@ -248,19 +282,29 @@ export default class CrmQuickText extends LightningElement {
 
         if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData === false)) {
             evt.stopPropagation();
+            const version = ++this.searchVersion;
             this.loadingData = true;
             searchRecords({
-                search: queryTerm
+                search: queryTerm,
+                contextRecordIds: this._contextRecordIds
             })
                 .then((result) => {
-                    this.numberOfRows = result.length;
-                    this.data = result;
+                    if (version === this.searchVersion && this.isConnected) {
+                        this.numberOfRows = result.length;
+                        this.data = result;
+                    }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (version === this.searchVersion && this.isConnected) {
+                        this.data = [];
+                        this.numberOfRows = 0;
+                        console.error('Problem searching quick texts:', error);
+                    }
                 })
                 .finally(() => {
-                    this.loadingData = false;
+                    if (version === this.searchVersion && this.isConnected) {
+                        this.loadingData = false;
+                    }
                 });
         }
     }

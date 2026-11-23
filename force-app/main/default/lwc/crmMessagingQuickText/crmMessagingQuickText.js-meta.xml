@@ -7,6 +7,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property name="contextRecordIds" type="String[]" label="Merge context record IDs"
+                role="inputOnly" />
             <property name="conversationNote" type="String" label="Conversation Note Output"
                 role="outputOnly" />
             <property name="conversationNoteRich" type="String" label="Conversation Note Input" />
