@@ -93,6 +93,86 @@ public class CRM_HenvendelseInfoListV2RestServiceTest {
             sharedChainIdCount,
             'Both conversation notes sharing a chain id should appear as separate henvendelser'
         );
+        List<Map<String, Object>> messages = getResponseMessages();
+        System.assertEquals(3, messages.size());
+        for (Map<String, Object> message : messages) {
+            System.assertEquals(false, message.get('sladdet'), 'Unredacted messages must expose sladdet=false');
+        }
+    }
+
+    @isTest
+    static void testRedactionStatusIsIndependentOfPendingRedaction() {
+        List<Conversation_Note__c> notes = [SELECT Id FROM Conversation_Note__c ORDER BY Id];
+        notes[0].CRM_Conversation_Note__c = 'Pending note';
+        notes[0].CRM_Is_Redacted__c = false;
+        notes[0].STO_Sensitive_Information__c = true;
+        notes[1].CRM_Conversation_Note__c = 'Redacted note';
+        notes[1].CRM_Is_Redacted__c = true;
+        notes[1].STO_Sensitive_Information__c = false;
+        update notes;
+
+        Id threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+        CRM_HENV_TestDataFactory.createRecordList(
+            new List<Message__c>{
+                new Message__c(
+                    CRM_Thread__c = threadId,
+                    CRM_Message_Text__c = 'Pending message',
+                    CRM_Sensitive_Information__c = true,
+                    CRM_Is_Redacted__c = false
+                ),
+                new Message__c(
+                    CRM_Thread__c = threadId,
+                    CRM_Message_Text__c = 'Redacted message',
+                    CRM_Sensitive_Information__c = false,
+                    CRM_Is_Redacted__c = true
+                )
+            }
+        );
+
+        RestRequest req = new RestRequest();
+        req.requestURI = '/services/apexrest/henvendelseinfo/henvendelseliste/v2';
+        req.httpMethod = 'GET';
+        req.params.put('aktorid', '123456789101213');
+        req.headers.put('x-correlation-id', '123TEST');
+        RestContext.request = req;
+        RestContext.response = new RestResponse();
+
+        Test.startTest();
+        CRM_HenvendelseInfoListV2RestService.getHenvendelseList();
+        Test.stopTest();
+
+        Map<String, Boolean> expectedRedacted = new Map<String, Boolean>{
+            'DUMMY TEXT' => false,
+            'Pending note' => false,
+            'Redacted note' => true,
+            'Pending message' => false,
+            'Redacted message' => true
+        };
+        Set<String> pending = new Set<String>{ 'Pending note', 'Pending message' };
+        List<Map<String, Object>> messages = getResponseMessages();
+        System.assertEquals(5, messages.size(), 'Both notes and all three thread messages must be returned');
+        for (Map<String, Object> message : messages) {
+            String text = (String) message.get('fritekst');
+            System.assert(expectedRedacted.containsKey(text), 'Unexpected or duplicate message: ' + text);
+            System.assertEquals(expectedRedacted.remove(text), message.get('sladdet'), text);
+            System.assertEquals(pending.contains(text), message.get('sladding'), text);
+        }
+        System.assertEquals(0, expectedRedacted.size(), 'Every expected message must be checked');
+    }
+
+    private static List<Map<String, Object>> getResponseMessages() {
+        System.assertEquals(200, RestContext.response.statusCode, RestContext.response.responseBody.toString());
+        Map<String, Object> response = (Map<String, Object>) JSON.deserializeUntyped(
+            RestContext.response.responseBody.toString()
+        );
+        List<Map<String, Object>> messages = new List<Map<String, Object>>();
+        for (Object inquiry : (List<Object>) response.get('data')) {
+            Map<String, Object> henvendelse = (Map<String, Object>) inquiry;
+            for (Object message : (List<Object>) henvendelse.get('meldinger')) {
+                messages.add((Map<String, Object>) message);
+            }
+        }
+        return messages;
     }
 
     @isTest
