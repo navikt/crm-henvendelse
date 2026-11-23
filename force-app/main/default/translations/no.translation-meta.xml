@@ -30,6 +30,10 @@
         <name>CRMHenveldelse_Blank</name>
     </customLabels>
     <customLabels>
+        <label>Fyll ut samtalereferatet før du lagrer eller journalfører det.</label>
+        <name>CRMHenvendelse_ConversationNote_TemplateError</name>
+    </customLabels>
+    <customLabels>
         <label>Du har gjort endringer i hilsen, signatur eller begge deler. Hvis du oversetter nå,
             vil du miste teksten du har skrevet. Vil du fortsette?</label>
         <name>Henvendelse_Language_Change_Alert_Text</name>
