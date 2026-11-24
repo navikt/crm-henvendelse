@@ -12,6 +12,7 @@ import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
 import THREAD_TYPE from '@salesforce/schema/Thread__c.CRM_Thread_Type__c';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
+import ACCOUNT_FIELD from '@salesforce/schema/Thread__c.CRM_Account__c';
 
 import END_DIALOGUE_LABEL from '@salesforce/label/c.Henvendelse_End_Dialogue';
 import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.Henvendelse_End_Dialogue_Alert_Text';
@@ -60,6 +61,7 @@ export default class MessagingThreadViewer extends LightningElement {
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
     langBtnLock = false;
+    quicktextContextRecordIds = [];
 
     connectedCallback() {
         if (this.thread) {
@@ -111,7 +113,8 @@ export default class MessagingThreadViewer extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$threadId',
-        fields: [ACTIVE_FIELD, REGISTERED_DATE, THREAD_TYPE]
+        fields: [ACTIVE_FIELD, REGISTERED_DATE, THREAD_TYPE],
+        optionalFields: [ACCOUNT_FIELD, 'Thread__c.CRM_Related_Object__c']
     })
     wiredThread(resp) {
         this._wiredThreadResult = resp;
@@ -121,10 +124,15 @@ export default class MessagingThreadViewer extends LightningElement {
                 this.registereddate = getFieldValue(data, REGISTERED_DATE);
                 this.threadType = getFieldValue(data, THREAD_TYPE);
                 this.isThreadClosed = !getFieldValue(data, ACTIVE_FIELD);
+                this.quicktextContextRecordIds = [
+                    getFieldValue(data, ACCOUNT_FIELD),
+                    getFieldValue(data, 'Thread__c.CRM_Related_Object__c')
+                ].filter((id) => /^[a-zA-Z0-9]{15}([a-zA-Z0-9]{3})?$/.test(id || ''));
             } catch (err) {
                 this.logThreadError(err, resp, 'Could not fetch active field from thread internal view');
             }
         } else if (error) {
+            this.quicktextContextRecordIds = [];
             console.error(error);
             this.logThreadError(error, resp, 'Could not fetch active field from thread internal view');
         }
